@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Data;
+
+use App\Enums\AdvertStatus;
+use App\Enums\AdvertType;
+use Spatie\LaravelData\Attributes\Validation\Enum;
+use Spatie\LaravelData\Attributes\Validation\In;
+use Spatie\LaravelData\Attributes\Validation\Rule;
+use Spatie\LaravelData\Data;
+
+class AdvertSaveData extends Data
+{
+    public function __construct(
+        #[Rule('url|regex:#https?://(?:www\.)?youtube\.com/watch\?v=([^&]+?)#')]
+        public ?string $youtubeLink,
+        #[Enum(AdvertType::class)]
+        public AdvertType $ad_type,
+        #[In([AdvertStatus::DRAFT->value, AdvertStatus::PENDING->value])]
+        public AdvertStatus $status,
+        public AddressData $address,
+        public AdvertPriceData $price,
+        //#[InArray('property_id,property_values')]
+        public array $properties,
+        public array $images,
+    ) {
+    }
+
+    //public static function rules(): array
+    //{
+    //    return [
+    //        //'youtube_link'        => 'nullable|url|regex:#https?://(?:www\.)?youtube\.com/watch\?v=([^&]+?)#',
+    //        //only youtube
+    //        //'ad_type'             => ['required', new \Illuminate\Validation\Rules\Enum(AdvertType::class)],
+    //        //'status'              => ['required',
+    //        //                          'string',
+    //        //                          \Illuminate\Validation\Rule::in([AdvertStatus::DRAFT->value,
+    //        //                                                           AdvertStatus::PENDING->value])],
+    //        //'address'             => 'required|array',
+    //        //'address.region_id'   => 'nullable|integer',
+    //        //'address.district_id' => 'required_with:address.region_id|integer',
+    //        //todo required
+    //        //'address.address'     => 'required|string',
+    //        //'address.long'        => 'required|numeric',
+    //        //'address.lat'         => 'required|numeric',
+    //        //'price'               => 'required|array',
+    //        //'price.price'         => 'required|numeric|min:1000',
+    //        //arenda qo'shilsa kamaytirish kerak
+    //        'price.currency' => [new Enum(CurrencyEnum::class)],
+    //        //'properties'          => ['required', 'array'],
+    //    ];
+    //}
+}
+

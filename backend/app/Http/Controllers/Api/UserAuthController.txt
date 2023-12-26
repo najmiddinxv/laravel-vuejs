@@ -1,0 +1,253 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
+use App\Models\UserTransport;
+use App\Models\VerificationCode;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
+
+class UserAuthController extends Controller
+{
+    //sms code token
+    public function getToken()
+    {
+        $url = "https://notify.eskiz.uz/api/auth/login";
+        $response = Http::post($url, [
+            'email' =>'example@gmail.com',
+            'password' =>"01230123"
+        ]);
+
+        DB::table('app_settings')->delete();
+
+        DB::table('app_settings')->insert([
+            'token' => $response['data']['token'],
+            'refresh_token' => '',
+            'token_type' => $response['token_type'],
+            'expires_in' => Carbon::now()->addDays(30),
+            'refresh_token_expires_in' => null,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return json_decode($response);
+
+    }
+
+    public function deleteAndGetNewToken()
+    {
+        $app_settings = DB::table('app_settings')->latest()->first();
+        $url = "notify.eskiz.uz/api/auth/invalidate";
+        $response = Http::withToken($app_settings->token)->delete($url);
+        $response = $this->getToken();
+        return $response;
+    }
+
+
+    //sms code
+    public function sendSms($phone_number, $message)
+    {
+        $app_settings = DB::table('app_settings')->latest()->first();
+        $now = Carbon::now();
+        if($now->isAfter($app_settings->expires_in))
+        {
+            $this->deleteAndGetNewToken();
+            $app_settings = DB::table('app_settings')->latest()->first();
+        }
+        $url = "https://notify.eskiz.uz/api/message/sms/send";
+        $response = Http::withToken($app_settings->token)->post($url, [
+            'mobile_phone' => $phone_number,
+            'message' => 'Sizning bir martalik tasdiqlash kodingiz : '.$message,
+
+        ]);
+
+        if($response->getStatusCode() != 200) {
+            throw new Exception($response->getStatusCode());
+            // sendError($response->getStatusCode());
+        }
+        return $response;
+    }
+
+
+
+    public function send_verification_code(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'phone_number' => 'required|string|min:12|max:12'
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->errors(), '', 403);
+        }
+
+        $user = User::where(['phone_number' => $request->phone_number])->first();
+
+        if (!($user instanceof User)) {
+            $user = User::create([
+                'phone_number' => $request->phone_number,
+                'status' => 0 ,
+                'devise_id_ios' => $request->devise_id_ios ,
+                'devide_id_android' => $request->devide_id_android ,
+            ]);
+        }
+
+        $code = rand(100000, 999999);
+        if ($request->phone_number == '998901234567') {
+            $code = 100000;
+        }
+
+        $this->sendSms($user->phone_number, $code);
+
+        $oldVrf = VerificationCode::where('user_id', $user->id)->first();
+        if(!empty($oldVrf)){
+            $oldVrf->delete();
+        }
+
+        $sendedVrf = VerificationCode::create([
+            'user_id' => $user->id,
+            'sms_code' => $code,
+            'expire_at' => Carbon::now()->addMinutes(2)
+        ]);
+
+        return sendResponse($sendedVrf,'success');
+    }
+
+    public function check_code_and_get_token(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'user_id' => 'required|integer',
+            'sms_code' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->errors(),'error validation');
+        }
+
+        $verificationCode = VerificationCode::where('user_id', $request->user_id)->where('sms_code', $request->sms_code)->first();
+
+        $now = Carbon::now();
+        if (!$verificationCode) {
+            return sendError('Your OTP is not correct');
+        }elseif($verificationCode && $now->isAfter($verificationCode->expire_at)){
+            return sendError('Your OTP has been expired');
+        }
+
+        $user = User::findOrFail($request->user_id);
+        $user->status = 2;
+        $user->rating = 4;
+        $user->phone_number_confirmed_at = Carbon::now();
+        $pswd = $request->phone_number.'$123';
+        $user->password = bcrypt($pswd);
+        $user->save();
+
+        if(Auth::attempt(['phone_number' => $user->phone_number, 'password' => $pswd]))
+        {
+            $authuser = Auth::user();
+            $success['token'] =  $user->createToken('authToken',[
+                // $authuser->role->name
+            ])->plainTextToken;
+            $success['user'] = $authuser;
+
+            $data = [
+                'success' => true,
+                'message' => __('locale.user_login_successfully'),
+                'data' => $success
+            ];
+
+            return sendResponse($success,__('locale.user_login_successfully'));
+
+        }
+
+    }
+
+    public function user_role_set(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'user_id' => 'required|integer',
+            'role_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->errors(),'error validation');
+        }
+
+        $user = User::findOrFail($request->user_id);
+        $user->role_id = $request->role_id;
+        $user->save();
+
+        DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->update(['abilities' => [$user->role->name] ]);
+
+        if(empty($user->user_transport) && $user->role_id == 3){
+            $userTransport = new UserTransport();
+            $userTransport->user_id = $user->id;
+            $userTransport->save();
+        }
+
+        return sendResponse($user,'success');
+
+    }
+
+    public function user_register(UserRequest $request)
+    {
+        $data = $request->validated();
+        $user = User::findOrFail($request->user_id);
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
+        if($user->role_id == 3){
+            $user_transport = $user->user_transport;
+            $user_transport->transport_data = $data['transport_data'] ?? '';
+            $user_transport->certificate = $data['certificate'] ?? '';
+            $user->user_transport()->save($user_transport);
+        }
+        $user->save();
+        return sendResponse($user,'success');
+    }
+
+    public function resend_verification_code(Request $request)
+    {
+        $user = User::where(['phone_number' => $request->phone_number])->first();
+        $oldVrf = VerificationCode::where('user_id', $user->id)->first();
+        if(!empty($oldVrf)){
+            $oldVrf->delete();
+        }
+
+         $code = rand(100000, 999999);
+         if ($request->phone_number == '998991234567') {
+             $code = 100000;
+         }
+
+         $this->sendSms($user->phone_number, $code);
+
+         $sendedVrf = VerificationCode::create([
+             'user_id' => $user->id,
+             'sms_code' => $code,
+             'expire_at' => Carbon::now()->addMinutes(1)
+         ]);
+
+         return sendResponse($sendedVrf,'success');
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json(['success' => __('locale.successfully_logged_out')]);
+    }
+
+    public function logout_all_devices()
+    {
+        Auth::user()->tokens->each(function($token, $key) {
+            $token->delete();
+        });
+        return response()->json(['success'=> __('locale.successfully_logged_out_from_all_devices')]);
+    }
+
+}

@@ -1,0 +1,141 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use App\Models\User;
+use WebSocket\Client;
+use Illuminate\Http\Request;
+use App\Mail\SendMessageMail;
+use App\Events\PostDeleteEvent;
+use App\Jobs\SendMessageMailJob;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Validator;
+use App\Notifications\SendMessageEmailNotif;
+use Illuminate\Support\Facades\Notification;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        // Post::create([
+        //     'category_id' => 1,
+        //     'title' => [
+        //         'uz' => 'Нажмиддин in English',
+        //         'ru' => 'Naam in het Nederlands'
+        //     ],
+        // ]);
+
+        $models = Post::select('id','title','slug', 'image')
+            ->cursorPaginate(100);
+
+        // $cachedPostIndex = Redis::get('post_index');
+
+        // if(isset($cachedPostIndex)) {
+        //     $models = json_decode($cachedPostIndex);
+        // }else {
+        //     $models = Post::with('author:id,name')->withCount('author')->get();
+        //     Redis::set('post_index', $models);
+        // }
+
+        return view('backend.post.index',[
+            'models' => $models,
+        ]);
+    }
+
+    public function create()
+    {
+        return view('backend.post.create',[
+        ]);
+    }
+
+    public function store(StorePostRequest $request)
+    {
+        $data = $request->validated();
+        // $request->request->add(['variable' => 'value']);
+        request()->request->add(['edit_json'=>'edit_json']);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('post_images', 'public');
+            $data['image'] = $request->file('image')->hashName();
+        }
+
+        Post::create($data);
+
+        // Post::create([
+        //     'title' => [
+        //        'uz' => 'Name in English',
+        //        'ru' => 'Naam in het Nederlands'
+        //     ],
+        //  ]);
+
+        // $translations = ['en' => 'hello', 'es' => 'hola'];
+        // $newItem->name = $translations;
+
+
+        // $userSchema = User::first();
+        // Notification::send($userSchema, new SendMessageEmailNotif($data));
+
+        //yoki mana shunday qilib shunchaki emailni o'zini yuborishimiz mumkin
+        // Mail::to('bekdevz@gmail.com')->send(new SendMessageMail());
+
+        // event(new PostDeleteEvent(Post::oldest()->first())); //event listener orqali 1-qo'shilgan postlar ochirilyapti
+        // dispatch(new SendMessageMailJob($data)); //jobs yani navbat orqali email va notificiation yuborilyapti. togrirogi notification ham databasega ham emailga yuborilyapti
+
+
+
+        // $client = new Client("ws://192.168.150.72:8080");
+        // $client->text(json_encode($data));
+        // // $client->receive();
+        // $client->close();
+
+        // return redirect()->back()->with('success','success');
+        return redirect()->route('post.index')->with('success','success');
+    }
+
+    public function show($slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+        // dd($post);
+        return view('backend.post.show',[
+            'post' => $post,
+        ]);
+    }
+
+    public function edit(Post $post)
+    {
+        //
+    }
+
+    public function update(UpdatePostRequest $request, Post $post)
+    {
+        //
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('post.index')->with('success','success');
+    }
+
+    public function postSearch(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'q' => 'required|string|max:500',
+         ]);
+
+         if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+         }
+
+        $posts = Post::search($request->q)->get();
+        // $posts = Post::where('title', 'LIKE', "%{$request->q}%")
+        //     ->orWhere('description', 'LIKE', "%{$request->q}%")
+        //     ->get();
+
+        return response()->json([
+           'posts' => $posts
+        ]);
+    }
+}

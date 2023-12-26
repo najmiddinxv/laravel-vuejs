@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Message;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class ChatController extends Controller
+{
+    public function index()
+    {
+
+        $users = User::paginate(25);
+        return view('backend.chat.index',[
+            'users' => $users,
+        ]);
+    }
+
+    public function room(Request $request)
+    {
+        // $messages = Message::where('from_id',auth()->user()->id)->where('to_id',$request->user_id)->get(); //bu ishlamadi
+
+        $users = User::limit(10)->get();
+
+
+
+        $authUserId = auth()->user()->id;
+        $otherUserId = $request->user_id;
+
+        $messages = Message::where(function($query) use ($authUserId, $otherUserId) {
+            $query->where('from_id', $authUserId)
+                ->where('to_id', $otherUserId);
+        })->orWhere(function($query) use ($authUserId, $otherUserId) {
+            $query->where('from_id', $otherUserId)
+                ->where('to_id', $authUserId);
+        })->get();
+
+
+        return view('backend.chat.room',[
+            'users' => $users,
+            'messages' => $messages,
+        ]);
+    }
+}
