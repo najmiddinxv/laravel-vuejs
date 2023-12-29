@@ -63,14 +63,14 @@ class Handler extends ExceptionHandler
                 if ($e instanceof NotFoundHttpException) {
                     //route not found
                     return response()->json([
-                        'error' => true,
-                        'code' => 404,
-                        'message' => __('errors.no_records'),
-                        'data' => []
-//                        'success' => false,
-//                        'code' => 404,
-//                        'message' => __('errors.no_records'),
-//                        'data' => []
+                        // 'error' => true,
+                        // 'code' => 404,
+                        // 'message' => __('errors.no_records'),
+                        // 'data' => []
+                       'success' => false,
+                       'code' => 404,
+                       'message' => __('errors.no_records'),
+                       'data' => []
                     ], 404);
                 }
                 if ($e instanceof AuthorizationException) {

@@ -8,9 +8,9 @@ class StringMacros
 {
     public static function register()
     {
-        Str::macro('customUpperCase', function () {
-            return strtoupper($this->value);
-        });
+        // Str::macro('customUpperCase', function () {
+        //     return strtoupper($this->value);
+        // });
 
         // Add more macros as needed...
     }

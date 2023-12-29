@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\VideoController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,5 +28,8 @@ use Illuminate\Support\Facades\Route;
 //         Route::get('/posts', 'index')->name('index');
 //     });
 
+
+
+    Route::apiResource('video',VideoController::class);
  });
 

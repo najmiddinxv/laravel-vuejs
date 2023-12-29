@@ -6,9 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
 {
-     /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -17,12 +14,18 @@ class StorePostRequest extends FormRequest
 
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
-    public function rules(): array
+    public function store()
+    {
+        return [
+            'category_id' => 'required|integer',
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'body' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+    }
+
+    public function update()
     {
         return [
             'category_id' => 'required|integer',
