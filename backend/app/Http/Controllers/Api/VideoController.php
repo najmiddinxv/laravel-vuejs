@@ -14,6 +14,9 @@ class VideoController extends Controller
 
     public function index(Request $request)
     {
+        // https://protone.media/en/blog/how-to-use-ffmpeg-in-your-laravel-projects
+        // https://github.com/protonemedia/laravel-ffmpeg
+        // https://laravel-news.com/laravel-ffmpeg-tools
         return response()->json('video');
     }
 
