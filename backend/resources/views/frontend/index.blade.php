@@ -236,7 +236,7 @@
                                             However venture pursuit he am mr cordial. Forming musical am hearing studied be luckily. Ourselves for determine attending how led gentleman sincerity. Valley afford uneasy joy she thrown though bed set.
                                         </p>
                                         <p>
-                                             Friendship so considered remarkably be to sentiments. Offered mention greater fifteen one promise because nor. Why denoting speaking fat indulged saw dwelling raillery.
+                                            Friendship so considered remarkably be to sentiments. Offered mention greater fifteen one promise because nor. Why denoting speaking fat indulged saw dwelling raillery.
                                         </p>
                                         <a class="btn btn-theme border btn-md" href="#">Read More</a>
                                     </div>

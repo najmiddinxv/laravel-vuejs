@@ -2,12 +2,14 @@
 @php
 function renderMenu($menu) {
     foreach ($menu as $menu_item) {
-        if (!empty($menu_item->children)) {
+        // if (!empty($menu_item->children)) {
+        if ($menu_item->children->count() > 0) {
+
             // echo '<li class="dropdown active">';
             echo '<li class="dropdown">';
             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" >' . $menu_item->name . '</a>';
             echo '<ul class="dropdown-menu">';
-                renderMenu($menu_item->children); // Recursively render submenu
+                renderMenu($menu_item->children);
             echo '</ul>';
             echo '</li>';
         } else {
@@ -23,7 +25,6 @@ function renderMenu($menu) {
 // echo '</ul>';
 
 @endphp
-
 <header id="home">
 
     <!-- Start Navigation -->

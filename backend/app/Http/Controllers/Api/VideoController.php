@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\VideoRequest;
-use App\Jobs\ConvertVideoForDownloading;
-use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Video;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\VideoRequest;
+use App\Http\Controllers\Controller;
+use App\Jobs\ConvertVideoForStreaming;
+use Illuminate\Support\Facades\Storage;
+use App\Jobs\ConvertVideoForDownloading;
 
 class VideoController extends Controller
 {
@@ -32,14 +34,45 @@ class VideoController extends Controller
 
     public function store(VideoRequest $request)
     {
+
         $video = Video::create([
-            'disk'          => 'videos_disk',
-            'original_name' => $request->video->getClientOriginalName(),
-            'path'          => $request->video->store('videos', 'videos_disk'),
             'title'         => $request->title,
+            'disk'          => 'public',
+            'original_name' => $request->video->getClientOriginalName(),
+            // 'path'          => $request->video->store('videos', 'videos_disk'),
+            'path'          => Storage::putFile(
+                'uploads/videos/'.now()->format('Y/m/d'),
+                $request->file('video'),
+                md5(Str::random(10).time())
+            ),
         ]);
 
-        $this->dispatch(new ConvertVideoForDownloading($video));
+        dd($video);
+
+        // $path = Storage::putFile('avatars', $request->file('avatar'));
+
+        // $path = $request->file('avatar')->storeAs(
+        //     'avatars', $request->user()->id
+        // );
+
+        // $path = Storage::putFileAs(
+        //     'avatars', $request->file('avatar'), $request->user()->id
+        // );
+
+
+
+        // $file = $request->file('avatar');
+
+        // $name = $file->getClientOriginalName();
+        // $extension = $file->getClientOriginalExtension();
+
+
+        // $file = $request->file('avatar');
+
+        // $name = $file->hashName(); // Generate a unique, random name...
+        // $extension = $file->extension(); // Determine the file's extension based on the file's MIME type...
+
+        // $this->dispatch(new ConvertVideoForDownloading($video));
         $this->dispatch(new ConvertVideoForStreaming($video));
 
         return response()->json([

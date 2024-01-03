@@ -30,8 +30,8 @@ class ConvertVideoForStreaming implements ShouldQueue
     public function handle()
     {
         // create some video formats...
-        $lowBitrateFormat  = (new X264)->setKiloBitrate(500);
-        $midBitrateFormat  = (new X264)->setKiloBitrate(1500);
+        // $lowBitrateFormat  = (new X264)->setKiloBitrate(500);
+        // $midBitrateFormat  = (new X264)->setKiloBitrate(1500);
         $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
@@ -40,12 +40,12 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         // call the 'exportForHLS' method and specify the disk to which we want to export...
             ->exportForHLS()
-            ->toDisk('streamable_videos')
+            ->toDisk('public')
 
         // we'll add different formats so the stream will play smoothly
         // with all kinds of internet connections...
-            ->addFormat($lowBitrateFormat)
-            ->addFormat($midBitrateFormat)
+            // ->addFormat($lowBitrateFormat)
+            // ->addFormat($midBitrateFormat)
             ->addFormat($highBitrateFormat)
 
         // call the 'save' method with a filename...

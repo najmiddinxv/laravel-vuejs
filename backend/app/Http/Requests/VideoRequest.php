@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VideoRequest extends BaseFormRequest
+class VideoRequest extends BaseApiFormRequest
 {
     public function authorize(): bool
     {
@@ -31,7 +31,7 @@ class VideoRequest extends BaseFormRequest
     public function update()
     {
         return [
-           
+
         ];
     }
 }

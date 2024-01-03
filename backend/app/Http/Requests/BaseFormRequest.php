@@ -46,8 +46,8 @@ class BaseFormRequest  extends FormRequest
             $response = response()->json([
                 'success' => false,
                 'message' => 'Ops! Some errors occurred',
-                'data' => $validator->errors(),
-                // 'errors' => $validator->errors()
+                // 'data' => $validator->errors(),
+                'errors' => $validator->errors()
             ]);
         }
 
@@ -57,6 +57,8 @@ class BaseFormRequest  extends FormRequest
             ->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
     }
+
+
 
 
     //boshqa error message chiqarish uchun
