@@ -7,7 +7,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localize','localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function (){
 
-    Route::prefix('ctrl')->controller(AuthBackendController::class)->as('backend.')->name('backend.auth.')->group(function() {
+    Route::prefix('admin')->controller(AuthBackendController::class)->as('backend.')->name('backend.auth.')->group(function() {
         Route::get('register', 'showRegisterForm')->name('showRegisterForm')->middleware('guest');
         Route::post('register', 'register')->name('register')->middleware('guest');
         Route::get('login', 'showLoginForm')->name('showLoginForm')->middleware('guest');
@@ -16,7 +16,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('logout', 'logout')->name('logout')->middleware(['backend']);
     });
     // Route::group(['prefix' => 'back', 'as'=>'backend.', 'middleware' => ['backend','role:admin|manager']], function (){
-     Route::group(['prefix' => 'ctrl', 'as'=>'backend.', 'name'=>'backend.', 'middleware' => ['backend']], function (){
+     Route::group(['prefix' => 'admin', 'as'=>'backend.', 'name'=>'backend.', 'middleware' => ['backend']], function (){
         Route::controller(BackendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });

@@ -42,7 +42,6 @@
                 <div class="col-12">
                 <label for="email" class="form-label">email</label>
                 <div class="input-group has-validation">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
                   <input type="text" name="email" class="form-control" id="email" required>
                   <div class="invalid-feedback">
                     @error('email')
@@ -58,7 +57,7 @@
                 <div class="invalid-feedback">
                     @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror   
+                    @enderror
                 </div>
               </div>
 

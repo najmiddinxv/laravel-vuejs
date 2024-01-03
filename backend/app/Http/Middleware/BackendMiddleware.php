@@ -11,11 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BackendMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()){
@@ -24,11 +20,14 @@ class BackendMiddleware
             }else{
                 Session::flush();
                 Auth::logout();
-                return redirect()->route('frontend.index')->with('error','Invalid login credentials.');
+                return back()->with('error','Access Denied');
+                // return redirect()->route('frontend.index');
+                // return redirect()->route('backend.auth.login')->with('error','Access Denied');
+
             }
         }else{
-            return redirect()->route('backend.auth.login')->with('error','Invalid login credentials.');
+            return redirect()->route('backend.auth.login');
+            // return redirect()->route('frontend.index')->with('error','Invalid login credentials.');
         }
-        return redirect()->route('frontend.index')->with('error','Invalid login credentials.');
     }
 }
