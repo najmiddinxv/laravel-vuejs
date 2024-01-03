@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->nullable();
+            $table->string('last_name')->nullable();//familya
+            $table->string('first_name')->nullable();//ism
+            $table->string('middle_name')->nullable();//sharif
             $table->string('username')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone_number',30)->unique()->nullable();
             $table->dateTime('phone_number_confirmed_at')->nullable();
             $table->tinyInteger('status')->default(2);
+            $table->string('avatar')->nullable();
             $table->string('telegram_full_name')->nullable();
             $table->string('telegram_phone_number',30)->nullable();
             $table->string('telegram_chat_id')->nullable();

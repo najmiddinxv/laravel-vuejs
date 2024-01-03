@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Backend</title>
+    <title>Backend - @yield('title')</title>
 
     <meta name="description" content="Deluck - Business Agency & Corporate Template">
     <meta name="keywords" content="website, blog, foo, bar">
-    {{-- <meta property="og:title" content="News of Uzbekistan and the World">
-    <meta property="og:description" content="Eng qiziqarli yangiliklar — bizda! Dunyo, mahalliy, shou-biznes, gadjetlar, sport, avtomobillar olami yangiliklaridan xabardor bo‘ling.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kun.uz/en">
-    <meta property="og:site_name" content="Kun.uz"> --}}
-
     {{--
     <meta name="author" content="John Doe">
     <meta name="publisher" content="John Doe">
@@ -26,7 +20,12 @@
     <meta http-equiv="content-language" content="en">
     --}}
 
-{{--    <link href="/assets/backend/img/favicon.png" rel="icon">--}}
+    {{-- <meta property="og:title" content="News of Uzbekistan and the World">
+    <meta property="og:description" content="Eng qiziqarli yangiliklar — bizda! Dunyo, mahalliy, shou-biznes, gadjetlar, sport, avtomobillar olami yangiliklaridan xabardor bo‘ling.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kun.uz/en">
+    <meta property="og:site_name" content="Kun.uz"> --}}
+
     <link href="{{asset('assets/backend/img/favicon.png')}}" rel="icon">
     <link href="{{asset('assets/backend/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
@@ -338,16 +337,6 @@
 
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
     <section class="section dashboard">
         @yield('content')
     </section>
@@ -364,6 +353,7 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script src="{{asset('assets/backend/js/jquery.min.js')}}"></script>
   <script src="{{asset('assets/backend/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('assets/backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/backend/vendor/chart.js/chart.umd.js')}}"></script>
@@ -373,6 +363,7 @@
   <script src="{{asset('assets/backend/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('assets/backend/vendor/php-email-form/validate.js')}}"></script>
   <script src="{{asset('assets/backend/js/main.js')}}"></script>
+  <script src="{{asset('assets/backend/js/custom.js')}}"></script>
   @yield('scripts')
 </body>
 </html>

@@ -17,11 +17,14 @@ class User extends Authenticatable
     public const STATUS_BACKEND = 10;
 
     protected $fillable = [
-        'full_name',
+        'last_name',
+        'first_name',
+        'middle_name',
         'username',
         'email',
         'phone_number',
         'status',
+        'avatar',
         'telegram_full_name',
         'telegram_phone_number',
         'telegram_chat_id',
@@ -36,7 +39,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'phone_number_confirmed_at	' => 'datetime',
+        'phone_number_confirmed_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

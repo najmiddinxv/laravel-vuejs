@@ -1,63 +1,24 @@
-@extends('layouts.mainBackend')
+@extends('backend.layouts.main')
+@section('styles')
+   <style>
 
-@section('title') User @endsection
-
+   </style>
+@endsection
 @section('content')
-
-    <div class="page-header card">
-    </div>
-    <div class="card">
-        <div class="content-header">
-            <div class="container-fluid card-block">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">{{__('msg.Menu')}}</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">{{__('msg.Home')}}</a></li>
-                            <li class="breadcrumb-item active">User</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <div class="breadcrumb-and-filter">
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="action-content">
-                            <form action="" method="">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <select style="margin-left: 15px;" name="usertype" class="form-control">
-                                                <option value="">------</option>
-                                                <option value="">Role</option>
-                                                <option value="">blablabla</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-primary">{{__('msg.Send')}}</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="create-data" style="float: right;">
-                            
-                                <a href="{{route('user.create')}}" class=" style-add btn btn-primary">{{__('msg.Create')}}</a>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="pagetitle">
+    <h1>User</h1>
+    <nav style="display: flex;justify-content:space-between;align-items: center;">
+      <ol class="breadcrumb" style="margin:0">
+        <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">User</li>
+      </ol>
+      <div>
+        <a href="{{ route('backend.user.create') }}" class="btn btn-success">create</a>
+      </div>
+    </nav>
+</div>
+<div class="card">
+    <div class="card-body" style="padding:20px">
 
         @if (session('success'))
             <div class="alert alert-success" role="alert">
@@ -80,72 +41,59 @@
             </div>
         @endif --}}
 
-        <div class="card-body">
-            <table id="dashboard_datatable" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>{{__('msg.Name')}}</th>
-                    <th>Email</th>
-                    <th>{{__('msg.user_type')}}</th>
-                    <th>{{__('msg.Created date')}}</th>
-                    <th>{{__('msg.Updated date')}}</th>
-                    <th>{{__('msg.Actions')}}</th>
-                </tr>
-                </thead>
-                <tbody>
 
-                @foreach($models as $key => $model)
-                    <tr>
-                        <th scope="row">{{ $models->firstItem()+$key  }}</th>
-                        <td>{{ $model->name }}</td>
-                        <td>{{ $model->email }}</td>
-                        <td>{{ $model->user_type == 1 ? 'admin' : 'user'  }}</td>
-                        <td>{{ $model->created_at }}</td>
-                        <td>{{ $model->updated_at }}</td>
-                        <td>
-                            <div style="text-align: center;">
-                              
-                                <a href="{{route('user.edit',$model->id)}}" class="btn btn-primary" title="update">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <form style="display: inline-block;" action="{{route('user.destroy',$model->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="delete-data-item btn btn-danger" title="delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            {{ $models->links() }}
-        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{{__('msg.Name')}}</th>
+                <th>Email</th>
+                <th>{{__('lang.Created date')}}</th>
+                <th>{{__('lang.Updated date')}}</th>
+                <th>{{__('lang.Actions')}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($users as $key => $user)
+                <tr>
+                    <th scope="row">{{ $users->firstItem()+$key  }}</th>
+                    <td>{{ $user->firs_name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->created_at }}</td>
+                    <td>{{ $user->updated_at }}</td>
+                    <td>
+                        <div style="text-align: center;">
+
+                            <a href="{{ route('backend.user.show',['user'=>$user->id]) }}" class="btn btn-primary" title="show">
+                                <i class="bx bx-show"></i>
+                            </a>
+                            <a href="{{ route('backend.user.edit',['user'=>$user->id]) }}" class="btn btn-primary" title="update">
+                                <i class="bx bx-pencil"></i>
+                            </a>
+                            <form style="display: inline-block;" action="{{ route('backend.user.destroy',['user'=>$user->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="delete-data-item btn btn-danger" title="delete">
+                                    <i class="bx bxs-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        {{ $users->links() }}
     </div>
+</div>
 
 @endsection
-
 @section('scripts')
     <script>
         $(document).ready(function () {
-            $("#dashboard_datatable").DataTable({
-                "responsive": true, 
-                "lengthChange": true, 
-                "autoWidth": false,
-                "paging": false
-                
-            });
 
         });
     </script>
 @endsection
-
-
-
-
-
 
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
+use App\Http\Controllers\Backend\UserConroller;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -21,22 +22,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('/', 'index')->name('index');
         });
 
+        Route::prefix('user')->controller(UserConroller::class)->name('user.')->group(function() {
+            Route::get('/', 'index')->name('index');
+            Route::get('create','create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{user}','edit')->name('edit');
+            Route::put('update/{user}','update')->name('update');
+            Route::get('show/{user}','show')->name('show');
+            Route::delete('destroy/{user}','destroy')->name('destroy');
+        });
 
     });
 
 
 
 
-//    Route::group(['prefix'=>'user'],function(){
-//        Route::get('/index',[UserConroller::class, 'index'])->name('user.index');
-//        Route::get('/create',[UserConroller::class, 'create'])->name('user.create');
-//        Route::post('/store',[UserConroller::class, 'store'])->name('user.store');
-//        Route::get('/edit/{id}',[UserConroller::class, 'edit'])->name('user.edit');
-//        Route::put('/update/{id}',[UserConroller::class, 'update'])->name('user.update');
-//        // Route::get('/show/{id}',[UserConroller::class, 'show'])->name('user.show');
-//        Route::delete('/destroy/{id}',[UserConroller::class, 'destroy'])->name('user.destroy');
-//    });
-//
 //    Route::group(['prefix'=>'role'],function(){
 //        Route::get('/index',[RoleController::class, 'index'])->name('role.index');
 //        Route::get('/create',[RoleController::class, 'create'])->name('role.create');
