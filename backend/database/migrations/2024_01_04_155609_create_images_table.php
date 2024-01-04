@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->string('title');
-            $table->string('slug')->nullable();
-            $table->string('description')->nullable();
-            $table->text('body')->nullable();
-            $table->string('image')->nullable();
-            $table->integer('view_count')->default(0);
+            $table->foreignId('album_id')->constrained('id')->onDelete('cascade');
+            $table->string('name');
+            $table->string('slug');
+            $table->text('description')->nullable();
+            $table->json('image')->nullable();
+            $table->string('ext', 50)->nullable();
+            $table->double('size')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
-
-
-        
     }
 
     /**
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('images');
     }
 };
