@@ -28,4 +28,7 @@ class PostFactory extends Factory
             // 'updated_at' => Carbon::now(),
         ];
     }
+
+
 }
+

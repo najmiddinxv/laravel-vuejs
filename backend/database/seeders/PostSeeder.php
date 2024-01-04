@@ -15,6 +15,19 @@ class PostSeeder extends Seeder
     {
         Post::truncate();
 
+
+
+        //you can also use the method
+        // PropertyGroup::factory(random_int(5, 10))
+        //     ->has(
+        //           Property::factory()
+        //               ->hasValues(random_int(5, 10))->count(random_int(5, 10))
+        //         , 'properties'
+        //     )
+        //     ->create();
+        // dump('create property group');
+
+        
         // $posts = Post::factory()->count(20000)->make();
 
         // $posts->chunk(2000)->each(function ($chunk) {

@@ -18,8 +18,6 @@ class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
         Role::truncate(); //rollar -> admin,manager...
         Permission::truncate(); //ruxsatlar ->delete,publish,view...
 
@@ -27,8 +25,6 @@ class PermissionSeeder extends Seeder
 
         ModelHasPermission::truncate();//(model)userga berilgan ruxsatlar id=1 user -> delete qilaoladi
         ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $roles = [
             [

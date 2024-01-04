@@ -14,38 +14,12 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::truncate();
-        User::factory()->create([
-            'first_name' => 'bek',
-            'last_name' => 'najmiddin',
-            'middle_name' => '',
-            'username' => 'bekdevz',
-            'user_type' => 1,
-            'status' => 1,
-            'email' => 'bekdevz@gmail.com',
-            'email_verified_at' => now(),
-            'password' => '01230123', // password
-            'remember_token' => Str::random(10),
-        ]);
-        User::factory(10)->create();
-
         $this->call([
+            UserSeeder::class,
             PermissionSeeder::class,
-            // CategoriesSeeder::class,
-            // PostSeeder::class,
 
         ]);
 
-
-        //you can also use the method
-        // PropertyGroup::factory(random_int(5, 10))
-        //     ->has(
-        //           Property::factory()
-        //               ->hasValues(random_int(5, 10))->count(random_int(5, 10))
-        //         , 'properties'
-        //     )
-        //     ->create();
-        // dump('create property group');
 
     }
 }
