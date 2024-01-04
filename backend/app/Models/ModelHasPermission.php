@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ModelHasPermission extends Model
 {
     use HasFactory;
+    protected $connection = 'mysql';
     protected $table = 'model_has_permissions';
     public $timestamps = false;
-    
     protected $primaryKey = 'model_id';
 
     protected $fillable = [
@@ -19,12 +19,12 @@ class ModelHasPermission extends Model
         'model_id',
     ];
 
-    
+
     public function getModel() {
-        return $this->hasOne('App\Models\User','id','model_id'); 
+        return $this->hasOne(User::class,'id','model_id');
     }
 
     public function getPermission() {
-        return $this->hasOne('App\Models\Permission','id','permission_id');
+        return $this->hasOne(Permission::class,'id','permission_id');
     }
 }

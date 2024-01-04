@@ -13,11 +13,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('register', 'register')->name('register')->middleware('guest');
         Route::get('login', 'showLoginForm')->name('showLoginForm')->middleware('guest');
         Route::post('login', 'login')->name('login')->middleware('guest');
-//        Route::post('logout', 'logout')->name('logout')->middleware(['backend','role:admin|manager']);
         Route::post('logout', 'logout')->name('logout')->middleware(['backend']);
     });
-    // Route::group(['prefix' => 'back', 'as'=>'backend.', 'middleware' => ['backend','role:admin|manager']], function (){
-     Route::group(['prefix' => 'admin', 'as'=>'backend.', 'name'=>'backend.', 'middleware' => ['backend']], function (){
+    Route::group(['prefix' => 'admin', 'as'=>'backend.', 'middleware' => ['backend','role:admin|manager']], function (){
+    //  Route::group(['prefix' => 'admin', 'as'=>'backend.', 'name'=>'backend.', 'middleware' => ['backend']], function (){
         Route::controller(BackendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });

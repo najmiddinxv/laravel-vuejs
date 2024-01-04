@@ -24,11 +24,11 @@ return new class extends Migration
             $table->tinyInteger('user_type')->default(2);
             $table->tinyInteger('status')->default(1);
             $table->string('avatar')->nullable();
-            $table->string('telegram_full_name')->nullable();
-            $table->string('telegram_phone_number',30)->nullable();
-            $table->string('telegram_chat_id')->nullable();
-            $table->string('telegram_username')->nullable();
             $table->string('password')->nullable();
+            // $table->string('telegram_full_name')->nullable();
+            // $table->string('telegram_phone_number',30)->nullable();
+            // $table->string('telegram_chat_id')->nullable();
+            // $table->string('telegram_username')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

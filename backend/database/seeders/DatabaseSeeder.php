@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         $this->call([
+            PermissionSeeder::class,
             // CategoriesSeeder::class,
             // PostSeeder::class,
 

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ModelHasRole extends Model
 {
     use HasFactory;
-    
+
+    protected $connection = 'mysql';
     protected $table = 'model_has_roles';
     public $timestamps = false;
-    
     protected $primaryKey = 'model_id';
 
     protected $fillable = [
@@ -20,13 +20,13 @@ class ModelHasRole extends Model
         'model_id',
     ];
 
-    
+
     public function getModel() {
-        return $this->hasOne('App\Models\User','id','model_id'); 
+        return $this->hasOne(User::class,'id','model_id');
     }
 
     public function getRole() {
-        return $this->hasOne('App\Models\Role','id','role_id');
+        return $this->hasOne(Role::class,'id','role_id');
     }
 
 
