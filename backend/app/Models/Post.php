@@ -84,4 +84,32 @@ class Post extends Model
         ];
     }
 
+
+
+    //     public $translatable = ['field_name'];
+    //     protected $appends = ['field_name_flat'];
+
+    //     // ...
+
+    //     public function getFieldNameFlatAttribute()
+    //     {
+    //         return json_encode($this->getTranslations('field_name'));
+    //     }
+
+    //     $index = $meilisearch->index('your_model_index');
+
+    // YourModel::chunk(200, function ($models) use ($index) {
+    //     $documents = [];
+
+    //     foreach ($models as $model) {
+    //         $documents[] = [
+    //             'id' => $model->id,
+    //             'field_name_flat' => $model->field_name_flat,
+    //             // ... other fields
+    //         ];
+    //     }
+
+    //     $index->addDocuments($documents);
+    // });
+
 }
