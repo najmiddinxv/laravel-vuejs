@@ -16,7 +16,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('logout', 'logout')->name('logout')->middleware(['backend']);
     });
     Route::group(['prefix' => 'admin', 'as'=>'backend.', 'middleware' => ['backend','role:admin|manager']], function (){
-    //  Route::group(['prefix' => 'admin', 'as'=>'backend.', 'name'=>'backend.', 'middleware' => ['backend']], function (){
         Route::controller(BackendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });
@@ -83,6 +82,53 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     // Route::get('/show/{id}',[ModelHasPermissionController::class, 'show'])->name('model-has-permission.show');
     // Route::delete('/destroy/permission/{permission_id}/model/{model_id}',[ModelHasPermissionController::class, 'destroy'])->name('model-has-permission.destroy');
     // });
+
+
+
+    // Route::group(['middleware' => ['can:publish articles']], function () {
+    //     //
+    // });
+
+    // for a specific guard: -> yani web uchun yoki api uchun maxus // api chiqaradigan route uchun api, browserdagi web uchun web
+    // Route::group(['middleware' => ['role:manager,api']], function () {
+    //     //
+    // });
+
+    // Route::group(['middleware' => ['permission:publish articles']], function () {
+    //     //
+    // });
+
+    // Route::group(['middleware' => ['role:manager','permission:publish articles']], function () {
+    //     //
+    // });
+
+    // Route::group(['middleware' => ['role_or_permission:publish articles']], function () {
+    //     //
+    // });
+
+
+    // Route::group(['middleware' => ['permission:publish articles|edit articles']], function () {
+    //     //
+    // });
+
+    // // for a specific guard
+    // Route::group(['middleware' => ['permission:publish articles|edit articles,api']], function () {
+    //     //
+    // });
+
+    // Route::group(['middleware' => ['role_or_permission:manager|edit articles']], function () {
+    //     //
+    // });
+
+    // public function __construct()
+    // {
+    //     $this->middleware(['role:manager','permission:publish articles|edit articles']);
+    // }
+
+    // public function __construct()
+    // {
+    //     $this->middleware(['role_or_permission:manager|edit articles']);
+    // }
 
 
 });

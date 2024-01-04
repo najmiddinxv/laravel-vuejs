@@ -48,11 +48,11 @@ class PermissionSeeder extends Seeder
                 'guard_name' =>'api'
             ],
             [
-                'name' =>'User',
+                'name' =>'user',
                 'guard_name' =>'web'
             ],
             [
-                'name' =>'User',
+                'name' =>'user',
                 'guard_name' =>'api'
             ],
 

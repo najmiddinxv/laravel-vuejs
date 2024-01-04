@@ -4,47 +4,59 @@
     <h3>@lang('lang.hello')</h3>
 
     <hr>
-        <p>role</p>
+        <h3>roles - Rollar</h3>
         {{-- @role('super-admin', 'admin')
             I am a super-admin!
         @else
             I am not a super-admin...
         @endrole --}}
         @role('admin')
-            <h1>men Admin</h1>
+            <p>men Admin</p>
         @else
-            <h1>Admin emasman</h1>
+            <p>Admin emasman</p>
         @endrole
 
         @role('manager')
-            <h1>men manager</h1>
+            <p>men manager</p>
         @else
-            <h1>manager emasman</h1>
+            <p>manager emasman</p>
         @endrole
 
         @role('user')
-            <h1>men user</h1>
+            <p>men user</p>
         @else
-            <h1>user emasman</h1>
+            <p>user emasman</p>
         @endrole
 
-        <p>permission</p>
+        <h3>permissions - ruxsatlar</h3>
         @can('delete')
-            <h1>delete</h1>
+            <p>delete qilaolaman</p>
         @else
             <h1>delete qilish imkoniyatim yoq</h1>
         @endcan
 
         @can('publish')
-            <h1>publish</h1>
+            <p>publish qilaolaman</p>
         @else
             <h1>publish qilish imkoniyatim yoq</h1>
         @endcan
 
         @can('view')
-            <h1>view</h1>
+            <p>view qilaolaman</p>
         @else
-            <h1>view qilish imkoniyatim yoq</h1>
+            <p>view qilish imkoniyatim yoq</p>
+        @endcan
+
+        @can('publish')
+            <p>publish qilaolaman</p>
+        @else
+            <p>publish qilish imkoniyatim yoq</p>
+        @endcan
+
+        @can('modify')
+            <p>modify qilaolaman</p>
+        @else
+            <p>modify qilish imkoniyatim yoq</p>
         @endcan
 
         {{-- @if(auth()->user()->can('edit articles') && $some_other_condition)
