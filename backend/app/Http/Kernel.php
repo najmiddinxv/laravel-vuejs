@@ -81,5 +81,6 @@ class Kernel extends HttpKernel
         //my middlewares
         'addRequestHeader' => \App\Http\Middleware\AddRequestHeader::class,
         'backend' => \App\Http\Middleware\BackendMiddleware::class,
+        'userProfile' => \App\Http\Middleware\UserProfileMiddleware::class,
     ];
 }

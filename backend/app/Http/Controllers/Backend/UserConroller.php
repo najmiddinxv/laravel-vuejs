@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\ModelHasPermission;
 use App\Models\Permission;
 use App\Models\Role;
@@ -51,29 +52,8 @@ class UserConroller extends Controller
 		]);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' =>  ['required', 'string','max:150'],
-            'user_email' => 'required|string|max:150|unique:users,email',
-            'password' => ['required', 'string', 'min:8','max:40', 'confirmed'],
-            'password_confirmation' => ['nullable', 'string', 'min:8','max:40', 'same:password'],
-            'user_type' =>  ['required'],
-            // 'permission' =>  "array",
-            // 'role' =>  "array",
-            // 'permission.*' =>  "array",
-            // 'role.*' =>  "array",
-        ]);
-
-        //    print_r($request->get('permission'));die;
-        // Array ( [0] => super admin )
-        //Array ( [0] => data-show )
-
-        if($validator->fails()){
-            return redirect()->route('user.create')->withErrors($validator)->withInput();
-        }
-
-        // htmlspecialchars( $request->input('user_email'), ENT_QUOTES),
 
         $model = User::create([
             'name' => $request->input('name'),
@@ -83,7 +63,7 @@ class UserConroller extends Controller
 
         ]);
 
-
+    }
     //     // pick a permission name
     //     // $permission_name = $request->get('permission');
     //     // // lookup all defined permissions, regardless of guard

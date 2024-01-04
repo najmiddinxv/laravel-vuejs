@@ -15,7 +15,7 @@ class BackendMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()){
-            if (auth()->user()->status === User::STATUS_BACKEND) {
+            if (auth()->user()->status === User::STATUS_ACTIVE && auth()->user()->user_type === User::USER_TYPE_BACKEND) {
                 return $next($request);
             }else{
                 Session::flush();

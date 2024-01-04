@@ -21,7 +21,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone_number',30)->unique()->nullable();
             $table->dateTime('phone_number_confirmed_at')->nullable();
-            $table->tinyInteger('status')->default(2);
+            $table->tinyInteger('user_type')->default(2);
+            $table->tinyInteger('status')->default(1);
             $table->string('avatar')->nullable();
             $table->string('telegram_full_name')->nullable();
             $table->string('telegram_phone_number',30)->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

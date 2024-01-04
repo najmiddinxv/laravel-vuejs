@@ -9,7 +9,7 @@
 
     <meta name="description" content="Deluck - Business Agency & Corporate Template">
     <meta name="keywords" content="website, blog, foo, bar">
-  
+
 
     <!-- Favicons -->
     <link href="{{asset('assets/backend/img/favicon.png')}}" rel="icon">
@@ -41,7 +41,6 @@
   <!-- Vendor JS Files -->
   <script src="{{asset('assets/backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/backend/vendor/php-email-form/validate.js')}}"></script>
-
   <!-- Template Main JS File -->
   <script src="{{asset('assets/backend/js/main.js')}}"></script>
   @yield('scripts')

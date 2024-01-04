@@ -32,17 +32,17 @@
                 @endif
 
                 @if(Session::has('error'))
-                    <p class="alert alert-danger">{{ Session('error') }}</p>
+                    <p class="alert alert-danger">{{ session('error') }}</p>
                 @endif
             </div>
 
-            <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('backend.auth.login') }}">
+            <form class="row g-3 needs-validation" method="POST" action="{{ route('backend.auth.login') }}">
                 @csrf
                 @method('POST')
                 <div class="col-12">
                 <label for="email" class="form-label">email</label>
                 <div class="input-group has-validation">
-                  <input type="text" name="email" class="form-control" id="email" required>
+                  <input type="email" name="email" class="form-control" id="email" required>
                   <div class="invalid-feedback">
                     @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>

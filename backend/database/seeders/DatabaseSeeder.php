@@ -14,17 +14,20 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::truncate();
         User::factory()->create([
-            'firs_name' => 'najmiddin bek',
-            'last_name' => 'najmiddin bek',
-            'middle_name' => 'najmiddin bek',
+            'first_name' => 'bek',
+            'last_name' => 'najmiddin',
+            'middle_name' => '',
             'username' => 'bekdevz',
+            'user_type' => 1,
+            'status' => 1,
             'email' => 'bekdevz@gmail.com',
             'email_verified_at' => now(),
             'password' => '01230123', // password
             'remember_token' => Str::random(10),
         ]);
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         $this->call([
             // CategoriesSeeder::class,

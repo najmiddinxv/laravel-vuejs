@@ -14,7 +14,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('login', 'login')->name('login');
             Route::post('logout', 'logout')->name('logout')->middleware('auth');
         });
-        Route::middleware('auth')->group(function() {
+        Route::middleware(['auth','userProfile'])->group(function() {
             Route::controller(UserProfileController::class)->group(function() {
                 Route::get('/', 'index')->name('index');
             });
