@@ -15,7 +15,7 @@ class Post extends Model
 {
     use HasFactory, Searchable;
     // use HasTranslations;
-    use TranslateMethods;
+    // use TranslateMethods;
 
     protected $fillable = [
         'category_id',
@@ -47,13 +47,14 @@ class Post extends Model
     // {
     //     return $this->getTranslatedAttribute($value);
     // }
-    protected function title(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string $value) => $this->getTranslatedAttribute($value),
-            // set: fn (string $value) => strtolower($value),
-        );
-    }
+
+    // protected function title(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn (string $value) => $this->getTranslatedAttribute($value),
+    //         // set: fn (string $value) => strtolower($value),
+    //     );
+    // }
 
     // public function getBodyAttribute($value)
     // {
@@ -66,8 +67,6 @@ class Post extends Model
     // https://spatie.be/docs/laravel-translatable/v6/introduction
     // bundan foydalanishimiz shart emas
     // public $translatable = ['title']; // bu blade uchun
-
-
 
 
     public function searchableAs(): string
@@ -84,32 +83,13 @@ class Post extends Model
         ];
     }
 
+    // public $translatable = ['title'];
 
+    // protected $appends = ['title_flat'];
 
-    //     public $translatable = ['field_name'];
-    //     protected $appends = ['field_name_flat'];
-
-    //     // ...
-
-    //     public function getFieldNameFlatAttribute()
-    //     {
-    //         return json_encode($this->getTranslations('field_name'));
-    //     }
-
-    //     $index = $meilisearch->index('your_model_index');
-
-    // YourModel::chunk(200, function ($models) use ($index) {
-    //     $documents = [];
-
-    //     foreach ($models as $model) {
-    //         $documents[] = [
-    //             'id' => $model->id,
-    //             'field_name_flat' => $model->field_name_flat,
-    //             // ... other fields
-    //         ];
-    //     }
-
-    //     $index->addDocuments($documents);
-    // });
+    // public function getTitlePostAttribute()
+    // {
+    //     return json_encode($this->title);
+    // }
 
 }
