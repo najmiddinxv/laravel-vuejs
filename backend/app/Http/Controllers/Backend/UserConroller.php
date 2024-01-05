@@ -81,11 +81,11 @@ class UserConroller extends Controller
             $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
 
 
-            $data['avatar'] = json_encode([
+            $data['avatar'] = [
                 'large' => $userAvatarLargeHashName,
                 'small' => $userAvatarMeduimHashName,
                 'medium' => $userAvatarSmallHashName,
-            ]);
+            ];
         }
 
         User::create($data);

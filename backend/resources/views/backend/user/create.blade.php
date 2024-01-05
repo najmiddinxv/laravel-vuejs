@@ -83,6 +83,8 @@
                         <div class="form-group">
                             <label for="userAvatar" class="col-form-label">user avatar</label>
                             <input type="file" class="form-control" name="userAvatar" id="userAvatar" accept=".jpg,.jpeg,.png">
+                            <img id="previewImage" src="#" alt="Preview Image" style="max-width: 100%; display: none;">
+
                             <div class="valid-feedback">
                             </div>
                         </div>
@@ -95,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">password</label>
-                            <input type="password" name="password" class="form-control" id="password" required>
+                            <input type="password" name="password" class="form-control" id="password" required >
                             <div class="valid-feedback">
                             </div>
                         </div>
@@ -119,4 +121,21 @@
 
     </form>
 
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function (e) {
+
+        $('#userAvatar').on('change',function(){
+            let reader = new FileReader();
+            reader.onload = (e) => {
+            $('#previewImage').attr('src', e.target.result);
+            $('#previewImage').css({'display':'block'});
+        }
+        reader.readAsDataURL(this.files[0]);
+
+    });
+
+    });
+</script>
 @endsection

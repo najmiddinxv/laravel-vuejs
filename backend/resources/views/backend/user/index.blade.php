@@ -49,6 +49,7 @@
                 <th>{{__('msg.Name')}}</th>
                 <th>username</th>
                 <th>Email</th>
+                <th>avatar</th>
                 <th>{{__('lang.Actions')}}</th>
             </tr>
             </thead>
@@ -59,6 +60,9 @@
                     <td>{{ $user->first_name }} {{ $user->last_name }} {{ $user->middle_name }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->email }}</td>
+
+                    <td>{{ $user->avatar}}</td>
+                    {{-- <td><img src="{{ $user->avatar}}" alt=""></td> --}}
                     <td>
                         <div style="text-align: center;">
 
