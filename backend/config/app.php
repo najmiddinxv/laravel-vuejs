@@ -166,6 +166,7 @@ return [
         MongoDB\Laravel\MongoDBServiceProvider::class,
         // Bekadmin\Contact\ContactServiceProvider::class,
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         App\Providers\ServicesProvider::class,
         App\Providers\RepositoriesProvider::class,
@@ -194,8 +195,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
-
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

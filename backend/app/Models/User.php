@@ -45,5 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'phone_number_confirmed_at' => 'datetime',
         'password' => 'hashed',
+        'avatar' => 'array',
     ];
 }

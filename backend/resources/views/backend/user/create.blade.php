@@ -2,7 +2,6 @@
 @section('title')
     {{ __('lang.create') }}
 @endsection
-
 @section('content')
     <div class="pagetitle">
         <h1>User</h1>
@@ -15,28 +14,63 @@
         </nav>
     </div>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
+    @if(session()->has('success'))
+        <p class="alert alert-success">{{ session('success') }}</p>
+    @endif
+    @if(session()->has('warning'))
+        <p class="alert alert-warning">{{ session('warning') }}</p>
+    @endif
+    @if(session()->has('error'))
+        <p class="alert alert-danger">{{ session('error') }}</p>
+    @endif
 
-    <form class="g-3 needs-validation" action="{{ route('backend.user.store') }}" method="POST" novalidate >
+    <form class="g-3 needs-validation" action="{{ route('backend.user.store') }}" method="POST" novalidate enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body" style="padding:20px">
-                        <label for="validationCustom01" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="validationCustom01" value="John" required>
+                      <div class="form-group">
+                        <label for="last_name" class="form-label">Last name</label>
+                        <input type="text" name="last_name" class="form-control" id="last_name" required>
                         <div class="valid-feedback">
-                            Looks good!
                         </div>
-
-                        <div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="validationCustom05" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid zip.
-                            </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="first_name" class="form-label">First name</label>
+                        <input type="text" name="first_name" class="form-control" id="first_name" required>
+                        <div class="valid-feedback">
                         </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle_name" class="form-label">Middle name</label>
+                        <input type="text" name="middle_name" class="form-control" id="middle_name" required>
+                        <div class="valid-feedback">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="username" class="form-label">username</label>
+                        <input type="text" name="username" class="form-control" id="username" required>
+                        <div class="valid-feedback">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="email" class="form-label">Email name</label>
+                        <input type="email" name="email" class="form-control" id="email" required>
+                        <div class="valid-feedback">
+                        </div>
+                      </div>
 
                     </div>
 
@@ -46,10 +80,30 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body" style="padding:20px">
-                        <label for="validationCustom02" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="validationCustom02" value="Doe" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                        <div class="form-group">
+                            <label for="userAvatar" class="col-form-label">user avatar</label>
+                            <input type="file" class="form-control" name="userAvatar" id="userAvatar" accept=".jpg,.jpeg,.png">
+                            <div class="valid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number" class="form-label">phone number</label>
+                            <input type="tel" name="phone_number" class="form-control" id="phone_number" required>
+                            {{-- <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required> --}}
+                            <div class="valid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">password</label>
+                            <input type="password" name="password" class="form-control" id="password" required>
+                            <div class="valid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">password_confirmation</label>
+                            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" required>
+                            <div class="valid-feedback">
+                            </div>
                         </div>
                     </div>
                 </div>

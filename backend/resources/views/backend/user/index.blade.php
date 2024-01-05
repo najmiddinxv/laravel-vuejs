@@ -47,9 +47,8 @@
             <tr>
                 <th>#</th>
                 <th>{{__('msg.Name')}}</th>
+                <th>username</th>
                 <th>Email</th>
-                <th>{{__('lang.Created date')}}</th>
-                <th>{{__('lang.Updated date')}}</th>
                 <th>{{__('lang.Actions')}}</th>
             </tr>
             </thead>
@@ -57,10 +56,9 @@
             @foreach($users as $key => $user)
                 <tr>
                     <th scope="row">{{ $users->firstItem()+$key  }}</th>
-                    <td>{{ $user->firs_name }}</td>
+                    <td>{{ $user->first_name }} {{ $user->last_name }} {{ $user->middle_name }}</td>
+                    <td>{{ $user->username }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->created_at }}</td>
-                    <td>{{ $user->updated_at }}</td>
                     <td>
                         <div style="text-align: center;">
 

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Models\ModelHasPermission;
-use App\Models\Permission;
-use App\Models\Role;
+use App\Helpers\ImageResize;
 use App\Models\User;
-use App\Models\UserType;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash as FacadesHash;
-use Spatie\Permission\PermissionRegistrar;
+use Intervention\Image\Facades\Image;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class UserConroller extends Controller
 {
@@ -55,15 +52,61 @@ class UserConroller extends Controller
     public function store(UserRequest $request)
     {
 
-        $model = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('user_email'),
-            'password' => FacadesHash::make($request->input('password')),
-            'user_type' => $request->get('user_type'),
+        $data = $request->validated();
 
-        ]);
+        if ($userAvatar = $request->file('userAvatar')) {
+
+            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
+            // $userAvatarPath = '/uploads/users/'.Str::random(10);
+            if (!Storage::exists($userAvatarPath)) {
+                Storage::makeDirectory($userAvatarPath, 0755, true, true);
+                // File::makeDirectory($directory, 0755, true, true);
+            }
+
+            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
+            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
+            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
+            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
+
+            // $path = Storage::putFileAs(
+            //     $userAvatarPath,
+            //     $userAvatar,
+            //     $userAvatarHashName
+            // );
+            // $data['avatar'] = "/{$path}";
+
+            $imageR = new ImageResize($userAvatar->getRealPath());
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+
+
+            $data['avatar'] = json_encode([
+                'large' => $userAvatarLargeHashName,
+                'small' => $userAvatarMeduimHashName,
+                'medium' => $userAvatarSmallHashName,
+            ]);
+        }
+
+        User::create($data);
+
+        return redirect()->back()->with('success','successfully created');
 
     }
+
+
+    public function destroy(User $user)
+    {
+        if($user->id == 1){
+            return back()->with('warning',"super adminni o'chiraolmaysiz");
+        }
+        $user->delete();
+        return redirect()->back()->with('success','user muvaffaqiyatli o\'chirildi');
+    }
+
+
+
+
     //     // pick a permission name
     //     // $permission_name = $request->get('permission');
     //     // // lookup all defined permissions, regardless of guard
@@ -195,14 +238,26 @@ class UserConroller extends Controller
 
     // }
 
-    public function destroy(User $user)
-    {
-        if($user->id == 1){
-            return back()->with('warning',"super adminni o'chiraolmaysiz");
-        }
-        $user->delete();
-        return redirect()->back()->with('success','user muvaffaqiyatli o\'chirildi');
-    }
+
+
+    // if (!empty($request->image)) {
+    //     Storage::delete('forum/' . $forum->id . '/' . $forum->image);
+    //     $file = $request->image;
+    //     $fileName = sha1($file->getClientOriginalName() . time()) . '.' . $file->getClientOriginalExtension();
+    //     $file->storeAs('forum/' . $forum->id, $fileName);
+
+    //     $imageR = new ImageResize(Storage::path('forum/' . $forum->id . '/' . $fileName));
+    //     $imageR->resizeToBestFit(config('params.large_image.width'), config('params.large_image.height'))
+    //     ->save(Storage::path("forum/{$forum->id}/l_{$fileName}"));
+    //     $imageR->resizeToBestFit(config('params.medium_image.width'), config('params.medium_image.height'))
+    //     ->save(Storage::path("forum/{$forum->id}/m_{$fileName}"));
+    //     $imageR->resizeToBestFit(config('params.small_image.width'), config('params.small_image.height'))
+    //     ->save(Storage::path("forum/{$forum->id}/s_{$fileName}"));
+    //     Storage::delete('forum/' . $forum->id . '/' . $fileName);
+
+    //     $forum->image = $fileName;
+    //     $forum->save();
+    // }
 }
 
 

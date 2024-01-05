@@ -51,7 +51,7 @@ class BaseFormRequest  extends FormRequest
             ]);
         }
 
-        $response = back()->with('error', __('locale.ops'))->withErrors($validator)->withInput();
+        $response = back()->with('error', __('lang.ops'))->withErrors($validator)->withInput();
 
         throw (new ValidationException($validator, $response))
             ->errorBag($this->errorBag)
