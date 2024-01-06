@@ -10,7 +10,6 @@ use Illuminate\Database\{Eloquent\Builder as EloquentBuilder, Query\Builder as Q
  * between[amount]=200to400&between[price]=200&between[price]=to400
  */
 EloquentBuilder::macro('fromTo', $function = function ($column, $from = null, $to = null) {
-    $column = $this->tableDotColumn($column);
     $this->when($from, fn($q) => $q->where($column, '>=', $from))
         ->when($to, fn($q) => $q->where($column, '<=', $to));
 
@@ -18,4 +17,3 @@ EloquentBuilder::macro('fromTo', $function = function ($column, $from = null, $t
 });
 
 QueryBuilder::macro('fromTo', $function);
-
