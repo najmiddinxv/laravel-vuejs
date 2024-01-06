@@ -209,7 +209,7 @@ return [
         //'el'          => ['name' => 'Greek',                  'script' => 'Grek', 'native' => 'Ελληνικά', 'regional' => 'el_GR'],
         // 'uz'          => ['name' => 'Uzbek (Cyrillic)',       'script' => 'Cyrl', 'native' => 'Ўзбек', 'regional' => 'uz_UZ'],
         'uz'          => ['name' => 'Uzbek (Latin)',          'script' => 'Latn', 'native' => 'oʼzbekcha', 'regional' => 'uz_UZ'],
-        'oz'          => ['name' => 'Uzbek (Cyrillic)',       'script' => 'Cyrl', 'native' => 'Ўзбек', 'regional' => 'uz_UZ'],
+        // 'oz'          => ['name' => 'Uzbek (Cyrillic)',       'script' => 'Cyrl', 'native' => 'Ўзбек', 'regional' => 'uz_UZ'],
         'ru'          => ['name' => 'Russian',                'script' => 'Cyrl', 'native' => 'русский', 'regional' => 'ru_RU'],
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
         //'az-Cyrl'     => ['name' => 'Azerbaijani (Cyrillic)', 'script' => 'Cyrl', 'native' => 'Азәрбајҹан', 'regional' => 'uz_UZ'],

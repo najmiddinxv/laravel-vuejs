@@ -20,27 +20,8 @@
 <div class="card">
     <div class="card-body" style="padding:20px">
 
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-error" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
-        {{-- @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif --}}
 
+        <x-alert-message-component></x-alert-message-component>
 
         <table class="table table-hover table-bordered">
             <thead>
@@ -61,11 +42,11 @@
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->email }}</td>
 
-                    <td>{{ $user->avatar}}</td>
-                    {{-- <td><img src="{{ $user->avatar}}" alt=""></td> --}}
+                    {{-- @dd($user->avatar['medium']) --}}
+                    {{-- <td>{{ $user->avatar['large'] ?? '-' }}</td> --}}
+                    <td style="text-align: center"><a href="{{ Storage::disk('public')->url($user->avatar['large'] ?? '-') }}"><img src="{{ Storage::disk('public')->url($user->avatar['medium'] ?? '-') }}" alt=""></a></td>
                     <td>
                         <div style="text-align: center;">
-
                             <a href="{{ route('backend.user.show',['user'=>$user->id]) }}" class="btn btn-primary" title="show">
                                 <i class="bx bx-show"></i>
                             </a>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->dateTime('phone_number_confirmed_at')->nullable();
             $table->tinyInteger('user_type')->default(2);
             $table->tinyInteger('status')->default(1);
-            $table->string('avatar')->nullable();
+            $table->json('avatar')->nullable();
             $table->string('password')->nullable();
             // $table->string('telegram_full_name')->nullable();
             // $table->string('telegram_phone_number',30)->nullable();

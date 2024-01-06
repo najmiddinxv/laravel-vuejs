@@ -14,25 +14,7 @@
         </nav>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    @if(session()->has('success'))
-        <p class="alert alert-success">{{ session('success') }}</p>
-    @endif
-    @if(session()->has('warning'))
-        <p class="alert alert-warning">{{ session('warning') }}</p>
-    @endif
-    @if(session()->has('error'))
-        <p class="alert alert-danger">{{ session('error') }}</p>
-    @endif
+    <x-alert-message-component></x-alert-message-component>
 
     <form class="g-3 needs-validation" action="{{ route('backend.user.store') }}" method="POST" novalidate enctype="multipart/form-data">
         @csrf
@@ -43,31 +25,31 @@
                     <div class="card-body" style="padding:20px">
                       <div class="form-group">
                         <label for="last_name" class="form-label">Last name</label>
-                        <input type="text" name="last_name" class="form-control" id="last_name" required>
+                        <input type="text" name="last_name" class="form-control" id="last_name" value="{{ old('last_name') }}" required>
                         <div class="valid-feedback">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="first_name" class="form-label">First name</label>
-                        <input type="text" name="first_name" class="form-control" id="first_name" required>
+                        <input type="text" name="first_name" class="form-control" id="first_name" value="{{ old('first_name') }}" required>
                         <div class="valid-feedback">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle_name" class="form-label">Middle name</label>
-                        <input type="text" name="middle_name" class="form-control" id="middle_name" required>
+                        <input type="text" name="middle_name" class="form-control" id="middle_name" value="{{ old('middle_name') }}" required>
                         <div class="valid-feedback">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="username" class="form-label">username</label>
-                        <input type="text" name="username" class="form-control" id="username" required>
+                        <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}" required>
                         <div class="valid-feedback">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="email" class="form-label">Email name</label>
-                        <input type="email" name="email" class="form-control" id="email" required>
+                        <input type="email" name="email" class="form-control" id="email"  value="{{ old('email') }}" required>
                         <div class="valid-feedback">
                         </div>
                       </div>
@@ -90,7 +72,7 @@
                         </div>
                         <div class="form-group">
                             <label for="phone_number" class="form-label">phone number</label>
-                            <input type="tel" name="phone_number" class="form-control" id="phone_number" required>
+                            <input type="tel" name="phone_number" class="form-control" id="phone_number" value="{{ old('phone_number') }}" required>
                             {{-- <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required> --}}
                             <div class="valid-feedback">
                             </div>
@@ -115,7 +97,7 @@
 
         <div class="row">
             <div class="col-12">
-                <button class="btn btn-success" type="submit">Submit form</button>
+                <button class="btn btn-success" type="submit">{{ __('lang.save') }}</button>
             </div>
         </div>
 

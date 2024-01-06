@@ -56,13 +56,17 @@ class UserRequest extends BaseFormRequest
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignore($this->user->id),
+            ],
             'email' => 'nullable|string|max:255',
             'phone_number' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'password' => 'required|min:8|max:50',
-            'password_confirmation' => 'required|same:password',
+            'userAvatar' => 'nullable|image|mimes:jpeg,png,jpg|max:8192',
+            'password' => ['nullable', 'string', 'min:8','max:40', 'confirmed'],
+            'password_confirmation' => ['nullable', 'string', 'min:8','max:40', 'same:password'],
         ];
     }
 }

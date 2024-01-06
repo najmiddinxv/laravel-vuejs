@@ -83,17 +83,71 @@ class UserConroller extends Controller
 
             $data['avatar'] = [
                 'large' => $userAvatarLargeHashName,
-                'small' => $userAvatarMeduimHashName,
                 'medium' => $userAvatarSmallHashName,
+                'small' => $userAvatarMeduimHashName,
+                // 'large' => '/storage'.$userAvatarLargeHashName,
+                // 'medium' => '/storage'.$userAvatarSmallHashName,
+                // 'small' => '/storage'.$userAvatarMeduimHashName,
             ];
         }
 
         User::create($data);
 
-        return redirect()->back()->with('success','successfully created');
+        return redirect()->route('backend.user.index')->with('success','successfully created');
 
     }
 
+    public function edit(User $user)
+    {
+
+        return view('backend.user.edit')->with([
+            'user' => $user
+		]);
+    }
+
+    public function update(UserRequest $request, User $user)
+    {
+
+        $data = $request->validated();
+        if ($userAvatar = $request->file('userAvatar')) {
+
+            //papaka yaratilayapti
+            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
+            if (!Storage::exists($userAvatarPath)) {
+                Storage::makeDirectory($userAvatarPath, 0755, true, true);
+            }
+
+            //eski fayllar o'chirilayapti
+            Storage::delete($user->avatar['large']);
+            Storage::delete($user->avatar['medium']);
+            Storage::delete($user->avatar['small']);
+
+            //fayl nomi va yo'li generatsiya qilinayapti
+            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
+            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
+            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
+            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
+
+            //rasm kesilib yuklanayapti
+            $imageR = new ImageResize($userAvatar->getRealPath());
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+
+            //nomlari bazaga saqlanayapti
+            $data['avatar'] = [
+                'large' =>  $userAvatarLargeHashName,
+                'medium' => $userAvatarSmallHashName,
+                'small' =>  $userAvatarMeduimHashName,
+            ];
+
+        }
+
+        $user->update($data);
+
+        return redirect()->route('backend.user.index')->with('success','successfully created');
+
+    }
 
     public function destroy(User $user)
     {
