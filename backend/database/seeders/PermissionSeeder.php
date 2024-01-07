@@ -18,13 +18,15 @@ class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        Role::truncate(); //rollar -> admin,manager...
-        Permission::truncate(); //ruxsatlar ->delete,publish,view...
 
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         RoleHasPermission::truncate();//rollarga biriktirilgan ruxsatlar ->manager faqat view qilaoladi,admin->hammasini qilaoladi
-
         ModelHasPermission::truncate();//(model)userga berilgan ruxsatlar id=1 user -> delete qilaoladi
         ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
+        Permission::truncate(); //ruxsatlar ->delete,publish,view...
+        Role::truncate(); //rollar -> admin,manager...
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $roles = [
             [
