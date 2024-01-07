@@ -29,6 +29,16 @@ class Post extends Model
     ];
 
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function category():BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');

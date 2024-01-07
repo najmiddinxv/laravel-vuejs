@@ -31,6 +31,26 @@ class NewsController extends Controller
 
         // $article->save();
 
+
+        //yokida
+        // $article_data = [
+        //     'en' => [
+        //         'title'       => $request->input('en_title'),
+        //         'full_text' => $request->input('en_full_text')
+        //     ],
+        //     'es' => [
+        //         'title'       => $request->input('es_title'),
+        //         'full_text' => $request->input('es_full_text')
+        //     ],
+        //  ];
+
+        //  // Now just pass this array to regular Eloquent function and Voila!
+        //  News::create($article_data);
+
+
+
+
+
         // $article->getTranslation('fr')->text;
         // yoki
         // app()->setLocale('fr');
