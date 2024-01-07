@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
+            $table->string('key');
+            $table->jsonb('value');
             $table->timestamps();
         });
     }

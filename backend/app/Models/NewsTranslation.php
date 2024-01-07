@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class NewsTranslation extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category_id',
-        'created_by',
-        'status',
-        'slider',
-        'view_count',
-    ];
+    public $timestamps = false;
 
-    public $translatedAttributes = [
+    protected $fillable = [
+        'news_id',
+        'locale',
         'title',
         'slug',
         'description',
         'body',
         'image',
     ];
-
-    
 }

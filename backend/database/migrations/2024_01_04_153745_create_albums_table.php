@@ -10,22 +10,12 @@ return new class extends Migration
     {
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->nullable();
-            $table->string('slug')->nullable();
-            $table->text('description')->nullable();
-            $table->json('image')->nullable();
+            $table->jsonb('name');
+            $table->jsonb('slug');
+            $table->jsonb('description')->nullable();
+            $table->jsonb('image')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-        });
-
-        Schema::create('albums_translations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('album_id')->constrained()->onDelete('cascade');
-            $table->string('name', 255);
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->string('locale')->index();
-            $table->unique(['id', 'locale']);
         });
     }
 

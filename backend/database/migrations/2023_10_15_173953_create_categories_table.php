@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('parent_id')->nullable();
             $table->string('category_type')->nullable();;
-            $table->string('name');
+            $table->jsonb('name');
             $table->string('icon')->nullable();
             $table->string('image')->nullable();
             $table->integer('order')->nullable();;

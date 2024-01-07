@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->integer('parent_id')->nullable();
-            $table->string('name');
-            $table->string('url');
+            $table->jsonb('name');
+            $table->jsonb('url');
             $table->integer('position');
             $table->integer('menu_order')->nullable();
             $table->timestamps();

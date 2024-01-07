@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->string('title');
-            $table->string('slug')->nullable();
-            $table->string('description')->nullable();
-            $table->text('body')->nullable();
-            $table->string('image')->nullable();
+            $table->foreignId('category_id')->constrained();
+            $table->jsonb('title');
+            $table->jsonb('slug');
+            $table->jsonb('description')->nullable();
+            $table->jsonb('body')->nullable();
+            $table->jsonb('image')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->tinyInteger('status')->nullable();
+            $table->boolean('slider')->default(0);
             $table->integer('view_count')->default(0);
-            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
 
 
-        
+
     }
 
     /**

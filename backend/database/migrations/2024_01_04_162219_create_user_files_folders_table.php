@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_file_folders', function (Blueprint $table) {
+        Schema::create('user_files_folders', function (Blueprint $table) {
             $table->id();
+            $table->integer('parent_id')->nullable();
+            $table->string('name');
+            $table->string('url');
+            $table->integer('position_order')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_file_folders');
+        Schema::dropIfExists('user_files_folders');
     }
 };

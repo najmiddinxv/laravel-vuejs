@@ -20,7 +20,22 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        //
+        // $article = new News();
+        // $article->online = true;
+        // $article->save();
+
+        // foreach (['en', 'nl', 'fr', 'de'] as $locale) {
+        //     $article->translateOrNew($locale)->name = "Title {$locale}";
+        //     $article->translateOrNew($locale)->text = "Text {$locale}";
+        // }
+
+        // $article->save();
+
+        // $article->getTranslation('fr')->text;
+        // yoki
+        // app()->setLocale('fr');
+        // $article->text;
+
     }
 
     public function show(News $news)
@@ -37,7 +52,7 @@ class NewsController extends Controller
     {
         //
     }
-    
+
     public function destroy(News $news)
     {
         //

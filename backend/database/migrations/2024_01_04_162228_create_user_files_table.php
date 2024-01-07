@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_files', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_files_folder_id')->nullable('user_files_folders');
+            $table->string('name')->nullable();
+            $table->string('file_hash_name');
+            $table->bigInteger('size')->nullable();
+            $table->string('file_type')->nullable();
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }

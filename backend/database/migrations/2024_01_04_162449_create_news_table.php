@@ -13,7 +13,24 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id');
+            $table->integer('created_by')->nullable();
+            $table->tinyInteger('status');
+            $table->boolean('slider')->default(0);
+            $table->integer('view_count')->default(0);
             $table->timestamps();
+        });
+        Schema::create('news_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('news_id')->constrained()->onDelete('cascade');
+            $table->string('locale')->index();
+            $table->string('title');
+            $table->string('slug');
+            $table->string('description',500)->nullable();
+            $table->text('body')->nullable();
+            $table->string('image')->nullable();
+
+            $table->unique(['news_id','locale']);
         });
     }
 
@@ -23,5 +40,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('news');
+        Schema::dropIfExists('news_translations');
     }
 };

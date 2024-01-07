@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->string('tagsable_type')->nullable();
+            $table->jsonb('name');
             $table->timestamps();
         });
     }
