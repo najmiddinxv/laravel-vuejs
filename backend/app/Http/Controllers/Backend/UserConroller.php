@@ -54,9 +54,32 @@ class UserConroller extends Controller
 
         $data = $request->validated();
 
-        // if ($request->hasFile('avatar')) { 
+        // https://laraveldaily.com/post/laravel-file-uploads-save-filename-database-folder-url
+        //  if ($request->hasFile('avatar')) { 
         //     $avatar = $request->file('avatar')->store(options: 'avatars');
         // } 
+ 
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'avatar' => $avatar ?? null,  //"avatars/OkWAukq8LBMBO7LXvaP7TS9jE7mT4Rbu3BYlbvCD.jpg" 
+        // // ]);
+        // <img src="{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
+        // <img src="{{ Storage::disk('s3')->temporaryUrl(Auth::user()->avatar, now()->addMinutes(5)) }}" alt="{{ Auth::user()->name }}" />
+        // config/filesystems.php:
+        //        'disks' => 
+        //     // ...
+        //     'avatars' => [
+        //         'driver' => 'local',
+        //         'root' => storage_path('app/public/avatars'),
+        //         'url' => env('APP_URL').'/storage/avatars',
+        //         'visibility' => 'public',
+        //         'throw' => false,
+        //     ],
+        // ],
+
+        
         if ($userAvatar = $request->file('userAvatar')) {
 
             $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
