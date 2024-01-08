@@ -54,6 +54,9 @@ class UserConroller extends Controller
 
         $data = $request->validated();
 
+        // if ($request->hasFile('avatar')) { 
+        //     $avatar = $request->file('avatar')->store(options: 'avatars');
+        // } 
         if ($userAvatar = $request->file('userAvatar')) {
 
             $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
