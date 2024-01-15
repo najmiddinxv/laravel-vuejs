@@ -68,6 +68,14 @@ class PermissionSeeder extends Seeder
                 'guard_name' =>'api'
             ],
             [
+                'name' =>'read',
+                'guard_name' =>'web'
+            ],
+            [
+                'name' =>'read',
+                'guard_name' =>'api'
+            ],
+            [
                 'name' =>'update',
                 'guard_name' =>'web'
             ],
@@ -84,27 +92,11 @@ class PermissionSeeder extends Seeder
                 'guard_name' =>'api'
             ],
             [
-                'name' =>'modify',
-                'guard_name' =>'web'
-            ],
-            [
-                'name' =>'modify',
-                'guard_name' =>'api'
-            ],
-            [
                 'name' =>'publish',
                 'guard_name' =>'web'
             ],
             [
                 'name' =>'publish',
-                'guard_name' =>'api'
-            ],
-            [
-                'name' =>'view',
-                'guard_name' =>'web'
-            ],
-            [
-                'name' =>'view',
                 'guard_name' =>'api'
             ],
 
