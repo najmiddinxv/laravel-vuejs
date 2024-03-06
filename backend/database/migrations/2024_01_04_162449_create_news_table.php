@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('no action');
             $table->integer('created_by')->nullable();
             $table->tinyInteger('status');
             $table->boolean('slider')->default(0);
@@ -22,7 +22,7 @@ return new class extends Migration
         });
         Schema::create('news_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('news_id')->constrained()->onDelete('cascade');
+            $table->foreignId('news_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');
             $table->string('slug');

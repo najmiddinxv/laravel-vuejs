@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_files', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_files_folder_id')->nullable('user_files_folders');
+            $table->foreignId('user_files_folder_id')->nullable()->constrained('user_files_folders')->onDelete('no action');
             $table->string('name')->nullable();
             $table->string('file_hash_name');
             $table->bigInteger('size')->nullable();

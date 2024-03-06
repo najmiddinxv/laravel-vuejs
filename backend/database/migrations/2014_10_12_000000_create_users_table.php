@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('last_name')->nullable();//familya
             $table->string('first_name')->nullable();//ism
             $table->string('middle_name')->nullable();//sharif
-            $table->string('username')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone_number',30)->unique()->nullable();

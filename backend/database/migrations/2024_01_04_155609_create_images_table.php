@@ -18,8 +18,7 @@ return new class extends Migration
                     table:'albums',
                     column:'id',
                     indexName:'images_album_id'
-                )->onDelete('cascade')
-                ->onUpdate('cascade');
+                )->onUpdate('no action');
 
             // $table->foreignId('category_id')->constrained(
             //     table: 'categories', indexName: 'posts_category_id'
@@ -30,7 +29,8 @@ return new class extends Migration
             // - restrict qilsangiz authorni o'chirib bo'lmaydi qachonki unga tegishli book larni o'chirmagunizcha.
             // - set null qilsangiz author_id o'rniga null yozib qo'yadi author o'chirilganda.
             // - cascade bo'lsa author o'chirilganda unga tegishli book lar ham o'chib ketadi.
-
+            // - no action qilsangiz author_id o'zgarmay o'z o'rnida qoladi author o'chirilganda.
+            // default restirict oladi
 
             $table->jsonb('name');
             $table->jsonb('slug');

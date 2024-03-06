@@ -2,15 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\categories;
-use App\Models\Category;
 use App\Models\ModelHasPermission;
 use App\Models\ModelHasRole;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleHasPermission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,15 +14,15 @@ class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
-
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::statement('SET CONSTRAINTS ALL DEFERRED;');//postgresql
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0;'); //mysql
         RoleHasPermission::truncate();//rollarga biriktirilgan ruxsatlar ->manager faqat view qilaoladi,admin->hammasini qilaoladi
         ModelHasPermission::truncate();//(model)userga berilgan ruxsatlar id=1 user -> delete qilaoladi
         ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
         Permission::truncate(); //ruxsatlar ->delete,publish,view...
         Role::truncate(); //rollar -> admin,manager...
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1;'); //mysql
+        DB::statement('SET CONSTRAINTS ALL IMMEDIATE;');//postgresql
 
         $roles = [
             [

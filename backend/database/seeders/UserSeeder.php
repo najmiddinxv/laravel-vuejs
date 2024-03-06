@@ -18,10 +18,9 @@ class UserSeeder extends Seeder
 
         User::truncate();
         User::factory()->create([
-            'first_name' => 'bek',
+            'first_name' => 'najmiddin',
             'last_name' => 'najmiddin',
-            'middle_name' => '',
-            'username' => 'bekdevz',
+            'middle_name' => 'najmiddin',
             'user_type' => 1,
             'status' => 1,
             'email' => 'bekdevz@gmail.com',
