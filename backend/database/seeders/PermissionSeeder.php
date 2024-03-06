@@ -16,11 +16,16 @@ class PermissionSeeder extends Seeder
     {
         DB::statement('SET CONSTRAINTS ALL DEFERRED;');//postgresql
         // DB::statement('SET FOREIGN_KEY_CHECKS=0;'); //mysql
-        RoleHasPermission::truncate();//rollarga biriktirilgan ruxsatlar ->manager faqat view qilaoladi,admin->hammasini qilaoladi
-        ModelHasPermission::truncate();//(model)userga berilgan ruxsatlar id=1 user -> delete qilaoladi
-        ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
-        Permission::truncate(); //ruxsatlar ->delete,publish,view...
-        Role::truncate(); //rollar -> admin,manager...
+        // RoleHasPermission::truncate();//rollarga biriktirilgan ruxsatlar ->manager faqat view qilaoladi,admin->hammasini qilaoladi
+        // ModelHasPermission::truncate();//(model)userga berilgan ruxsatlar id=1 user -> delete qilaoladi
+        // ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
+        // Permission::truncate(); //ruxsatlar ->delete,publish,view...
+        // Role::truncate(); //rollar -> admin,manager...
+        DB::table('role_has_permissions')->delete();
+        DB::table('model_has_permissions')->delete();
+        DB::table('model_has_roles')->delete();
+        DB::table('permissions')->delete();
+        DB::table('roles')->delete();
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;'); //mysql
         DB::statement('SET CONSTRAINTS ALL IMMEDIATE;');//postgresql
 
