@@ -11,6 +11,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Services\Contracts\UserServiceContract;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
@@ -19,14 +20,7 @@ use Spatie\Permission\Models\Role as SpatieModelsRole;
 class UserConroller extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:data-all|data-create|data-edit|data-show|data-delete', ['only' => ['index']]);
-    //     $this->middleware('permission:data-create|data-all', ['only' => ['create','store']]);
-    //     $this->middleware('permission:data-show|data-all', ['only' => ['show']]);
-    //     $this->middleware('permission:data-edit|data-all', ['only' => ['edit','update']]);
-    //     $this->middleware('permission:data-delete|data-all', ['only' => ['destroy']]);
-    // }
+    public function __construct(private UserServiceContract $userService) {}
 
     public function index()
     {
