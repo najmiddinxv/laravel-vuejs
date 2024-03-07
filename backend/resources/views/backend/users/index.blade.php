@@ -13,7 +13,7 @@
         <li class="breadcrumb-item active">User</li>
       </ol>
       <div>
-        <a href="{{ route('backend.user.create') }}" class="btn btn-success">create</a>
+        <a href="{{ route('backend.users.create') }}" class="btn btn-success">create</a>
       </div>
     </nav>
 </div>
@@ -44,16 +44,20 @@
 
                     {{-- @dd($user->avatar['medium']) --}}
                     {{-- <td>{{ $user->avatar['large'] ?? '-' }}</td> --}}
-                    <td style="text-align: center"><a href="{{ Storage::disk('public')->url($user->avatar['large'] ?? '-') }}"><img src="{{ Storage::disk('public')->url($user->avatar['medium'] ?? '-') }}" alt=""></a></td>
+                    <td style="text-align: center">
+                        <a href="{{ Storage::disk('public')->url($user->avatar['large'] ?? '-') }}">
+                            <img src="{{ Storage::disk('public')->url($user->avatar['medium'] ?? '-') }}" alt="">
+                        </a>
+                    </td>
                     <td>
                         <div style="text-align: center;">
-                            <a href="{{ route('backend.user.show',['user'=>$user->id]) }}" class="btn btn-primary" title="show">
+                            <a href="{{ route('backend.users.show',['user'=>$user->id]) }}" class="btn btn-primary" title="show">
                                 <i class="bx bx-show"></i>
                             </a>
-                            <a href="{{ route('backend.user.edit',['user'=>$user->id]) }}" class="btn btn-primary" title="update">
+                            <a href="{{ route('backend.users.edit',['user'=>$user->id]) }}" class="btn btn-primary" title="update">
                                 <i class="bx bx-pencil"></i>
                             </a>
-                            <form style="display: inline-block;" action="{{ route('backend.user.destroy',['user'=>$user->id]) }}" method="POST">
+                            <form style="display: inline-block;" action="{{ route('backend.users.destroy',['user'=>$user->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="delete-data-item btn btn-danger" title="delete">

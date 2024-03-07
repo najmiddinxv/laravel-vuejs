@@ -16,7 +16,7 @@ class UserRequest extends BaseFormRequest
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
+            // 'username' => 'required|string|max:255|unique:users',
             'email' => 'nullable|string|max:255',
             'phone_number' => 'required|string|max:255',
             'userAvatar' => 'nullable|image|mimes:jpeg,png,jpg|max:8192',
@@ -56,17 +56,20 @@ class UserRequest extends BaseFormRequest
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
-            'username' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('users')->ignore($this->user->id),
-            ],
+            // 'username' => [
+            //     'required',
+            //     'string',
+            //     'max:255',
+            //     Rule::unique('users')->ignore($this->user->id),
+            // ],
             'email' => 'nullable|string|max:255',
-            'phone_number' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:255',
             'userAvatar' => 'nullable|image|mimes:jpeg,png,jpg|max:8192',
             'password' => ['nullable', 'string', 'min:8','max:40', 'confirmed'],
             'password_confirmation' => ['nullable', 'string', 'min:8','max:40', 'same:password'],
+
+            'permission_ids' => 'nullable|array',
+            'role_ids' => 'nullable|array',
         ];
     }
 }

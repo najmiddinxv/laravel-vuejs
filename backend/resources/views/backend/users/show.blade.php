@@ -10,7 +10,7 @@
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('backend.user.index') }}">Users</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('backend.users.index') }}">Users</a></li>
         <li class="breadcrumb-item active">{{ $user->username }}</li>
       </ol>
     </nav>

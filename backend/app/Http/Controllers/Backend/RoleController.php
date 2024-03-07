@@ -5,91 +5,66 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use App\components\ImageResize;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use File;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Permission as SpatieModelsPermission;
+use Spatie\Permission\Models\Role as SpatieModelsRole;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:data-all|data-create|data-edit|data-show|data-delete', ['only' => ['index']]);
-        $this->middleware('permission:data-create|data-all', ['only' => ['create','store']]);
-        $this->middleware('permission:data-show|data-all', ['only' => ['show']]);
-        $this->middleware('permission:data-edit|data-all', ['only' => ['edit','update']]);
-        $this->middleware('permission:data-delete|data-all', ['only' => ['destroy']]);
-        
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:data-all|data-create|data-edit|data-show|data-delete', ['only' => ['index']]);
+    //     $this->middleware('permission:data-create|data-all', ['only' => ['create','store']]);
+    //     $this->middleware('permission:data-show|data-all', ['only' => ['show']]);
+    //     $this->middleware('permission:data-edit|data-all', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:data-delete|data-all', ['only' => ['destroy']]);
+    // }
+
     public function index()
     {
-        $models = Role::orderBy('id','desc')->paginate(100);
+        $models = Role::with('permissions:id')->orderBy('id','desc')->paginate(50);
+
 		return view('backend.role.index',[
 			'models'=>$models,
 		]);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        // $models = new Role();
-		
-        return view('backend.role.create')->with([
-			// 'models'=>$models,
-		]);
-
+        return view('backend.role.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-			'roleName' => 'required|unique:roles,guard_name|max:255',
-			'roleGuardName' => 'required|unique:roles,guard_name|max:255',
-
-		]); 
+            'name' => [
+                'required',
+                Rule::unique('roles')->where(function ($query) use ($request) {
+                    return $query->where('guard_name', $request->guard_name);
+                                // ->where('name', $request->name);
+                }),
+                'string',
+                'max:255',
+            ],
+            'guard_name' => 'required|string|max:255',
+		]);
 
         if ($validator->fails()) {
-			return redirect()->route('role.create')->withErrors($validator)->withInput();
+			return back()->withErrors($validator)->withInput();
 		}
 
-        $model = Role::create([
-            'name' => $request->input('roleName'),
-            'guard_name' => $request->input('roleGuardName'),
-
-        ]);
-
-        if ($model) {
-            // Session::flash('success','ajoyib');
-            return redirect()->route('role.index')->with('success','role ' . __('msg.successfully created'));
-
+        if (Role::create($request->all())) {
+            return redirect()->route('admin.role.index')->with('success','role ' . __('msg.successfully created'));
         }
 
-        return redirect()->route('role.create')->withInput();
-		
+        return back()->with('error','error')->withInput();
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $model = Role::findorFail($id);
@@ -98,67 +73,71 @@ class RoleController extends Controller
 		]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $model = Role::findorFail($id);
+        $permissions = Permission::all();
         return view('backend.role.edit')->with([
 			'model'=>$model,
+			'permissions'=>$permissions,
 		]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $model = Role::findorFail($id);
-        
-        $validator = Validator::make($request->all(),[
-			// 'roleName' => 'required|unique:roles,guard_name|max:255',
-			// 'roleGuardName' => 'required|unique:roles,guard_name|max:255',
-			'roleGuardName' => 'required|string|max:255',
-			'roleGuardName' => 'required|string|max:255',
-
-		]); 
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('roles')->where(function ($query) use ($request, $id) {
+                    return $query->where('guard_name', $request->guard_name)
+                        ->where('id', '!=', $id);
+                }),
+            ],
+            'guard_name' => 'required|string|max:255',
+			'permission_id' => ['required','array'],
+        ]);
 
         if ($validator->fails()) {
-			return redirect()->route('role.edit',$id)->withErrors($validator)->withInput();
+			return back()->withErrors($validator)->withInput();
 		}
 
-        $model->name = $request->input('roleName');
-        $model->guard_name = $request->input('roleGuardName');
-        if ($model->update()) {
-            return redirect()->route('role.index')->with('success','role ' . __('msg.successfully updated'));
+        $model = Role::findorFail($id);
+
+        $role = SpatieModelsRole::find($id);
+        $permission = SpatieModelsPermission::find($request->permission_id);
+
+        if ($model->update($request->all())) {
+            $role->syncPermissions($permission);
+            return redirect()->route('admin.role.index')->with('success','role ' . __('msg.successfully updated'));
         }
-        
-        return redirect()->route('role.edit',$id)->withInput();
-        
+
+        return back()->with('error','error')->withInput();
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $model = Role::findOrFail($id);
-        
-        if (!empty($model)) {
-            $model->delete();
-            return redirect()->route('role.index')->with('success','role ' . __('successfully deleted'));
+
+        $SpatieModelsRole = SpatieModelsRole::find($id);
+        foreach ($request->permission_ids as $permission_id) {
+            $permission = SpatieModelsPermission::find($permission_id);
+            $SpatieModelsRole->revokePermissionTo($permission);
         }
-        
+
+        $role = Role::find($id);
+        $role->permissions()->detach();
+
+        try {
+            DB::statement("SET foreign_key_checks=0");
+            DB::table('roles')->where('id', $id)->delete();
+            DB::statement("SET foreign_key_checks=1");
+            return redirect()->back()->with('success', 'Record deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error deleting record: ' . $e->getMessage());
+        }
+        return back()->with('success','role ' . __('successfully deleted'));
     }
+
 }

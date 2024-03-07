@@ -20,7 +20,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('/', 'index')->name('index');
         });
 
-        Route::prefix('user')->controller(UserConroller::class)->name('user.')->group(function() {
+        Route::prefix('users')->controller(UserConroller::class)->name('users.')->group(function() {
             Route::get('/', 'index')->name('index');
             Route::get('create','create')->name('create');
             Route::post('store','store')->name('store');
