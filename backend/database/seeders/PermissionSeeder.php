@@ -21,11 +21,11 @@ class PermissionSeeder extends Seeder
         // ModelHasRole::truncate();//(model)userga berlgan rollar id=1 userga admin role berilgan
         // Permission::truncate(); //ruxsatlar ->delete,publish,view...
         // Role::truncate(); //rollar -> admin,manager...
-        DB::table('role_has_permissions')->delete();
-        DB::table('model_has_permissions')->delete();
-        DB::table('model_has_roles')->delete();
-        DB::table('permissions')->delete();
-        DB::table('roles')->delete();
+        DB::table('role_has_permissions')->truncate();
+        DB::table('model_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();
+        DB::table('permissions')->truncate();
+        DB::table('roles')->truncate();
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;'); //mysql
         DB::statement('SET CONSTRAINTS ALL IMMEDIATE;');//postgresql
 
@@ -127,10 +127,6 @@ class PermissionSeeder extends Seeder
                 'role_id' =>1
             ],
             [
-                'permission_id' =>11,
-                'role_id' =>1
-            ],
-            [
                 'permission_id' =>2,
                 'role_id' =>2
             ],
@@ -151,55 +147,45 @@ class PermissionSeeder extends Seeder
                 'role_id' =>2
             ],
             [
-                'permission_id' =>12,
-                'role_id' =>2
-            ],
-            [
-                'permission_id' =>9,
+                'permission_id' =>1,
                 'role_id' =>3
             ],
             [
-                'permission_id' =>11,
+                'permission_id' =>3,
                 'role_id' =>3
             ],
             [
-                'permission_id' =>8,
+                'permission_id' =>2,
                 'role_id' =>4
             ],
             [
-                'permission_id' =>10,
+                'permission_id' =>4,
                 'role_id' =>4
             ],
-            [
-                'permission_id' =>11,
-                'role_id' =>5
-            ],
-            [
-                'permission_id' =>12,
-                'role_id' =>6
-            ],
+
         ];
-        RoleHasPermission::insert($role_has_permission);
+        DB::table('role_has_permissions')->insert($role_has_permission);
         dump('RoleHasPermission seeder done');
 
-
         $model_has_permission = [
+            //oddiy user permission berilayapti
             [
-                'permission_id' =>11,
+                'permission_id' =>3,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 3
             ],
             [
-                'permission_id' =>12,
+                'permission_id' =>4,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 3
             ],
 
         ];
-        ModelHasPermission::insert($model_has_permission);
+        DB::table('model_has_permissions')->insert($model_has_permission);
         dump('ModelHasPermission seeder done');
 
         $model_has_role = [
+            //admin
             [
                 'role_id' =>1,
                 'model_type' => 'App\\Models\\User',
@@ -210,6 +196,7 @@ class PermissionSeeder extends Seeder
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 1
             ],
+            //manager
             [
                 'role_id' =>5,
                 'model_type' => 'App\\Models\\User',
@@ -222,7 +209,7 @@ class PermissionSeeder extends Seeder
             ],
 
         ];
-        ModelHasRole::insert($model_has_role);
+        DB::table('model_has_roles')->insert($model_has_role);
         dump('ModelHasRole seeder done');
 
     }
