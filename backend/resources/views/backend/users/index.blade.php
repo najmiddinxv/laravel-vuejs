@@ -21,7 +21,7 @@
     <div class="card-body" style="padding:20px">
 
 
-        <x-alert-message-component></x-alert-message-component>
+        {{-- <x-alert-component></x-alert-component> --}}
 
         <table class="table table-hover table-bordered">
             <thead>

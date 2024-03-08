@@ -14,7 +14,7 @@
         </nav>
     </div>
 
-    <x-alert-message-component></x-alert-message-component>
+    {{-- <x-alert-component></x-alert-component> --}}
 
     <form class="g-3 needs-validation" action="{{ route('backend.users.store') }}" method="POST" novalidate enctype="multipart/form-data">
         @csrf
