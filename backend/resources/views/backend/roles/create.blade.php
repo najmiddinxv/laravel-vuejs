@@ -1,31 +1,18 @@
-@extends('backend.layouts.index')
+@extends('backend.layouts.main')
 @section('title')
-    {{__('msg.Create')}}
+    {{ __('lang.create') }}
 @endsection
-
 @section('content')
-    <div class="page-header card">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.roles.index') }}">Roles</a></li>
+                <li class="breadcrumb-item active">role yaratish</li>
+            </ol>
+        </nav>
     </div>
-    <div class="card">
-        <div class="content-header">
-            <div class="container-fluid card-block">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Role yaratish</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        {{-- <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admin.index')}}">{{__('msg.Home')}}</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('admin.role.index')}}">Role</a></li>
-                            <li class="breadcrumb-item active">{{__('msg.Create')}}</li>
-                        </ol> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <form action="{{route('admin.role.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('backend.roles.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-8">
@@ -45,20 +32,22 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{route('admin.role.index')}}" class="btn btn-danger">Bekor qilish</a>
+                            <a href="{{route('backend.roles.index')}}" class="btn btn-danger">Bekor qilish</a>
                             <button type="submit" class="btn btn-success">Saqlash</button>
                         </div>
 
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </form>
 
 @endsection
+@section('scripts')
+<script>
+    $(document).ready(function (e) {
 
-
-
-
-
+    });
+</script>
+@endsection

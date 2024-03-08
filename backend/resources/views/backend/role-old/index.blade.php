@@ -1,4 +1,4 @@
-@extends('layouts.mainBackend')
+@extends('backend.layouts.main')
 @php  @endphp
 
 @section('title') Role @endsection
@@ -15,7 +15,7 @@
     <div class="page-header card">
     </div>
     <div class="card">
-        <div class="content-header">
+        {{-- <div class="content-header">
             <div class="container-fluid card-block">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -30,40 +30,23 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="card">
         <div class="card-header">
             <div class="breadcrumb-and-filter">
                 <div class="row">
                     <div class="col-md-9">
-                        <div class="action-content">
-                            <form action="" method="">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <select style="margin-left: 15px;" name="usertype" class="form-control">
-                                                <option value="">------</option>
-                                                <option value="">Role</option>
-                                                <option value="">blablabla</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-primary">{{__('msg.Send')}}</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
                     </div>
                     <div class="col-md-3">
                         <div class="create-data" style="float: right;">
                             {{-- @role('super admin') --}}
-                                <a href="{{route('role.create')}}" class=" style-add btn btn-primary">{{__('msg.Create')}}</a>
+                                <a href="{{route('backend.roles.create')}}" class=" style-add btn btn-primary">Яратиш</a>
                             {{-- @else --}}
 
                             {{-- @endrole --}}
-                              
+
                         </div>
                     </div>
                 </div>
@@ -86,11 +69,9 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>{{__('msg.Name')}}</th>
-                    <th>{{__('msg.GuardName')}}</th>
-                    <th>{{__('msg.Created_at')}}</th>
-                    <th>{{__('msg.Updated_at')}}</th>
-                    <th>{{__('msg.Actions')}}</th>
+                    <th>Role</th>
+                    <th>Guard name</th>
+                    <th>Amallar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -101,19 +82,18 @@
                         <th scope="row">{{ $i }}</th>
                         <td>{{ $model->name }}</td>
                         <td>{{ $model->guard_name }}</td>
-                        <td>{{ $model->created_at }}</td>
-                        <td>{{ $model->updated_at }}</td>
                         <td>
                             <div style="text-align: center;">
                                 {{-- <a href="{{route('role.show',$model->id)}}" class="btn btn-info" title="view">
                                     <i class="fas fa-eye"></i>
                                 </a> --}}
-                                <a href="{{route('role.edit',$model->id)}}" class="btn btn-primary" title="update">
+                                <a href="{{route('backend.roles.edit',$model->id)}}" class="btn btn-primary" title="update">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <form style="display: inline-block;" action="{{route('role.destroy',$model->id)}}" method="POST">
+                                <form style="display: inline-block;" action="{{route('backend.roles.destroy',['id'=>$model->id])}}" method="POST">
                                     @csrf
                                     @method('DELETE')
+                                    <input type="hidden" name="permission_ids[]" value="{{ implode(',', $model->permissions->pluck('id')->toArray()) }}">
                                     <button type="submit" class="delete-data-item btn btn-danger" title="delete">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -137,11 +117,11 @@
 <script>
     $(document).ready(function () {
         $("#dashboard_datatable").DataTable({
-            "responsive": true, 
-            "lengthChange": true, 
+            "responsive": true,
+            "lengthChange": true,
             "autoWidth": false,
             "paging": false
-            
+
         });
 
     });

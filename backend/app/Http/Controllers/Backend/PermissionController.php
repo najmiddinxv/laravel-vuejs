@@ -25,14 +25,14 @@ class PermissionController extends Controller
     public function index()
     {
         $models = Permission::with('roles')->orderBy('id','desc')->paginate(100);
-		return view('backend.permission.index',[
+		return view('backend.permissions.index',[
 			'models'=>$models,
 		]);
     }
 
     public function create()
     {
-        return view('backend.permission.create');
+        return view('backend.permissions.create');
     }
 
     public function store(Request $request)
@@ -55,7 +55,7 @@ class PermissionController extends Controller
 		}
 
         if (Permission::create($request->all())) {
-            return redirect()->route('admin.permission.index')->with('success','permission ' . __('msg.successfully created'));
+            return redirect()->route('admin.permissions.index')->with('success','permission ' . __('msg.successfully created'));
         }
 
         return back()->with('error','error')->withInput();
@@ -64,7 +64,7 @@ class PermissionController extends Controller
     public function show($id)
     {
         $model = Permission::findorFail($id);
-        return view('backend.permission.show')->with([
+        return view('backend.permissions.show')->with([
 			'model'=>$model,
 		]);
     }
@@ -72,7 +72,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $model = Permission::findorFail($id);
-        return view('backend.permission.edit')->with([
+        return view('backend.permissions.edit')->with([
 			'model'=>$model,
 		]);
     }
@@ -97,7 +97,7 @@ class PermissionController extends Controller
 		}
 
         if (Permission::find($id)->update($request->all())) {
-            return redirect()->route('admin.permission.index')->with('success','permission ' . __('msg.successfully updated'));
+            return redirect()->route('admin.permissions.index')->with('success','permission ' . __('msg.successfully updated'));
         }
 
         return back()->withInput();
@@ -115,17 +115,14 @@ class PermissionController extends Controller
         $permission->users()->detach();
 
         try {
-            DB::statement("SET foreign_key_checks=0");
+            // DB::statement("SET foreign_key_checks=0");
             DB::table('permissions')->where('id', $id)->delete();
-
             // DB::table('model_has_permissions')->where('permission_id', $permission->id)->delete();
-
-            DB::statement("SET foreign_key_checks=1");
+            // DB::statement("SET foreign_key_checks=1");
             return redirect()->back()->with('success', 'Record deleted successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error deleting record: ' . $e->getMessage());
         }
-
         // Permission::findOrFail($id)->delete();
         return back()->with('success','permission ' . __('successfully deleted'));
     }

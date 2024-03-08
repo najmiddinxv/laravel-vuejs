@@ -1,4 +1,4 @@
-@extends('layouts.mainBackend')
+@extends('backend.layouts.index')
 
 
 @section('title')
@@ -21,7 +21,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item"><a href="{{route('role.index')}}">Index Role</a></li>
+          <li class="breadcrumb-item"><a href="{{route('admin.role.index')}}">Index Role</a></li>
           <li class="breadcrumb-item active">View Role</li>
         </ol>
       </div>
@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-               
+
                 <tr>
                     <td>{{__('msg.Name') }}</td>
                     <td>{{ $model->name }}</td>
@@ -62,20 +62,20 @@
                  <tr>
                   <td>
                      <div class="action-content-view">
-               
-                     <a href="{{route('role.index')}}" class="btn btn-success" title="cancel">
+
+                     <a href="{{route('admin.role.index')}}" class="btn btn-success" title="cancel">
                           cancel
                       </a>
-                      <a href="{{route('role.edit',$model->id)}}" class="btn btn-primary" title="update">
+                      <a href="{{route('admin.role.edit',$model->id)}}" class="btn btn-primary" title="update">
                           update
-                      </a>  
-                     
-                    <a href="{{route('role.destroy',$model->id)}}" class="delete-data-item btn btn-danger" title="delete">
+                      </a>
+
+                    <a href="{{route('admin.role.destroy',$model->id)}}" class="delete-data-item btn btn-danger" title="delete">
                         delete
                     </a>
                     </div>
                   </td>
-                  
+
                  </tr>
             </tbody>
         </table>
