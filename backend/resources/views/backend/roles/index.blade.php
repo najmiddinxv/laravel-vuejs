@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 <div class="pagetitle">
-    <h1>Roles</h1>
+    <h1>Role ga permission biriktirish uchun edit tugmasiga bosing</h1>
     <nav style="display: flex;justify-content:space-between;align-items: center;">
       <ol class="breadcrumb" style="margin:0">
         <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>

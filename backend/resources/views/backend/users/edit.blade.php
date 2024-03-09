@@ -94,9 +94,9 @@
                                     <label for="permission_ids{{ $permission->id }}"
                                         @foreach ($roles as $key => $role)
                                             @foreach ($role->permissions as $role_has_permission)
-                                            {{-- <p>{{ $role_has_permission->pivot->permission_id }}</p> --}}
-                                            @if ($role_has_permission->pivot->permission_id == $permission->id)
-                                                    style="background:green;color:#fff;padding:5px;margin:5px"
+                                            {{-- <p>{{ $role_has_permission  }}</p> --}}
+                                                @if ($role_has_permission->pivot->permission_id == $permission->id)
+                                                        style="background:green;color:#fff;padding:5px;margin:5px"
                                                 @endif
                                             @endforeach
                                         @endforeach
@@ -110,17 +110,19 @@
                                         @endforeach
 
                                         {{-- @foreach ($roles as $key => $role)
-                                        @foreach ($role->permissions as $role_has_permission)
-                                            @if ($role_has_permission->id == $permission->id)
-                                            checked
-                                            @endif
-                                        @endforeach
-                                    @endforeach --}}
+                                            @foreach ($role->permissions as $role_has_permission)
+                                                @if ($role_has_permission->id == $permission->id)
+                                                checked
+                                                @endif
+                                            @endforeach
+                                        @endforeach --}}
 
                                         >
                                     |
                                 @endforeach
                             @endif
+
+
                         </div>
 
 

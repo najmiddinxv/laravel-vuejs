@@ -49,7 +49,7 @@ class User extends Authenticatable
     ];
 
     // protected $appends = ['full_name'];
-    
+
     public function getFullNameAttribute() {
         return "{$this->last_name} {$this->first_name} {$this->middle_name}";
     }
