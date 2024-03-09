@@ -10,5 +10,6 @@ return [
     'name' => 'Nomi',
     'actions' => 'Amallar',
     'update' => 'Tahrirlash',
+    'total' => 'Jami',
 
 ];

@@ -2,10 +2,13 @@
 
 namespace App\Services\Contracts;
 
-
+use App\Models\User;
 use Illuminate\Http\Request;
 
 interface UserServiceContract
 {
-    public function index(Request $request);
+    public function index();
+    public function store(array $data);
+    public function update(array $data, int $id);
+    public function destroy(int $id);
 }

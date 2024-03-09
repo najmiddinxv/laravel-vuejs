@@ -1,6 +1,6 @@
 <?php
 
-function sendResponse($message,$code = 200, $data = [])
+function sendResponse($code = 200, $message, $data = [])
 {
     $response = [
         'success' => true,

@@ -2,18 +2,167 @@
 
 namespace App\Services;
 
-use App\Http\Resources\PostResource;
-use App\Models\Post;
+use App\Helpers\ImageResize;
 use App\Models\User;
-use App\Services\Contracts\PostServiceContract;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Services\Contracts\UserServiceContract;
+use Spatie\Permission\Models\Permission as SpatieModelsPermission;
+use Spatie\Permission\Models\Role as SpatieModelsRole;
 
 class UserService implements UserServiceContract
 {
-    public function index($request)
+    public function index()
     {
-        return User::all();
+        $users = User::where('id','!=',auth()->user()->id)->orderBy('id','desc')->paginate(50);
+        return $users;
     }
+
+    public function store(array $data)
+    {
+        // https://laraveldaily.com/post/laravel-file-uploads-save-filename-database-folder-url
+        //  if ($request->hasFile('avatar')) {
+        //     $avatar = $request->file('avatar')->store(options: 'avatars');
+        // }
+
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'avatar' => $avatar ?? null,  //"avatars/OkWAukq8LBMBO7LXvaP7TS9jE7mT4Rbu3BYlbvCD.jpg"
+        // // ]);
+        // <img src="{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
+        // <img src="{{ Storage::disk('s3')->temporaryUrl(Auth::user()->avatar, now()->addMinutes(5)) }}" alt="{{ Auth::user()->name }}" />
+        // config/filesystems.php:
+        //        'disks' =>
+        //     // ...
+        //     'avatars' => [
+        //         'driver' => 'local',
+        //         'root' => storage_path('app/public/avatars'),
+        //         'url' => env('APP_URL').'/storage/avatars',
+        //         'visibility' => 'public',
+        //         'throw' => false,
+        //     ],
+        // ],
+
+        if (isset($data['userAvatar'])) {
+            $userAvatar = $data['userAvatar'];
+            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
+            // $userAvatarPath = '/uploads/users/'.Str::random(10);
+            if (!Storage::exists($userAvatarPath)) {
+                Storage::makeDirectory($userAvatarPath, 0755, true, true);
+                // File::makeDirectory($directory, 0755, true, true);
+            }
+
+            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
+            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
+            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
+            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
+
+            // $path = Storage::putFileAs(
+            //     $userAvatarPath,
+            //     $userAvatar,
+            //     $userAvatarHashName
+            // );
+            // $data['avatar'] = "/{$path}";
+
+            $imageR = new ImageResize($userAvatar->getRealPath());
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+
+            $data['avatar'] = [
+                'large' => $userAvatarLargeHashName,
+                'medium' => $userAvatarSmallHashName,
+                'small' => $userAvatarMeduimHashName,
+                // 'large' => '/storage'.$userAvatarLargeHashName,
+                // 'medium' => '/storage'.$userAvatarSmallHashName,
+                // 'small' => '/storage'.$userAvatarMeduimHashName,
+            ];
+        }
+
+        return User::create($data);
+    }
+
+    public function update(array $data, $id)
+    {
+        $user = User::findOrFail($id);
+        if (isset($data['userAvatar'])) {
+            $userAvatar = $data['userAvatar'];
+            //papaka yaratilayapti
+            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
+            if (!Storage::exists($userAvatarPath)) {
+                Storage::makeDirectory($userAvatarPath, 0755, true, true);
+            }
+
+            //fayl nomi va yo'li generatsiya qilinayapti
+            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
+            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
+            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
+            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
+
+            //rasm kesilib yuklanayapti
+            $imageR = new ImageResize($userAvatar->getRealPath());
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+
+            //nomlari bazaga saqlanayapti
+            $data['avatar'] = [
+                'large' =>  $userAvatarLargeHashName,
+                'medium' => $userAvatarSmallHashName,
+                'small' =>  $userAvatarMeduimHashName,
+            ];
+
+
+            //eski fayllar o'chirilayapti
+            // if (Storage::exists('images/file.jpg')) {
+            // }
+            Storage::delete($user->avatar['large'] ?? '');
+            Storage::delete($user->avatar['medium'] ?? '');
+            Storage::delete($user->avatar['small'] ?? '');
+
+        }
+        if (isset($data['permission_ids'])) {
+            $permissions = SpatieModelsPermission::find($data['permission_ids']);
+            $user->syncPermissions($permissions);
+        }else{
+            $user->syncPermissions([]);
+        }
+
+        if (isset($data['role_ids'])) {
+            $permissions = SpatieModelsRole::find($data['role_ids']);
+            $user->syncRoles($permissions);
+        }else{
+            $user->syncRoles([]);
+        }
+
+        return $user->update($data);
+    }
+
+    public function destroy(int $id)
+    {
+        $user = User::findOrFail($id);
+        if($user->id == 1){
+            return back()->with('warning',"super adminni o'chiraolmaysiz");
+        }
+        Storage::delete($user->avatar['large'] ?? '');
+        Storage::delete($user->avatar['medium'] ?? '');
+        Storage::delete($user->avatar['small'] ?? '');
+        return $user->delete();
+    }
+
+}
+
+
+
+
+
+
+
+
 
 
     //     // pick a permission name
@@ -167,4 +316,3 @@ class UserService implements UserServiceContract
     //     $forum->image = $fileName;
     //     $forum->save();
     // }
-}

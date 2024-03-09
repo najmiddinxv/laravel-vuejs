@@ -10,5 +10,6 @@ return [
     'name' => 'name',
     'actions' => 'actions',
     'update' => 'update',
+    'total' => 'Total',
 
 ];

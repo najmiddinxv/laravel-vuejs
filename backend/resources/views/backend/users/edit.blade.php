@@ -18,7 +18,7 @@
 
     {{-- <x-alert-message-component></x-alert-message-component> --}}
 
-    <form class="g-3 needs-validation" action="{{ route('backend.users.update',['user' => $user->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+    <form class="g-3 needs-validation" action="{{ route('backend.users.update',['id' => $user->id]) }}" method="POST" novalidate enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">

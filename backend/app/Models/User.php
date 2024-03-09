@@ -21,9 +21,9 @@ class User extends Authenticatable
     public const USER_TYPE_USERPROFILE = 2;
 
     protected $fillable = [
-        'last_name',
-        'first_name',
-        'middle_name',
+        'last_name', //familya
+        'first_name', //ism
+        'middle_name', //sharif
         'email',
         'phone_number',
         'user_type',
@@ -47,6 +47,12 @@ class User extends Authenticatable
         'password' => 'hashed',
         'avatar' => 'array',
     ];
+
+    // protected $appends = ['full_name'];
+    
+    public function getFullNameAttribute() {
+        return "{$this->last_name} {$this->first_name} {$this->middle_name}";
+    }
 
     public function user_permissions() : BelongsToMany
     {
