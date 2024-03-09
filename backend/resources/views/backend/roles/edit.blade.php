@@ -1,6 +1,6 @@
 @extends('backend.layouts.main')
 @section('title')
-    {{ __('lang.update') }}
+    {{ $role->name }} {{ __('lang.update') }}
 @endsection
 @section('content')
     <div class="pagetitle">
@@ -13,7 +13,7 @@
             </ol>
         </nav>
     </div>
-    <form action="{{route('backend.roles.update',$role->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('backend.roles.update',$role->id)}}" method="POST" enctype="multipart/form-data" class="needs-validation was-validated" novalidate>
         @csrf
         @method('PUT')
         <div class="row">
@@ -23,14 +23,15 @@
 
                         <div class="form-group">
                             <label for="name">Role name</label>
-                            <input type="text" name="name" id="name" class="form-control @error('name') error-data-input is-invalid @enderror" value="{{$role->name, old('name') }}" required>
+                            <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{$role->name, old('name') }}" required>
                             <span class="error-data">@error('name'){{$message}}@enderror</span>
+                            <div class="invalid-feedback">@error('name'){{$message}}@enderror</div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label for="guard_name">Guard name</label>
-                            <input type="text" name="guard_name" id="guard_name" class="form-control @error('guard_name') error-data-input is-invalid @enderror" value="{{$role->guard_name, old('guard_name') }}" required>
-                            <span class="error-data">@error('guard_name'){{$message}}@enderror</span>
+                            <input type="text" name="guard_name" id="guard_name" class="form-control @error('guard_name') is-invalid @enderror" value="{{$role->guard_name, old('guard_name') }}" required>
+                            <div class="invalid-feedback">@error('guard_name'){{$message}}@enderror</div>
                         </div>
 
                         <div class="form-group">

@@ -40,6 +40,7 @@
     <link href="{{asset('assets/backend/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
     <link href="{{asset('assets/backend/vendor/simple-datatables/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/backend/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/backend/css/custom.css')}}" rel="stylesheet">
     @yield('styles')
 </head>
 <body>
@@ -310,8 +311,7 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
-
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -332,20 +332,14 @@
               <i class="bi bi-circle"></i><span>Permissions</span>
             </a>
           </li>
-
         </ul>
-      </li><!-- End Components Nav -->
-
+      </li>
     </ul>
-
-  </aside><!-- End Sidebar-->
-
+  </aside>
   <main id="main" class="main">
-
     <section class="section dashboard">
         @yield('content')
     </section>
-
   </main>
   {{-- <footer id="footer" class="footer">
     <div class="copyright">
@@ -355,7 +349,6 @@
       Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
   </footer> --}}
-
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <script src="{{asset('assets/backend/js/jquery.min.js')}}"></script>

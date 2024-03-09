@@ -1,129 +1,103 @@
-@extends('backend.layouts.index')
-@section('title') Permission @endsection
+@extends('backend.layouts.main')
+@section('styles')
+   <style>
 
+   </style>
+@endsection
 @section('content')
-
-    <div class="page-header card">
+<div class="pagetitle">
+    <h1>Permission</h1>
+    <nav style="display: flex;justify-content:space-between;align-items: center;">
+      <ol class="breadcrumb" style="margin:0">
+        <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Permission</li>
+      </ol>
+      <div>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create-permission">Create</button>
+        {{-- <a href="{{ route('backend.roles.create') }}" class="btn btn-success">create</a> --}}
+      </div>
+    </nav>
+</div>
+<div class="card">
+    <div class="card-body" style="padding:20px">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{{__('lang.name')}}</th>
+                <th>{{__('lang.actions')}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($permissions as $key => $permission)
+                <tr>
+                    <th scope="row">{{ $permissions->firstItem()+$key  }}</th>
+                    <td>{{ $permission->name }}</td>
+                    <td>{{ $permission->guard_name }}</td>
+                    <td>
+                        <div style="text-align: center;">
+                            <a href="{{ route('backend.permissions.edit',['id'=>$permission->id]) }}" class="btn btn-primary" title="update">
+                                <i class="bx bx-pencil"></i>
+                            </a>
+                            <form style="display: inline-block;" action="{{ route('backend.permissions.destroy',['id'=>$permission->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="delete-data-item btn btn-danger" title="delete">
+                                    <i class="bx bxs-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        {{ $permissions->links() }}
     </div>
-    <div class="card">
-        <div class="content-header">
-            <div class="container-fluid card-block">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Permission</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        {{-- <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admin.index')}}">{{__('msg.Home')}}</a></li>
-                            <li class="breadcrumb-item active">Role</li>
-                        </ol> --}}
-                    </div>
+</div>
+
+<div class="modal fade" id="create-permission" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-permission-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="{{route('backend.permissions.store')}}" method="POST" enctype="multipart/form-data" class="needs-validation was-validated" novalidate>
+        @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="create-permission-label">Permission yaratish</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Permission</label>
+                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
+                                <span class="error-data">@error('name'){{$message}}@enderror</span>
+                            </div>
 
-    <div class="card">
-        <div class="card-header">
-            <div class="breadcrumb-and-filter">
-                <div class="row">
-                    <div class="col-md-9">
-
-                    </div>
-                    <div class="col-md-3">
-                        <div class="create-data" style="float: right;">
-                            {{-- @role('super admin') --}}
-                                <a href="{{route('admin.permission.create')}}" class=" style-add btn btn-primary">Yaratish</a>
-                            {{-- @else --}}
-
-                            {{-- @endrole --}}
-
+                            <div class="form-group mt-10">
+                                <label for="guard_name" class="form-label">Guard Name</label>
+                                <input type="text" name="guard_name" id="guard_name" class="form-control @error('guard_name') error-data-input @enderror" value="{{ old('guard_name') }}" required>
+                                <span class="error-data">@error('guard_name'){{$message}}@enderror</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{__('lang.close')}}</button>
+                    <button type="submit" class="btn btn-success">{{__('lang.save')}}</button>
+                </div>
             </div>
-        </div>
-
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-error" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <div class="card-body">
-            <table id="dashboard_datatable" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Permission</th>
-                    <th>Gurad name</th>
-                    <th>{{__('msg.Actions')}}</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                @php $i=($models->currentPage()-1) * $models->perPage() + 1 @endphp
-                @foreach($models as $model)
-                    <tr>
-                        <th scope="row">{{ $i }}</th>
-                        <td>{{ $model->name }}</td>
-                        <td>{{ $model->guard_name }}</td>
-                        <td>
-                            <div style="text-align: center;">
-                                {{-- <a href="{{route('permission.show',$model->id)}}" class="btn btn-info" title="view">
-                                    <i class="fas fa-eye"></i>
-                                </a> --}}
-                                <a href="{{route('admin.permission.edit',$model->id)}}" class="btn btn-primary" title="update">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-
-                                <form style="display: inline-block;" action="{{route('admin.permission.destroy',$model->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="role_ids[]" value="{{ implode(',', $model->roles->pluck('id')->toArray()) }}">
-
-                                    <button type="submit" class="delete-data-item btn btn-danger" title="delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @php $i++ @endphp
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+        </form>
     </div>
+  </div>
 
-<style>
-
-</style>
 @endsection
-
 @section('scripts')
-<script>
-    $(document).ready(function () {
-        $("#dashboard_datatable").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "paging": false
+    <script>
+        $(document).ready(function () {
 
         });
-
-    });
-</script>
+    </script>
 @endsection
-
-
-
-
-
 
 

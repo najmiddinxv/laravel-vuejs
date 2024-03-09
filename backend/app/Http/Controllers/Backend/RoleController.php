@@ -22,11 +22,6 @@ class RoleController extends Controller
 		]);
     }
 
-    public function create()
-    {
-        return view('backend.roles.create');
-    }
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
