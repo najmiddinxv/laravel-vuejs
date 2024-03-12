@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Services\Contracts\UserServiceContract;
+use Illuminate\Support\Facades\DB;
 
 class UserConroller extends Controller
 {
@@ -42,13 +43,26 @@ class UserConroller extends Controller
 
     public function edit(User $user)
     {
-        $user = User::with('user_permissions:id')->find($user->id);
+        $user = User::with('user_permissions:id','user_roles:id')->find($user->id);
+
+        if (!empty($user->user_roles)) {
+            $user_role_ids = [];
+
+            foreach ($user->user_roles as $user_role) {
+                $user_role_ids[] = $user_role->id;
+            }
+
+            $user_role_has_permissions = DB::table('role_has_permissions')->whereIn('role_id', $user_role_ids)->get();
+        }
+
         $roles = Role::with('permissions')->get();
         $permissions = Permission::all();
+
         return view('backend.users.edit')->with([
             'user' => $user,
             'roles' => $roles,
             'permissions' => $permissions,
+            'user_role_has_permissions' => $user_role_has_permissions ?? [],
 		]);
     }
 
