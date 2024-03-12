@@ -45,6 +45,11 @@ class UserConroller extends Controller
     {
         $user = User::with('user_permissions:id','user_roles:id')->find($user->id);
 
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all();
+
+        //userga berilgan role orqali rolega berilgan permissinlarni aniqlashitirsh uchun ishlatilayapti bu
+        //yashil ranga bo'yab alohida ajratib ko'rsatish uchun
         if (!empty($user->user_roles)) {
             $user_role_ids = [];
 
@@ -54,9 +59,6 @@ class UserConroller extends Controller
 
             $user_role_has_permissions = DB::table('role_has_permissions')->whereIn('role_id', $user_role_ids)->get();
         }
-
-        $roles = Role::with('permissions')->get();
-        $permissions = Permission::all();
 
         return view('backend.users.edit')->with([
             'user' => $user,

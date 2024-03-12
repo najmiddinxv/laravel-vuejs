@@ -3,6 +3,9 @@
     {{ app()->getLocale() }}
     <h3>@lang('lang.hello')</h3>
 
+    @can('create')
+        <p>create</p>
+    @endcan
     <hr>
         <h3>roles - Rollar</h3>
         {{-- @role('super-admin', 'admin')

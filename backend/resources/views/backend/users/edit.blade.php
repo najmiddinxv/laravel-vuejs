@@ -89,6 +89,18 @@
                         <div class="form-group border p-1">
                             <p><b>permissions (user uchun berilgan permissionlar)</b></p>
                             <p><i>yashil ranga bo'yalgan permissionlar ayni vaqtda userga berilgan role tarkibida mavjud yani (rolega ushbu permissionlar biriktirilib bo'lingan)</i></p>
+                            <p><i>bu bizga nega kerak biz birinchi navbatda role yaratamiz va o'sha rolega permissionlarni biriktiramiz keyin userga role beramiz. userga role berdik lekin o'sha rolega berilgan permissionlardan tashqari yana qandaydir bitta permission berishimiz kerak shunda permisisons bo'limidan yashil ranga bo'yalmaganidan birortasini berishimiz mumkin </i></p>
+                            <p><i>
+                                spatie permissonda asosan permissionlarni tekshiramiz shu tarzda
+                                @ can('create')
+                                create
+                                @ endcan
+                                
+                                yoki roleni ham tekshirsak bo'ladi kerakli joyda
+                                @ role('admin')
+                                create
+                                @ role
+                            </i></p>
                             @if (!empty($permissions))
                                 @foreach ($permissions as $key => $permission)
                                     <label for="permission_ids{{ $permission->id }}"

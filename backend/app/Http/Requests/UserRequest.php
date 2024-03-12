@@ -68,6 +68,8 @@ class UserRequest extends BaseFormRequest
             'password' => ['nullable', 'string', 'min:8','max:40', 'confirmed'],
             'password_confirmation' => ['nullable', 'string', 'min:8','max:40', 'same:password'],
 
+            'user_type' => 'nullable|integer',
+            'status' => 'nullable|integer',
             'permission_ids' => 'nullable|array',
             'role_ids' => 'nullable|array',
         ];

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Services\Contracts\UserServiceContract;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
 use Spatie\Permission\Models\Role as SpatieModelsRole;
 
@@ -126,6 +127,13 @@ class UserService implements UserServiceContract
             Storage::delete($user->avatar['small'] ?? '');
 
         }
+
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }else{
+            $data['password'] = $user->password;
+        }
+        
         if (isset($data['permission_ids'])) {
             $permissions = SpatieModelsPermission::find($data['permission_ids']);
             $user->syncPermissions($permissions);
