@@ -1,6 +1,6 @@
 <?php
 
-function sendResponse($code = 200, $message, $data = [])
+function sendResponse($code = 200, $message = null, $data = [])
 {
     $response = [
         'success' => true,
@@ -12,7 +12,7 @@ function sendResponse($code = 200, $message, $data = [])
     return response()->json($response, $code);
 }
 
-function sendError($message, $code = 404, $data = [])
+function sendError($code = 404, $message = null,  $data = [])
 {
     $response = [
         'success' => false,

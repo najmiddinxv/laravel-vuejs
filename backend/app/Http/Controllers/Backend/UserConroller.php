@@ -11,7 +11,6 @@ use App\Services\Contracts\UserServiceContract;
 
 class UserConroller extends Controller
 {
-
     public function __construct(private UserServiceContract $userService) {}
 
     public function index()
