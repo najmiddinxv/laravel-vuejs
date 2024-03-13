@@ -21,6 +21,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::controller(BackendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });
+        
+        // Route::resource('users',UserConroller::class,[]);
 
         Route::prefix('users')->controller(UserConroller::class)->name('users.')->group(function() {
             Route::get('/', 'index')->name('index');
