@@ -40,3 +40,19 @@ stdout_logfile=/var/www/html/project-folder/public/worker.log
 supervisorctl reread
 10.Activate the process
 supervisorctl update
+
+
+
+
+
+
+
+[program:email-queue]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/artisan queue:work redis
+autostart=true
+autorestart=true
+user=forge
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/html/storage/logs/supervisord.log
