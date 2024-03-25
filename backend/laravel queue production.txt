@@ -1,0 +1,42 @@
+https://dev.to/techparida/how-to-set-up-laravel-queues-on-production-4one
+Hello everyone, in this article, you will learn how to set up Laravel Queues/Jobs on production
+
+Below steps to follow...
+
+1.Connect to your ubuntu server and go to your existing laravel project then run the below command to create required tables in the database.
+php artisan queue:table
+2.Then migrate the tables with the help of the below command
+php artisan migrate
+3.Now, you can create Jobs controller through command so that you will get the basic format of jobs or queue in laravel
+php artisan make:job SendNotification
+Here, SendNotification is a controller, where your main logic of queue/job will execute.
+
+Laravel queues provide a unified queueing API across a variety of different queue backends, such as Amazon SQS, Redis, or even a relational database.
+
+Now, we need to setup .env file to execute the jobs using database
+
+4.Go to .env file then change QUEUE_DRIVER=database or QUEUE_CONNECTION=database
+
+5.Go to the app/Jobs folder and write the task in the handle function of the SendNotification.php file and you can pass the variables from the controller and define them in the constructor in the Job file. (Refer to Video for better understanding)
+
+6.From any controller you can dispatch the job: dispatch(new SendNotification($mobile, $msg));
+
+7.To automate the queue we have to install a supervisor
+apt install supervisor
+8.Create supervisor config file at /etc/supervisor/conf.d queue-worker.conf
+cd /etc/supervisor/conf.d
+nano queue-worker.conf
+queue-worker.conf
+[program:queue-worker]
+process_name = %(program_name)s_%(process_num)02d
+command=php /var/www/html/project-folder/artisan queue:listen
+autostart=true
+autorestart=true
+user=root
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/www/html/project-folder/public/worker.log
+9.Reread the supervisor the config file
+supervisorctl reread
+10.Activate the process
+supervisorctl update
