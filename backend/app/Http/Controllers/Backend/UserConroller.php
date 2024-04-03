@@ -8,15 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Services\Contracts\UserServiceContract;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserConroller extends Controller
 {
     public function __construct(private UserServiceContract $userService) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->userService->index();
+        $users = $this->userService->index($request);
         return view('backend.users.index',[
 			'users' => $users,
 		]);

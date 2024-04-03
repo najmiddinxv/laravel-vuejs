@@ -9,18 +9,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Services\Contracts\UserServiceContract;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
 use Spatie\Permission\Models\Role as SpatieModelsRole;
 
 class UserService implements UserServiceContract
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('id','!=',auth()->user()->id)->orderBy('id','desc')->paginate(50);
+        $users = User::orderBy('id','desc')->paginate(50);
         return $users;
     }
 
+    public function show(int $id) : User
+    {
+        return User::findOrFail($id);
+    }
+    
     public function store(array $data)
     {
         if (isset($data['userAvatar'])) {
@@ -88,7 +94,7 @@ class UserService implements UserServiceContract
         // ],
     }
 
-    public function update(array $data, $id)
+    public function update(array $data, int $id)
     {
         $user = User::findOrFail($id);
         if (isset($data['userAvatar'])) {
@@ -133,7 +139,7 @@ class UserService implements UserServiceContract
         }else{
             $data['password'] = $user->password;
         }
-        
+
         if (isset($data['permission_ids'])) {
             $permissions = SpatieModelsPermission::find($data['permission_ids']);
             $user->syncPermissions($permissions);
