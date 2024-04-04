@@ -212,9 +212,7 @@
 
           </ul>
         </li> --}}
-
           <li class="nav-item dropdown  pe-3">
-
               <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                   <span class="d-none d-md-block dropdown-toggle ps-2"> {{ app()->getLocale() }}</span>
               </a>
@@ -224,9 +222,7 @@
                   }
               </style>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" style="min-width: 120px;padding:0;">
-
                   @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-
                         <li class="">
                           <a class="dropdown-item d-flex align-items-center" rel="alternate" hreflang="{{ $localeCode }}"
                              href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
@@ -239,13 +235,9 @@
                           <hr class="dropdown-divider">
                       </li>
                   @endforeach
-
-
               </ul>
           </li>
-
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{asset('assets/backend/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->email ?? 'user'}}</span>
@@ -277,9 +269,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
               <li>
-
                   <form action="{{route('backend.auth.logout')}}" method="POST">
                       @csrf
                       @method('POST')
@@ -288,20 +278,16 @@
                           Logout
                       </button>
                   </form>
-
               </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
       </ul>
     </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -312,8 +298,21 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*',]) ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Content</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content {{ request()->routeIs(['backend.tags.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('backend.tags.index') }}" class="{{ request()->routeIs('backend.tags.*') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Tags</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
         <a class="nav-link {{ request()->routeIs(['backend.users.*','backend.roles.*','backend.permissions.*']) ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Settings</span>
+          <i class="ri-settings-3-line"></i><span>Settings</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content {{ request()->routeIs(['backend.users.*','backend.roles.*','backend.permissions.*']) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">

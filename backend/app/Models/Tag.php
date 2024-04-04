@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
+use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory,HasTranslations,TranslateMethods;
 
-    public $timestamp = false;
+    public $translatable = ['name'];
 
     protected $fillable = [
         'name',
+        'tagsable_type',
     ];
+
+    public $timestamp = false;
+
 
     public function posts()
     {

@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\UserConroller;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -21,9 +22,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::controller(BackendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });
-        
         // Route::resource('users',UserConroller::class,[]);
-
         Route::prefix('users')->controller(UserConroller::class)->name('users.')->group(function() {
             Route::get('/', 'index')->name('index');
             Route::get('create','create')->name('create');
@@ -47,6 +46,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
            Route::put('update/{id}','update')->name('update');
            Route::delete('destroy/{id}','destroy')->name('destroy');
         });
+        //content
+        Route::prefix('tags')->name('tags.')->controller(TagController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{tag}','edit')->name('edit');
+            Route::put('update/{tag}','update')->name('update');
+            Route::delete('destroy/{tag}','destroy')->name('destroy');
+         });
 
     });
 
