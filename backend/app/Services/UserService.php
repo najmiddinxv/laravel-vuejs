@@ -26,7 +26,7 @@ class UserService implements UserServiceContract
     {
         return User::findOrFail($id);
     }
-    
+
     public function store(array $data)
     {
         if (isset($data['userAvatar'])) {
@@ -67,31 +67,6 @@ class UserService implements UserServiceContract
 
         return User::create($data);
 
-
-        // https://laraveldaily.com/post/laravel-file-uploads-save-filename-database-folder-url
-        //  if ($request->hasFile('avatar')) {
-        //     $avatar = $request->file('avatar')->store(options: 'avatars');
-        // }
-
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'avatar' => $avatar ?? null,  //"avatars/OkWAukq8LBMBO7LXvaP7TS9jE7mT4Rbu3BYlbvCD.jpg"
-        // // ]);
-        // <img src="{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
-        // <img src="{{ Storage::disk('s3')->temporaryUrl(Auth::user()->avatar, now()->addMinutes(5)) }}" alt="{{ Auth::user()->name }}" />
-        // config/filesystems.php:
-        //        'disks' =>
-        //     // ...
-        //     'avatars' => [
-        //         'driver' => 'local',
-        //         'root' => storage_path('app/public/avatars'),
-        //         'url' => env('APP_URL').'/storage/avatars',
-        //         'visibility' => 'public',
-        //         'throw' => false,
-        //     ],
-        // ],
     }
 
     public function update(array $data, int $id)
