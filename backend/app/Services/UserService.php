@@ -2,19 +2,19 @@
 
 namespace App\Services;
 
+use App\Contracts\UserServiceContract as ContractsUserServiceContract;
 use App\Helpers\ImageResize;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use App\Services\Contracts\UserServiceContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
 use Spatie\Permission\Models\Role as SpatieModelsRole;
 
-class UserService implements UserServiceContract
+class UserService implements ContractsUserServiceContract
 {
     public function index(Request $request)
     {
