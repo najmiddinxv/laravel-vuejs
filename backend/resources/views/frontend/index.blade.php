@@ -14,7 +14,7 @@
 
     <!-- Start Header Top
     ============================================= -->
-    <div class="top-bar-area inline inc-border">
+    {{-- <div class="top-bar-area inline inc-border">
         <div class="container">
             <div class="row">
                 <div class="col-md-7 address-info text-left">
@@ -101,13 +101,13 @@
                                     </div>
                                 @endif --}}
 
-                            </div>
+                            {{-- </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Header Top -->
 
     <!-- Header

@@ -212,9 +212,7 @@
 
           </ul>
         </li> --}}
-
           <li class="nav-item dropdown  pe-3">
-
               <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                   <span class="d-none d-md-block dropdown-toggle ps-2"> {{ app()->getLocale() }}</span>
               </a>
@@ -224,9 +222,7 @@
                   }
               </style>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" style="min-width: 120px;padding:0;">
-
                   @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-
                         <li class="">
                           <a class="dropdown-item d-flex align-items-center" rel="alternate" hreflang="{{ $localeCode }}"
                              href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
@@ -239,28 +235,24 @@
                           <hr class="dropdown-divider">
                       </li>
                   @endforeach
-
-
               </ul>
           </li>
-
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{asset('assets/backend/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->username ?? 'user'}}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->email ?? 'user'}}</span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{auth()->user()->last_name}} {{auth()->user()->first_name}}</h6>
+              {{-- <span>{{auth()->user()->getRoleNames()}}</span> --}}
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -268,19 +260,16 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+            {{-- <li>
+              <a class="dropdown-item d-flex align-items-center" href="">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
-            </li>
+            </li> --}}
             <li>
               <hr class="dropdown-divider">
             </li>
-
               <li>
-
                   <form action="{{route('backend.auth.logout')}}" method="POST">
                       @csrf
                       @method('POST')
@@ -289,20 +278,16 @@
                           Logout
                       </button>
                   </form>
-
               </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
       </ul>
     </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -313,22 +298,36 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*',]) ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Content</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="components-nav" class="nav-content {{ request()->routeIs(['backend.tags.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('backend.users.index') }}">
+            <a href="{{ route('backend.tags.index') }}" class="{{ request()->routeIs('backend.tags.*') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Tags</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs(['backend.users.*','backend.roles.*','backend.permissions.*']) ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="ri-settings-3-line"></i><span>Settings</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content {{ request()->routeIs(['backend.users.*','backend.roles.*','backend.permissions.*']) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('backend.users.index') }}" class="{{ request()->routeIs('backend.users.*') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Users</span>
             </a>
           </li>
           <li>
-            <a href="{{ route('backend.roles.index') }}">
+            <a href="{{ route('backend.roles.index') }}" class="{{ request()->routeIs('backend.roles.*') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Roles</span>
             </a>
           </li>
           <li>
-            <a href="{{ route('backend.permissions.index') }}">
+            <a href="{{ route('backend.permissions.index') }}" class="{{ request()->routeIs('backend.permissions.*') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Permissions</span>
             </a>
           </li>

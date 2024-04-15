@@ -2,23 +2,29 @@
 
 namespace App\Services;
 
+use App\Contracts\UserServiceContract as ContractsUserServiceContract;
 use App\Helpers\ImageResize;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use App\Services\Contracts\UserServiceContract;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
 use Spatie\Permission\Models\Role as SpatieModelsRole;
 
-class UserService implements UserServiceContract
+class UserService implements ContractsUserServiceContract
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('id','!=',auth()->user()->id)->orderBy('id','desc')->paginate(50);
+        $users = User::orderBy('id','desc')->paginate(50);
         return $users;
+    }
+
+    public function show(int $id) : User
+    {
+        return User::findOrFail($id);
     }
 
     public function store(array $data)
@@ -61,34 +67,9 @@ class UserService implements UserServiceContract
 
         return User::create($data);
 
-
-        // https://laraveldaily.com/post/laravel-file-uploads-save-filename-database-folder-url
-        //  if ($request->hasFile('avatar')) {
-        //     $avatar = $request->file('avatar')->store(options: 'avatars');
-        // }
-
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'avatar' => $avatar ?? null,  //"avatars/OkWAukq8LBMBO7LXvaP7TS9jE7mT4Rbu3BYlbvCD.jpg"
-        // // ]);
-        // <img src="{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
-        // <img src="{{ Storage::disk('s3')->temporaryUrl(Auth::user()->avatar, now()->addMinutes(5)) }}" alt="{{ Auth::user()->name }}" />
-        // config/filesystems.php:
-        //        'disks' =>
-        //     // ...
-        //     'avatars' => [
-        //         'driver' => 'local',
-        //         'root' => storage_path('app/public/avatars'),
-        //         'url' => env('APP_URL').'/storage/avatars',
-        //         'visibility' => 'public',
-        //         'throw' => false,
-        //     ],
-        // ],
     }
 
-    public function update(array $data, $id)
+    public function update(array $data, int $id)
     {
         $user = User::findOrFail($id);
         if (isset($data['userAvatar'])) {
@@ -133,7 +114,7 @@ class UserService implements UserServiceContract
         }else{
             $data['password'] = $user->password;
         }
-        
+
         if (isset($data['permission_ids'])) {
             $permissions = SpatieModelsPermission::find($data['permission_ids']);
             $user->syncPermissions($permissions);

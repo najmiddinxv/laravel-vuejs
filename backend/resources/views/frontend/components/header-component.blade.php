@@ -52,6 +52,39 @@ function renderMenu($menu) {
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
+                    <li class="login">
+                        @auth
+                        <div style="display: flex;align-items:center">
+                            <form action="{{route('userProfile.auth.logout')}}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button class="btn btn-danger" >
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Logout
+                                </button>
+                            </form>
+                            @if (request()->routeIs('userProfile.*'))
+                            <div>
+                                <a href="{{ route('frontend.index') }}" class="btn btn-success">saytga qaytish</a>
+                             </div>
+                            @else
+                            <a href="{{route('userProfile.index')}}" class="btn btn-success">
+                                profile
+                            </a>
+                            @endif
+                        </div>
+
+                        @else
+
+                        <a href="{{route('userProfile.auth.login')}}" title="login" class="btn btn-success">
+                            login
+                        </a>
+                        <a href="{{route('userProfile.auth.register')}}" title="register" class="btn btn-success">
+                            register
+                        </a>
+
+                        @endauth
+                    </li>
                     <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
                 </ul>
