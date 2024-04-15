@@ -6,18 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('album_id')
+            $table->foreignId('category_id')
                 ->constrained(
-                    table:'albums',
+                    table:'categories',
                     column:'id',
-                    indexName:'images_album_id'
+                    indexName:'images_category_id'
                 )->onUpdate('no action');
 
             // $table->foreignId('category_id')->constrained(
@@ -43,9 +40,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('images');
