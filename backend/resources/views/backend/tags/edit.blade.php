@@ -28,7 +28,6 @@
                                 <option value="">All</option>
                                 <option value="App/Models/News" {{ $tag->tagsable_type == 'App/Models/News' ? 'selected' : '' }}>News</option>
                                 <option value="App/Models/Post" {{ $tag->tagsable_type == 'App/Models/Post' ? 'selected' : '' }}>Post</option>
-                                <option value="App/Models/Album" {{ $tag->tagsable_type == 'App/Models/Album' ? 'selected' : '' }}>Album</option>
                                 <option value="App/Models/Image" {{ $tag->tagsable_type == 'App/Models/Image' ? 'selected' : '' }}>Image</option>
                                 <option value="App/Models/Page" {{ $tag->tagsable_type == 'App/Models/Page' ? 'selected' : '' }}>Page</option>
                                 <option value="App/Models/Video" {{ $tag->tagsable_type == 'App/Models/Video' ? 'selected' : '' }}>Video</option>
@@ -39,10 +38,10 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group mt-10">
+                        <div class="form-group mt-3">
                             <label for="name_uz" class="form-label">Name uz</label>
                             <input type="text" name="name[uz]" id="name_uz"
-                                class="form-control @error('name') error-data-input @enderror"
+                                class="form-control @error('name.uz') error-data-input @enderror"
                                 value="{{ $tag->getTranslation('name', 'uz'), old('name.uz') }}" required>
                             <span class="error-data">
                                 @error('name.uz')
@@ -50,10 +49,10 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group mt-10">
+                        <div class="form-group mt-3">
                             <label for="name_ru" class="form-label">Name ru</label>
                             <input type="text" name="name[ru]" id="name_ru"
-                                class="form-control @error('name') error-data-input @enderror"
+                                class="form-control @error('name.ru') error-data-input @enderror"
                                 value="{{ $tag->getTranslation('name', 'ru'), old('name.ru') }}">
                             <span class="error-data">
                                 @error('name.ru')
@@ -61,10 +60,10 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group mt-10">
+                        <div class="form-group mt-3">
                             <label for="name_en" class="form-label">Name en</label>
                             <input type="text" name="name[en]" id="name_en"
-                                class="form-control @error('name') error-data-input @enderror"
+                                class="form-control @error('name.en') error-data-input @enderror"
                                 value="{{ $tag->getTranslation('name', 'en'), old('name.en') }}">
                             <span class="error-data">
                                 @error('name.en')
@@ -74,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="mt-3">
                     <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
                 </div>
             </div>

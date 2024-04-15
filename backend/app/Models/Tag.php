@@ -9,7 +9,9 @@ use Spatie\Translatable\HasTranslations;
 
 class Tag extends Model
 {
-    use HasFactory,HasTranslations,TranslateMethods;
+    use HasFactory, HasTranslations, TranslateMethods;
+
+    public $timestamp = false;
 
     public $translatable = ['name'];
 
@@ -17,9 +19,6 @@ class Tag extends Model
         'name',
         'tagsable_type',
     ];
-
-    public $timestamp = false;
-
 
     public function posts()
     {

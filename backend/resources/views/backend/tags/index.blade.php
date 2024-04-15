@@ -82,17 +82,17 @@
                             </div>
                             <div class="form-group mt-10">
                                 <label for="name_uz" class="form-label">Name uz</label>
-                                <input type="text" name="name[uz]" id="name_uz" class="form-control @error('name') error-data-input @enderror" value="{{ old('name.uz') }}" required>
+                                <input type="text" name="name[uz]" id="name_uz" class="form-control @error('name.uz') error-data-input @enderror" value="{{ old('name.uz') }}" required>
                                 <span class="error-data">@error('name.uz'){{$message}}@enderror</span>
                             </div>
                             <div class="form-group mt-10">
                                 <label for="name_ru" class="form-label">Name ru</label>
-                                <input type="text" name="name[ru]" id="name_ru" class="form-control @error('name') error-data-input @enderror" value="{{ old('name.ru') }}">
+                                <input type="text" name="name[ru]" id="name_ru" class="form-control @error('name.ru') error-data-input @enderror" value="{{ old('name.ru') }}">
                                 <span class="error-data">@error('name.ru'){{$message}}@enderror</span>
                             </div>
                             <div class="form-group mt-10">
                                 <label for="name_en" class="form-label">Name en</label>
-                                <input type="text" name="name[en]" id="name_en" class="form-control @error('name') error-data-input @enderror" value="{{ old('name.en') }}">
+                                <input type="text" name="name[en]" id="name_en" class="form-control @error('name.en') error-data-input @enderror" value="{{ old('name.en') }}">
                                 <span class="error-data">@error('name.en'){{$message}}@enderror</span>
                             </div>
                         </div>

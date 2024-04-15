@@ -53,7 +53,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{tag}','edit')->name('edit');
             Route::put('update/{tag}','update')->name('update');
             Route::delete('destroy/{tag}','destroy')->name('destroy');
-         });
+        });
 
     });
 

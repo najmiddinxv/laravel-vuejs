@@ -298,11 +298,79 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['backend.tags.*',]) ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Content</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content {{ request()->routeIs(['backend.tags.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+
+
+
+
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Menu</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>News</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Pages</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Images</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Tinymce files</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Short words</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Contacts</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Contact Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Comments</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Videos</span>
+                </a>
+            </li>
+
+
+
+
           <li>
             <a href="{{ route('backend.tags.index') }}" class="{{ request()->routeIs('backend.tags.*') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Tags</span>
