@@ -31,7 +31,8 @@
                     <th scope="row">{{ $tags->firstItem() + $key }}</th>
                     {{-- <td>{{ $tag->getTranslation('name',app()->getLocale()) }}</td> --}}
                     {{-- https://github.com/mcamara/laravel-localization mana shu ishlatilgani uchun avtomat tarjima qilib yuboradi --}}
-                    <td>{{ $tag->name }}</td>
+                    {{-- <td>{{ $tag->name }}</td> --}}
+                    <td>{{ $tag->hasTranslation('name', app()->getLocale()) ? $tag->getTranslation('name', app()->getLocale()) : '' }}</td>
                     <td>{{ $tag->tagsable_type }}</td>
                     <td>
                         <div style="text-align: center;">
@@ -73,7 +74,6 @@
                                     <option value="">All</option>
                                     <option value="App/Models/News">News</option>
                                     <option value="App/Models/Post">Post</option>
-                                    <option value="App/Models/Album">Album</option>
                                     <option value="App/Models/Image">Image</option>
                                     <option value="App/Models/Page">Page</option>
                                     <option value="App/Models/Video">Video</option>

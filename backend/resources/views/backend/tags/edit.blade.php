@@ -53,7 +53,9 @@
                             <label for="name_ru" class="form-label">Name ru</label>
                             <input type="text" name="name[ru]" id="name_ru"
                                 class="form-control @error('name.ru') error-data-input @enderror"
-                                value="{{ $tag->getTranslation('name', 'ru'), old('name.ru') }}">
+                                {{-- value="{{ $tag->getTranslation('name', 'ru'), old('name.ru') }}" --}}
+                                value="{{ $tag->hasTranslation('name', 'ru') ? $tag->getTranslation('name', 'ru') : '', old('name.ru') }}"
+                                >
                             <span class="error-data">
                                 @error('name.ru')
                                     {{ $message }}
@@ -64,7 +66,9 @@
                             <label for="name_en" class="form-label">Name en</label>
                             <input type="text" name="name[en]" id="name_en"
                                 class="form-control @error('name.en') error-data-input @enderror"
-                                value="{{ $tag->getTranslation('name', 'en'), old('name.en') }}">
+                                {{-- value="{{ $tag->getTranslation('name', 'en'), old('name.en') }}" --}}
+                                value="{{ $tag->hasTranslation('name', 'en') ? $tag->getTranslation('name', 'en') : '', old('name.en') }}"
+                                >
                             <span class="error-data">
                                 @error('name.en')
                                     {{ $message }}
