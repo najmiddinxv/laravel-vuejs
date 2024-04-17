@@ -40,7 +40,7 @@ class TagController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('backend.tags.index')->with('success','tags ' . __('lang.successfully created'));
+        return redirect()->route('backend.tags.index')->with('success','tags ' . __('lang.successfully_created'));
     }
 
     public function edit(Tag $tag)
@@ -71,12 +71,12 @@ class TagController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('backend.tags.index')->with('success','tags ' . __('lang.successfully updated'));
+        return redirect()->route('backend.tags.index')->with('success','tags ' . __('lang.successfully_updated'));
     }
 
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return redirect()->back()->with('success','tag muvaffaqiyatli o\'chirildi');
+        return redirect()->back()->with('success',__('lang.successfully_deleted'));
     }
 }

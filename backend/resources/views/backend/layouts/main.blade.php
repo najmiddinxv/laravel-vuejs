@@ -298,11 +298,11 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['backend.tags.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*','backend.words.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Content</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*','backend.words.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
 
 
 
@@ -343,8 +343,8 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
-                <i class="bi bi-circle"></i><span>Short words</span>
+                <a href="{{ route('backend.words.index') }}" class="{{ request()->routeIs('backend.words.*') ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Words</span>
                 </a>
             </li>
             <li>

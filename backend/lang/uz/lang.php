@@ -11,5 +11,8 @@ return [
     'actions' => 'Amallar',
     'update' => 'Tahrirlash',
     'total' => 'Jami',
-
+    'successfully_updated' => 'muvaffaqiyatli tahrirlandi',
+    'successfully_created' => 'muvaffaqiyatli yaratildi',
+    'successfully_deleted' => 'muvaffaqiyatli o\'chirildi',
+    'successfully_deleted_all' => 'barchasi muvaffaqiyatli o\'chirildi',
 ];

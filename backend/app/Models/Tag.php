@@ -11,7 +11,7 @@ class Tag extends Model
 {
     use HasFactory, HasTranslations, TranslateMethods;
 
-    public $timestamp = false;
+    // public $timestamps = false;
 
     public $translatable = ['name'];
 

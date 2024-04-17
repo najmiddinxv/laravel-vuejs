@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\UserConroller;
+use App\Http\Controllers\Backend\WordController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -53,6 +54,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{tag}','edit')->name('edit');
             Route::put('update/{tag}','update')->name('update');
             Route::delete('destroy/{tag}','destroy')->name('destroy');
+        });
+        Route::prefix('words')->name('words.')->controller(WordController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{word}','edit')->name('edit');
+            Route::put('update/{word}','update')->name('update');
+            Route::delete('destroy/{word}','destroy')->name('destroy');
         });
 
     });
