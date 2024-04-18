@@ -89,7 +89,7 @@
 
                         <div class="form-group mt-3">
                             <label for="categoryable_type" class="form-label">Categoryable Type</label>
-                            <select class="form-select" name="categoryable_type" id="categoryable_type" required="">
+                            <select class="form-select" name="categoryable_type" id="categoryable_type">
                                 {{-- <option selected="" disabled="" value="">---------</option> --}}
                                 <option value="">All</option>
                                 <option value="App/Models/News" {{ $category->categoryable_type == 'App/Models/News' ? 'selected' : '' }}>News</option>
