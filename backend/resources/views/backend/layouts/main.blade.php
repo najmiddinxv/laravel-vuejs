@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Backend - @yield('title')</title>
+    <title>Backend @yield('title')</title>
 
     <meta name="description" content="Deluck - Business Agency & Corporate Template">
     <meta name="keywords" content="website, blog, foo, bar">
@@ -73,7 +73,7 @@
           </a>
         </li><!-- End Search Icon-->
 
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -99,48 +99,6 @@
               </div>
             </li>
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
             </li>
@@ -148,8 +106,7 @@
           </ul><!-- End Notification Dropdown Items -->
 
         </li>
-         --}}
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
@@ -178,40 +135,12 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
             <li class="dropdown-footer">
               <a href="#">Show all messages</a>
             </li>
 
           </ul>
-        </li> --}}
+        </li>
           <li class="nav-item dropdown  pe-3">
               <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                   <span class="d-none d-md-block dropdown-toggle ps-2"> {{ app()->getLocale() }}</span>
@@ -298,47 +227,47 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['backend.tags.*','backend.words.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Content</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*','backend.words.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
 
 
 
 
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="{{ route('backend.categories.index') }}" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Categories</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Menu</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>News</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Posts</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Pages</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Images</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Tinymce files</span>
                 </a>
             </li>
@@ -348,22 +277,22 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Contacts</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Contact Subjects</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Comments</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend.categories.*') ? 'active' : '' }}">
+                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Videos</span>
                 </a>
             </li>

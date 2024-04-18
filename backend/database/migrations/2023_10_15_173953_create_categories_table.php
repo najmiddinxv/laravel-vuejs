@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->string('image')->nullable();
             $table->integer('order')->nullable();;
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

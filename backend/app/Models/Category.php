@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
@@ -21,49 +22,10 @@ class Category extends Model
         'status',
     ];
 
-     //attributs
-     public function getTestAttribute()
-     {
-         return 'bu test append va shu category nomi : '. $this->name;
-     }
-
-     // protected $with = ['user'];
-     // protected $appends = ['Func];
-
-
-     // public function customer():BelongsTo
-     // {
-     //     return $this->belongsTo(User::class,'customer_id','id');
-     // }
-
-     // protected $casts = [
-     //     'images' => 'array',
-     //     'from' => 'array',
-     //     'to' => 'array',
-     // ];
-
-     // public function setDateOfOrderAttribute($value)
-     // {
-     //     $this->attributes['date_of_order'] = date("Y-m-d", strtotime($value));
-     // }
-
-     // public function getDateOfOrderAttribute($value)
-     // {
-     //     return date("d.m.Y", strtotime($value));
-     // }
-
-
-     // function name() : Attribute
-     // {
-     //     $locale = app()->getLocale();
-
-     //     return Attribute::make(
-     //         get: fn ($value) => $value[$locale],
-     //         set: fn ($value) => [$locale => $value],
-     //     );
-     // }
-
-
+    public function parent():BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
      //=============================translate===================================
      //translate uchun
      public $translatable = ['name']; // bu web uchun
@@ -74,10 +36,10 @@ class Category extends Model
      // bazada shu tartibda saqlanaypti
      //postmanda headerdan Accept-Language:uz qilib jonatilayapti
 
-     public function getNameAttribute($value)
-     {
-         return $this->getTranslatedAttribute($value);
-     }
+    //  public function getNameAttribute($value)
+    //  {
+    //      return $this->getTranslatedAttribute($value);
+    //  }
     //har bitta columnni nomini shunda yozish kerak tarjima uchun
     //  public function getIconAttribute($value)
     //  {
@@ -121,6 +83,53 @@ class Category extends Model
      *
      *
      */
+
+
+     //attributs
+    //  public function getTestAttribute()
+    //  {
+    //      return 'bu test append va shu category nomi : '. $this->name;
+    //  }
+
+     // protected $with = ['user'];
+     // protected $appends = ['Func];
+
+
+     // public function customer():BelongsTo
+     // {
+     //     return $this->belongsTo(User::class,'customer_id','id');
+     // }
+
+     // protected $casts = [
+     //     'images' => 'array',
+     //     'from' => 'array',
+     //     'to' => 'array',
+     // ];
+
+     // public function setDateOfOrderAttribute($value)
+     // {
+     //     $this->attributes['date_of_order'] = date("Y-m-d", strtotime($value));
+     // }
+
+     // public function getDateOfOrderAttribute($value)
+     // {
+     //     return date("d.m.Y", strtotime($value));
+     // }
+
+
+     // function name() : Attribute
+     // {
+     //     $locale = app()->getLocale();
+
+     //     return Attribute::make(
+     //         get: fn ($value) => $value[$locale],
+     //         set: fn ($value) => [$locale => $value],
+     //     );
+     // }
+
+
+
+
 
 
     //  public $translatedAttributes = ['name', 'slug', 'description'];
