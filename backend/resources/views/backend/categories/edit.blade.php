@@ -13,11 +13,20 @@
             </ol>
         </nav>
     </div>
-    <form action="{{ route('backend.words.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <x-alert-message-component></x-alert-message-component>
+    <form action="{{ route('backend.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-
-
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-primary">
@@ -63,31 +72,55 @@
                 <div class="card card-primary">
                     <div class="card-body">
 
-                        <div class="form-group mt-3">
+                        <div class="form-group mt-1">
                             <label for="image" class="form-label">parent</label>
                             <select class="form-select" aria-label="Default select example" name="parent_id">
                                 <option value="">select parent</option>
-                                <option value="0">no active</option>
-                                <option value="1">active</option>
+                                @foreach ($categories as $category_item)
+                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $category->parent?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
+                                @endforeach
                             </select>
+                        </div>
+
+                        {{-- <ul>
+                            @foreach($menus as $menu)
+                                <li>
+                                    <a href="{{ $menu->url }}">{{ $menu->name }}</a>
+                                    @if($menu->children->isNotEmpty())
+                                        <ul>
+                                            @foreach($menu->children as $childMenu)
+                                                <li><a href="{{ $childMenu->url }}">{{ $childMenu->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul> --}}
+
+                        <div class="form-group mt-3">
+                            <label for="categoryable_type" class="form-label">Categoryable Type</label>
+                            <select class="form-select" name="categoryable_type" id="categoryable_type" required="">
+                                {{-- <option selected="" disabled="" value="">---------</option> --}}
+                                <option value="">All</option>
+                                <option value="App/Models/News" {{ $category->categoryable_type == 'App/Models/News' ? 'selected' : '' }}>News</option>
+                                <option value="App/Models/Post" {{ $category->categoryable_type == 'App/Models/Post' ? 'selected' : '' }}>Post</option>
+                                <option value="App/Models/Image" {{ $category->categoryable_type == 'App/Models/Image' ? 'selected' : '' }}>Image</option>
+                                <option value="App/Models/Page" {{ $category->categoryable_type == 'App/Models/Page' ? 'selected' : '' }}>Page</option>
+                                <option value="App/Models/Video" {{ $category->categoryable_type == 'App/Models/Video' ? 'selected' : '' }}>Video</option>
+                            </select>
+                            <span class="error-data">
+                                @error('categoryable_type')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="image" class="form-label">category type</label>
-                            <select class="form-select" aria-label="Default select example" name="parent_id">
-                                <option value="">select parent</option>
-                                <option value="0">no active</option>
-                                <option value="1">active</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
                             <label for="status" class="form-label">status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
                                 <option value="">select status</option>
-                                <option value="0">no active</option>
-                                <option value="1">active</option>
+                                <option value="0" {{ $category->status == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="1" {{ $category->status == 1 ? 'selected' : '' }}>active</option>
                             </select>
                         </div>
                         <div class="form-group mt-3">
@@ -117,6 +150,8 @@
                             <label for="image" class="form-label">image</label>
                             <input type="file" name="image" id="image"
                                 class="form-control @error('image') error-data-input @enderror">
+                            <img id="previewImage" src="{{ Storage::url($category->image['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
+
                             <span class="error-data">
                                 @error('image')
                                     {{ $message }}
@@ -129,15 +164,21 @@
         </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
-
         </div>
-
     </form>
 @endsection
 @section('scripts')
     <script>
         $(document).ready(function(e) {
+            $('#image').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImage').attr('src', e.target.result);
+                    $('#previewImage').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
 
+            });
         });
     </script>
 @endsection

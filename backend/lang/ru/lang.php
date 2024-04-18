@@ -10,6 +10,7 @@ return [
     'name' => 'Название',
     'actions' => 'Действия',
     'update' => 'Редактирование',
+    'edit' => 'Редактирование',
     'toal' => 'Общий',
     'successful_updated' => 'успешно обновлено',
     'successful_created' => 'успешно создано',

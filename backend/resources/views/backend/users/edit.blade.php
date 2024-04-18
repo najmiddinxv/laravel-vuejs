@@ -95,7 +95,7 @@
                                 @ can('create')
                                 create
                                 @ endcan
-                                
+
                                 yoki roleni ham tekshirsak bo'ladi kerakli joyda
                                 @ role('admin')
                                 create
@@ -201,7 +201,7 @@
         }
         reader.readAsDataURL(this.files[0]);
 
-    });
+        });
 
     });
 </script>

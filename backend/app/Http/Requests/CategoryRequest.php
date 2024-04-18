@@ -18,7 +18,8 @@ class CategoryRequest extends BaseFormRequest
     {
         return [
             'parent_id' => 'nullable|integer',
-            'name' => 'required|string|max:255',
+            'name.uz' => 'required|string|max:255',
+            'name.*' => ['nullable','string','max:255'],
             'category_type' => 'nullable|string|max:255',
             'icon' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
@@ -31,10 +32,11 @@ class CategoryRequest extends BaseFormRequest
     {
         return [
             'parent_id' => 'nullable|integer',
-            'name' => 'required|string|max:255',
+            'name.uz' => 'required|string|max:255',
+            'name.*' => ['nullable','string','max:255'],
             'category_type' => 'nullable|string|max:255',
             'icon' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'order' => 'nullable|integer',
             'status' => 'nullable|integer',
         ];

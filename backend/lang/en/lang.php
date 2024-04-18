@@ -10,6 +10,7 @@ return [
     'name' => 'name',
     'actions' => 'actions',
     'update' => 'update',
+    'edit' => 'edit',
     'total' => 'Total',
     'successfully_updated' => 'successfully updated',
     'successfully_created' => 'successfully created',

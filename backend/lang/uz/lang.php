@@ -10,6 +10,7 @@ return [
     'name' => 'Nomi',
     'actions' => 'Amallar',
     'update' => 'Tahrirlash',
+    'edit' => 'Tahrirlash',
     'total' => 'Jami',
     'successfully_updated' => 'muvaffaqiyatli tahrirlandi',
     'successfully_created' => 'muvaffaqiyatli yaratildi',

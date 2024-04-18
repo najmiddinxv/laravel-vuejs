@@ -131,15 +131,15 @@ class UserConroller extends Controller
 
             //rasm kesilib yuklanayapti
             $imageR = new ImageResize($userAvatar->getRealPath());
-            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
-            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
             $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
 
             //nomlari bazaga saqlanayapti
             $data['avatar'] = [
                 'large' =>  $userAvatarLargeHashName,
-                'medium' => $userAvatarSmallHashName,
-                'small' =>  $userAvatarMeduimHashName,
+                'medium' => $userAvatarMeduimHashName,
+                'small' =>  $userAvatarSmallHashName,
             ];
 
 
