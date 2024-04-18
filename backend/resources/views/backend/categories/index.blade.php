@@ -11,8 +11,7 @@
         <li class="breadcrumb-item active">Category</li>
       </ol>
       <div>
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create-word">Create</button>
-        {{-- <a href="{{ route('backend.roles.create') }}" class="btn btn-success">create</a> --}}
+        <a href="{{ route('backend.categories.create') }}" class="btn btn-success">{{ __('lang.create') }}</a>
       </div>
     </nav>
 </div>
@@ -48,10 +47,9 @@
                     {{-- <td>{{ $category->name }}</td> --}}
                     {{-- <td>{{ $category->hasTranslation('name', app()->getLocale()) ? $word->getTranslation('name', app()->getLocale()) : '' }}</td> --}}
                     <td>{{ $category->icon }}</td>
-                    <td>{{ $category->image }}</td>
+                    <td style="text-align: center"><img src="{{ Storage::url($category->image['medium'] ?? '-') }}" alt="img" width="20%"></td>
                     <td>{{ $category->order }}</td>
                     <td>{!! $category->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
-
                     <td>
                         <div style="text-align: center;">
                             <a href="{{ route('backend.categories.edit',['category'=>$category->id]) }}" class="btn btn-primary" title="update">

@@ -65,14 +65,14 @@ class UserConroller extends Controller
             // $data['avatar'] = "/{$path}";
 
             $imageR = new ImageResize($userAvatar->getRealPath());
-            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
-            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
             $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
+            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
+            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
 
             $data['avatar'] = [
                 'large' => $userAvatarLargeHashName,
-                'medium' => $userAvatarSmallHashName,
-                'small' => $userAvatarMeduimHashName,
+                'medium' => $userAvatarMeduimHashName,
+                'small' => $userAvatarSmallHashName,
                 // 'large' => '/storage'.$userAvatarLargeHashName,
                 // 'medium' => '/storage'.$userAvatarSmallHashName,
                 // 'small' => '/storage'.$userAvatarMeduimHashName,

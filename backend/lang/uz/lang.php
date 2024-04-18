@@ -9,6 +9,7 @@ return [
     'title' => 'Sarlavha',
     'name' => 'Nomi',
     'actions' => 'Amallar',
+    'create' => 'Yaratish',
     'update' => 'Tahrirlash',
     'edit' => 'Tahrirlash',
     'total' => 'Jami',
