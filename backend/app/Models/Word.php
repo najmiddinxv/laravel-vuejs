@@ -12,8 +12,6 @@ class Word extends Model
 {
     use HasFactory, HasTranslations, TranslateMethods, EscapeUniCodeJson;
 
-    // public $timestamps = false;
-
     public $translatable = ['value'];
 
     protected $fillable = [

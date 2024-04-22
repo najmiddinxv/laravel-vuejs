@@ -8,12 +8,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Services\ImageUploadService;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    public function __construct(protected ImageUploadService $imageUploadService){}
+    public function __construct(protected FileUploadService $fileUploadService){}
 
     public function index()
     {
@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
         $image = $data['image'];
         if (isset($image)) {
-            $data['image'] = $this->imageUploadService->upload($image, '/uploads/categories');
+            $data['image'] = $this->fileUploadService->imageUpload($image, '/uploads/categories');
         }
 
         Category::create($data);
@@ -58,8 +58,8 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $this->imageUploadService->delete($category->image);
-            $data['image'] = $this->imageUploadService->upload($request->file('image'), '/uploads/categories');
+            $this->fileUploadService->imageDelete($category->image);
+            $data['image'] = $this->fileUploadService->imageUpload($request->file('image'), '/uploads/categories');
         }
         $category->update($data);
         return back()->with('success', 'category ' . __('lang.successfully_updated'));

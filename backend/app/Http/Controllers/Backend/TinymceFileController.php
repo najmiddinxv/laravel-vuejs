@@ -10,7 +10,10 @@ class TinymceFileController extends Controller
 {
     public function index()
     {
-        //
+        $tinymceFiles = TinymceFile::orderBy('id','desc')->paginate(30);
+		return view('backend.tinymceFiles.index',[
+			'tinymceFiles'=>$tinymceFiles,
+		]);
     }
 
     public function create()
@@ -19,11 +22,6 @@ class TinymceFileController extends Controller
     }
 
     public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(TinymceFile $tinymceFile)
     {
         //
     }
@@ -40,6 +38,7 @@ class TinymceFileController extends Controller
 
     public function destroy(TinymceFile $tinymceFile)
     {
-        //
+        $tinymceFile->delete();
+        return back()->with('success', 'File ' . __('lang.successfully_deleted'));
     }
 }

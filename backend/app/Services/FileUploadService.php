@@ -6,9 +6,9 @@ use App\Helpers\ImageResize;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ImageUploadService
+class FileUploadService
 {
-    public function upload($file, $basePath)
+    public function imageUpload($file, $basePath)
     {
         $imagePath = $basePath . '/' . now()->format('Y/m/d');
         if (!Storage::exists($imagePath)) {
@@ -32,10 +32,29 @@ class ImageUploadService
         ];
     }
 
-    public function delete($image)
+    public function imageDelete($image)
     {
         Storage::delete($image['large'] ?? '');
         Storage::delete($image['medium'] ?? '');
         Storage::delete($image['small'] ?? '');
     }
+
+
+    public function fileUpload($file, $basePath)
+    {
+        $filePath = $basePath . '/' . now()->format('Y/m/d');
+        if (!Storage::exists($filePath)) {
+            Storage::makeDirectory($filePath, 0755, true, true);
+        }
+
+        $fileHashName = $filePath.'/'.md5(Str::random(10) . time()) . '.' . $file->getClientOriginalExtension();
+
+        return $fileHashName;
+    }
+
+    public function fileDelete($file)
+    {
+        Storage::delete($file ?? '');
+    }
+
 }

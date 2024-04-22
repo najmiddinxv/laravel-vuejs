@@ -12,8 +12,6 @@ class Tag extends Model
 {
     use HasFactory, HasTranslations, TranslateMethods, EscapeUniCodeJson;
 
-    // public $timestamps = false;
-
     public $translatable = ['name'];
 
     protected $fillable = [

@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('tinymce_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('no action');
-            $table->string('name')->nullable();
-            $table->string('file_hash_name');
-            $table->bigInteger('size')->nullable();
-            $table->string('file_type')->nullable();
-            $table->integer('created_by')->nullable();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('path');
+            $table->string('mime_type');
+            $table->unsignedBigInteger('size');
+            $table->string('thumbnail')->nullable();
+            $table->unsignedInteger('download_count')->default(0);
+            $table->string('status')->default(1);
+            $table->unsignedBigInteger('uploaded_by');
             $table->timestamps();
         });
     }
