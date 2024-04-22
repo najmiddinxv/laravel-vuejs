@@ -18,6 +18,7 @@ return new class extends Migration
             $table->jsonb('url');
             $table->integer('position');
             $table->integer('menu_order')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

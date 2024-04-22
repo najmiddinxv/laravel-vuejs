@@ -47,7 +47,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        $categories = Category::with('children')->whereNull('parent_id')->get();
+        $categories = Category::all();
         return view('backend.categories.edit',[
 			'categories' => $categories,
 			'category' => $category,
@@ -57,7 +57,6 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
         $data = $request->validated();
-        // if (isset($data['image'])) {
         if ($request->hasFile('image')) {
             $this->imageUploadService->delete($category->image);
             $data['image'] = $this->imageUploadService->upload($request->file('image'), '/uploads/categories');

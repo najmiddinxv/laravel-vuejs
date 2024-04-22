@@ -227,11 +227,11 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*','backend.menu.*',]) ? '' : 'collapsed' }}" data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Content</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
+        <ul id="content-nav" class="nav-content {{ request()->routeIs(['backend.tags.*','backend.words.*','backend.categories.*','backend.menu.*',]) ? 'show' : 'collapse' }}  " data-bs-parent="#sidebar-nav">
 
 
 
@@ -242,7 +242,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                <a href="{{ route('backend.menu.index') }}" class="{{ request()->routeIs('backend.menu.*') ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Menu</span>
                 </a>
             </li>

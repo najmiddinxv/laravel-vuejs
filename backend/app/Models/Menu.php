@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\EscapeUniCodeJson;
+use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class Menu extends Model
 {
-    use HasFactory;
+    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
 
     protected $table = 'menu';
 
@@ -18,13 +21,20 @@ class Menu extends Model
         'url',
         'position',
         'menu_order',
+        'status',
     ];
 
-    public function children():HasMany
+    public $translatable = ['name','url'];
+
+    public function children()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
 
 
 }

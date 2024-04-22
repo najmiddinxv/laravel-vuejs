@@ -72,21 +72,6 @@
                             </select>
                         </div>
 
-                        {{-- <ul>
-                            @foreach($menus as $menu)
-                                <li>
-                                    <a href="{{ $menu->url }}">{{ $menu->name }}</a>
-                                    @if($menu->children->isNotEmpty())
-                                        <ul>
-                                            @foreach($menu->children as $childMenu)
-                                                <li><a href="{{ $childMenu->url }}">{{ $childMenu->name }}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul> --}}
-
                         <div class="form-group mt-3">
                             <label for="categoryable_type" class="form-label">Categoryable Type</label>
                             <select class="form-select" name="categoryable_type" id="categoryable_type">

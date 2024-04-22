@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TagController;
@@ -71,6 +72,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{category}','edit')->name('edit');
             Route::put('update/{category}','update')->name('update');
             Route::delete('destroy/{category}','destroy')->name('destroy');
+        });
+        Route::prefix('menu')->name('menu.')->controller(MenuController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{menu}','edit')->name('edit');
+            Route::put('update/{menu}','update')->name('update');
+            Route::delete('destroy/{menu}','destroy')->name('destroy');
         });
 
     });
