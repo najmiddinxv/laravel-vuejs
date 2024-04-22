@@ -28,7 +28,6 @@
                 <th>{{__('lang.path')}}</th>
                 <th>{{__('lang.mime_type')}}</th>
                 <th>{{__('lang.size')}}</th>
-                <th>{{__('lang.thumbnail')}}</th>
                 <th>{{__('lang.download_count')}}</th>
                 <th>{{__('lang.status')}}</th>
                 <th>{{__('lang.uploaded_by')}}</th>
@@ -49,7 +48,6 @@
                     @endif
                     <td>{{ $tinymceFile->mime_type }}</td>
                     <td>{{ $tinymceFile->size }}</td>
-                    <td style="text-align: center"><img src="{{ Storage::url($tinymceFile->thumbnail) }}" alt="img" width="20%"></td>
                     <td>{{ $tinymceFile->download_count }}</td>
                     <td>{!! $tinymceFile->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{{ $tinymceFile->uploaded_by }}</td>

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TinymceFileRequest;
+use App\Models\Category;
 use App\Models\TinymceFile;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 
 class TinymceFileController extends Controller
 {
+    public function __construct(protected FileUploadService $fileUploadService){}
+
     public function index()
     {
         $tinymceFiles = TinymceFile::orderBy('id','desc')->paginate(30);
@@ -18,12 +23,22 @@ class TinymceFileController extends Controller
 
     public function create()
     {
-        //
+        $categories = Category::where('categoryable_type','App\Models\TinymceFile')->orderBy('id','desc')->get();
+        return view('backend.tinymceFiles.create',[
+            'categories' => $categories,
+		]);
     }
 
-    public function store(Request $request)
+    public function store(TinymceFileRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['path'] = $this->fileUploadService->imageUpload($data['file'], '/uploads/tinymceFiles');
+        $data['mime_type'] = $data['file']->getClientMimeType();
+        // $data['size'] = $data['file']->getSize();
+        $data['size'] = $data['file']->getClientOriginalExtension();
+        $data['uploaded_by'] = auth()->user()->id;
+        TinymceFile::create($data);
+        return redirect()->route('backend.tinymceFiles.index')->with('file ',__('lang.successfully_created'));
     }
 
     public function edit(TinymceFile $tinymceFile)

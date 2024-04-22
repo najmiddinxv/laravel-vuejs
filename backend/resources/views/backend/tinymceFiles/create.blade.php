@@ -7,13 +7,13 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.categories.index') }}">Categories</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.tinymceFiles.index') }}">Files</a></li>
                 <li class="breadcrumb-item active">{{ __('lang.create') }}</li>
             </ol>
         </nav>
     </div>
     <x-alert-message-component></x-alert-message-component>
-    <form action="{{ route('backend.categories.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backend.tinymceFiles.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-8">
@@ -53,6 +53,8 @@
                                 @enderror
                             </span>
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -61,9 +63,9 @@
                     <div class="card-body">
 
                         <div class="form-group mt-1">
-                            <label for="image" class="form-label">parent</label>
-                            <select class="form-select" aria-label="Default select example" name="parent_id">
-                                <option value="">select parent</option>
+                            <label for="category_id" class="form-label">Category</label>
+                            <select class="form-select" aria-label="Default select example" name="category_id" id="category_id">
+                                <option value="">select category</option>
                                 @foreach ($categories as $category_item)
                                     <option value="{{ $category_item->id }}">{{ $category_item->name }}</option>
                                 @endforeach
@@ -71,60 +73,11 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="categoryable_type" class="form-label">Categoryable Type</label>
-                            <select class="form-select" name="categoryable_type" id="categoryable_type">
-                                {{-- <option selected="" disabled="" value="">---------</option> --}}
-                                <option value="">All</option>
-                                <option value="App/Models/News">News</option>
-                                <option value="App/Models/Post">Post</option>
-                                <option value="App/Models/Image">Image</option>
-                                <option value="App/Models/Page">Page</option>
-                                <option value="App/Models/Video">Video</option>
-                            </select>
+                            <label for="file" class="form-label">image</label>
+                            <input type="file" name="file" id="file"
+                                class="form-control @error('file') error-data-input @enderror">
                             <span class="error-data">
-                                @error('categoryable_type')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="status" class="form-label">status</label>
-                            <select class="form-select" aria-label="Default select example" name="status" id="status">
-                                <option value="1">active</option>
-                                <option value="0">no active</option>
-                            </select>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="order" class="form-label">Order</label>
-                            <input type="number" name="order" id="order"
-                                class="form-control @error('order') error-data-input @enderror"
-                                value="{{ old('order') }}" >
-                            <span class="error-data">
-                                @error('order')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="icon" class="form-label">icon</label>
-                            <input type="text" name="icon" id="icon"
-                                class="form-control @error('icon') error-data-input @enderror"
-                                value="{{ old('icon') }}" >
-                            <span class="error-data">
-                                @error('icon')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="image" class="form-label">image</label>
-                            <input type="file" name="image" id="image"
-                                class="form-control @error('image') error-data-input @enderror">
-                            <img id="previewImage" src="" alt="Img" style="max-width: 100%;">
-
-                            <span class="error-data">
-                                @error('image')
+                                @error('file')
                                     {{ $message }}
                                 @enderror
                             </span>
@@ -141,15 +94,7 @@
 @section('scripts')
     <script>
         $(document).ready(function(e) {
-            $('#image').on('change',function(){
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    $('#previewImage').attr('src', e.target.result);
-                    $('#previewImage').css({'display':'block'});
-                }
-                reader.readAsDataURL(this.files[0]);
 
-            });
         });
     </script>
 @endsection

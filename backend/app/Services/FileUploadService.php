@@ -47,9 +47,22 @@ class FileUploadService
             Storage::makeDirectory($filePath, 0755, true, true);
         }
 
-        $fileHashName = $filePath.'/'.md5(Str::random(10) . time()) . '.' . $file->getClientOriginalExtension();
+        $fileExt = $file->getClientOriginalExtension();
 
-        return $fileHashName;
+        $fileHashName = $filePath.'/'.md5(Str::random(10) . time()) . '.' . $fileExt;
+        if($fileExt == 'jpg' || $fileExt == 'jpeg' || $fileExt == 'png' || $fileExt == 'gif'){
+            $imageR = new ImageResize($file->getRealPath());
+            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($fileHashName));
+            return $fileHashName;
+        }else{
+            $storedFile = Storage::putFileAs(
+                $filePath,
+                $file,
+                $fileHashName
+            );
+            return $storedFile;
+        }
+
     }
 
     public function fileDelete($file)
