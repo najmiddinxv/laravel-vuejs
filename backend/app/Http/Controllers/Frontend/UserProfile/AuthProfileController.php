@@ -34,7 +34,7 @@ class AuthProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('userProfile.auth.login'); // Redirect to the user dashboard after registration
+        return redirect()->route('userProfile.auth.login');
     }
 
     public function showLoginForm()
