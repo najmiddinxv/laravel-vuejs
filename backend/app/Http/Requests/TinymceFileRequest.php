@@ -32,7 +32,7 @@ class TinymceFileRequest extends BaseFormRequest
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
             'description.*' => ['nullable','string','max:255'],
-            'files.*' => 'nullable|mimes:jpeg,png,jpg,gif,doc,docx,xls,xlsx,txt,mp4,pdf,mp3|max:102400',
+            // 'files.*' => 'nullable|mimes:jpeg,png,jpg,gif,doc,docx,xls,xlsx,txt,mp4,pdf,mp3|max:102400',
             'status' => 'nullable|integer',
         ];
     }

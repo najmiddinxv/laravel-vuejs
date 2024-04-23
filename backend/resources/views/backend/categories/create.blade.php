@@ -87,13 +87,7 @@
                                 @enderror
                             </span>
                         </div>
-                        <div class="form-group mt-3">
-                            <label for="status" class="form-label">status</label>
-                            <select class="form-select" aria-label="Default select example" name="status" id="status">
-                                <option value="1">active</option>
-                                <option value="0">no active</option>
-                            </select>
-                        </div>
+                       
                         <div class="form-group mt-3">
                             <label for="order" class="form-label">Order</label>
                             <input type="number" name="order" id="order"

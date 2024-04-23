@@ -24,7 +24,7 @@ class CategoryRequest extends BaseFormRequest
             'icon' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'order' => 'nullable|integer',
-            'status' => 'nullable|integer',
+            // 'status' => 'nullable|integer',
         ];
     }
 

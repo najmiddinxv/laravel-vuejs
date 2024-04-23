@@ -58,9 +58,11 @@ class TinymceFileController extends Controller
 		]);
     }
 
-    public function update(Request $request, TinymceFile $tinymceFile)
+    public function update(TinymceFileRequest $request, TinymceFile $tinymceFile)
     {
-        //
+        $data = $request->validated();
+        $tinymceFile->update($data);
+        return back()->with('success', 'File ' . __('lang.successfully_updated'));
     }
 
     public function destroy(TinymceFile $tinymceFile)

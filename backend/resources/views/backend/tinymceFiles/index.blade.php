@@ -56,7 +56,7 @@
                             {{-- <a href="#" class="btn btn-primary" title="copy">
                                 <i class="bx bx-copy"></i>
                             </a> --}}
-                            <button style="font-size:14px" class="copyFIlePath btn btn-primary" data-filepath="{{ $tinymceFile->path }}">
+                            <button style="font-size:14px" class="copyFIlePath btn btn-primary" data-filepath="{{ "/storage/{$tinymceFile->path}" }}">
                                 <i class="bx bx-copy"></i>
                             </button>
                             <a href="{{ route('backend.tinymceFiles.edit',['tinymceFile'=>$tinymceFile->id]) }}" class="btn btn-primary" title="edit">
@@ -92,11 +92,11 @@
             document.execCommand('copy');
             tempInput.remove();
 
-            $(this).find('i').removeClass('bx-copy').addClass('bi bi-check2');
-
-            setTimeout(function() {
-                $(this).find('i').removeClass('bi bi-check2').addClass('bx bx-copy');
-            }, 1000);
+            $(this).html('<i class="bi bi-check2"></i>');
+            
+            // setTimeout(function(){
+            //     $(this).html('<i class="bx bx-copy"></i>');
+            // }, 1000);
 
             // $(this).text('Copied');
             // console.log('copied : ' + filePathCopied);

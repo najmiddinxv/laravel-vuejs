@@ -35,8 +35,8 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
-        $image = $data['image'];
-        if (isset($image)) {
+        $image = $data['image'] ?? null;
+        if (!is_null($image)) {
             $data['image'] = $this->fileUploadService->imageUpload($image, '/uploads/categories');
         }
 
