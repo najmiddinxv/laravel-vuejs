@@ -32,10 +32,12 @@ class TinymceFileController extends Controller
     public function store(TinymceFileRequest $request)
     {
         $data = $request->validated();
-        $data['path'] = $this->fileUploadService->imageUpload($data['file'], '/uploads/tinymceFiles');
-        $data['mime_type'] = $data['file']->getClientMimeType();
+        $fileUploadServiceResponse = $this->fileUploadService->fileUpload($data['file'], '/uploads/tinymceFiles');
+        $data['path'] = $fileUploadServiceResponse[0];
+        // $data['mime_type'] = $data['file']->getClientMimeType();
         // $data['size'] = $data['file']->getSize();
-        $data['size'] = $data['file']->getClientOriginalExtension();
+        $data['mime_type'] = $data['file']->getClientOriginalExtension();
+        $data['size'] = $fileUploadServiceResponse[1];
         $data['uploaded_by'] = auth()->user()->id;
         TinymceFile::create($data);
         return redirect()->route('backend.tinymceFiles.index')->with('file ',__('lang.successfully_created'));

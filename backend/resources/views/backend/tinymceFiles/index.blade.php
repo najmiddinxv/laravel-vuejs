@@ -42,20 +42,23 @@
                     <td>{{ $tinymceFile->name }}</td>
                     <td>{{ $tinymceFile->description }}</td>
                     @if ($tinymceFile->mime_type == 'jpg' || $tinymceFile->mime_type == 'jpeg' || $tinymceFile->mime_type == 'png')
-                        <td style="text-align: center"><img src="{{ Storage::url($tinymceFile->path) }}" alt="img" width="20%"></td>
+                        <td style="text-align: center"><a href="{{ Storage::url($tinymceFile->path) }}"><img src="{{ Storage::url($tinymceFile->path) }}" alt="img" width="20%"></a></td>
                     @else
                         <td><a href="{{ Storage::url($tinymceFile->path) }}">file</a></td>
                     @endif
                     <td>{{ $tinymceFile->mime_type }}</td>
-                    <td>{{ $tinymceFile->size }}</td>
+                    <td>{{ Number::fileSize($tinymceFile->size); }}</td>
                     <td>{{ $tinymceFile->download_count }}</td>
                     <td>{!! $tinymceFile->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{{ $tinymceFile->uploaded_by }}</td>
                     <td>
                         <div style="text-align: center;">
-                            <a href="#" class="btn btn-primary" title="copy">
+                            {{-- <a href="#" class="btn btn-primary" title="copy">
                                 <i class="bx bx-copy"></i>
-                            </a>
+                            </a> --}}
+                            <button style="font-size:14px" class="copyFIlePath btn btn-primary" data-filepath="{{ $tinymceFile->path }}">
+                                <i class="bx bx-copy"></i>
+                            </button>
                             <a href="{{ route('backend.tinymceFiles.edit',['tinymceFile'=>$tinymceFile->id]) }}" class="btn btn-primary" title="edit">
                                 <i class="bx bx-pencil"></i>
                             </a>
@@ -75,6 +78,30 @@
         {{ $tinymceFiles->links() }}
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+     $(document).ready(function() {
+        $('.copyFIlePath').click(function() {
+            var filePathCopied = $(this).data('filepath');
+            var tempInput = $('<input>');
+
+            tempInput.val(filePathCopied);
+            $('body').append(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            tempInput.remove();
+
+            $(this).find('i').removeClass('bx-copy').addClass('bi bi-check2');
+            setTimeout(function() {
+                $(this).find('i').removeClass('bi bi-check2').addClass('bx bx-copy');
+            }, 5000);
+
+            // $(this).text('Copied');
+            // console.log('copied : ' + filePathCopied);
+        });
+    });
+</script>
 @endsection
 
 
