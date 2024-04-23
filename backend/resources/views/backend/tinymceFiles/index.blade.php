@@ -93,9 +93,10 @@
             tempInput.remove();
 
             $(this).find('i').removeClass('bx-copy').addClass('bi bi-check2');
+
             setTimeout(function() {
                 $(this).find('i').removeClass('bi bi-check2').addClass('bx bx-copy');
-            }, 5000);
+            }, 1000);
 
             // $(this).text('Copied');
             // console.log('copied : ' + filePathCopied);

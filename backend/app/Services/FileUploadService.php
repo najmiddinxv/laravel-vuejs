@@ -51,18 +51,20 @@ class FileUploadService
         $fileExt = $file->getClientOriginalExtension();
 
         $fileHashName = md5(Str::random(10) . time()) . '.' . $fileExt;
-        // $fileAndHashName = $filePath.'/'.md5(Str::random(10) . time()) . '.' . $fileExt;
         $fileAndHashName = $filePath.'/'.$fileHashName;
+
         if($fileExt == 'jpg' || $fileExt == 'jpeg' || $fileExt == 'png' || $fileExt == 'gif'){
             $imageR = new ImageResize($file->getRealPath());
             $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($fileAndHashName));
             $filesize = Storage::size($fileAndHashName);
             // $fileSize = File::size(public_path('images/1461177230.jpg'));
+
             return [$fileAndHashName, $filesize];
         }else{
             $storedFile = '/'.Storage::putFileAs($filePath, $file, $fileHashName);
             // $storedFile = Storage::put($filePath,$fileHashName);
             $filesize = Storage::size($fileAndHashName);
+
             return [$storedFile, $filesize];
         }
     }

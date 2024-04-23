@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TinymceFileRequest;
+use App\Jobs\FileUploadJob;
 use App\Models\Category;
 use App\Models\TinymceFile;
 use App\Services\FileUploadService;
@@ -32,20 +33,29 @@ class TinymceFileController extends Controller
     public function store(TinymceFileRequest $request)
     {
         $data = $request->validated();
-        $fileUploadServiceResponse = $this->fileUploadService->fileUpload($data['file'], '/uploads/tinymceFiles');
-        $data['path'] = $fileUploadServiceResponse[0];
-        // $data['mime_type'] = $data['file']->getClientMimeType();
-        // $data['size'] = $data['file']->getSize();
-        $data['mime_type'] = $data['file']->getClientOriginalExtension();
-        $data['size'] = $fileUploadServiceResponse[1];
-        $data['uploaded_by'] = auth()->user()->id;
-        TinymceFile::create($data);
+
+        foreach ($data['files'] as $fileItem) {
+            $fileUploadServiceResponse = $this->fileUploadService->fileUpload($fileItem, '/uploads/files');
+            $data['path'] = $fileUploadServiceResponse[0];
+            // $data['mime_type'] = $data['file']->getClientMimeType();
+            // $data['size'] = $data['file']->getSize();
+            // $data['mime_type'] = $data['file']->getClientOriginalExtension();
+            $data['mime_type'] = $fileItem->getClientOriginalExtension();
+            $data['size'] = $fileUploadServiceResponse[1];
+            $data['uploaded_by'] = auth()->user()->id;
+            TinymceFile::create($data);
+        }
+
         return redirect()->route('backend.tinymceFiles.index')->with('file ',__('lang.successfully_created'));
     }
 
     public function edit(TinymceFile $tinymceFile)
     {
-        //
+        $categories = Category::where('categoryable_type','App\Models\TinymceFile')->orderBy('id','desc')->get();
+        return view('backend.tinymceFiles.edit',[
+            'categories' => $categories,
+            'tinymceFile' => $tinymceFile,
+		]);
     }
 
     public function update(Request $request, TinymceFile $tinymceFile)
@@ -58,4 +68,5 @@ class TinymceFileController extends Controller
         $tinymceFile->delete();
         return back()->with('success', 'File ' . __('lang.successfully_deleted'));
     }
+
 }

@@ -124,11 +124,10 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="file" class="form-label">image</label>
-                            <input type="file" name="file" id="file"
-                                class="form-control @error('file') error-data-input @enderror">
+                            <label for="files" class="form-label">File</label>
+                            <input type="file" name="files[]" id="files" class="form-control @error('files') error-data-input @enderror" multiple>
                             <span class="error-data">
-                                @error('file')
+                                @error('files')
                                     {{ $message }}
                                 @enderror
                             </span>
