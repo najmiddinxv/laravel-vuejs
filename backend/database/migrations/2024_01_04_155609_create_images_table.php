@@ -30,11 +30,11 @@ return new class extends Migration
             // default restirict oladi
 
             $table->jsonb('name');
-            $table->jsonb('slug');
-            $table->jsonb('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('ext', 50)->nullable();
-            $table->double('size')->nullable();
+            $table->string('path');
+            $table->string('mime_type', 50)->nullable();
+            $table->unsignedBigInteger('size');
+            // $table->unsignedInteger('download_count')->default(0);
+            $table->unsignedBigInteger('uploaded_by');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
