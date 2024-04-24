@@ -20,8 +20,9 @@
 <div class="card">
     <div class="card-body">
 
+        <x-alert-message-component></x-alert-message-component>
         <p>{{__('lang.total')}} : {{ $users->total() }}</p>
-        {{-- <x-alert-component></x-alert-component> --}}
+
 
         <table class="table table-hover table-bordered">
             <thead>
@@ -42,7 +43,7 @@
                     {{-- @dd($user->avatar['large']) --}}
                     <td style="text-align: center">
                         <a href="{{ Storage::disk('public')->url($user->avatar['large'] ?? '-') }}">
-                            <img src="{{ Storage::disk('public')->url($user->avatar['medium'] ?? '-') }}" alt="">
+                            <img src="{{ Storage::disk('public')->url($user->avatar['medium'] ?? '-') }}" alt="" style="width:30%">
                         </a>
                     </td>
                     <td>

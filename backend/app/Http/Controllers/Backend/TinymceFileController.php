@@ -35,7 +35,7 @@ class TinymceFileController extends Controller
         $data = $request->validated();
 
         foreach ($data['files'] as $fileItem) {
-            $fileUploadServiceResponse = $this->fileUploadService->fileUpload($fileItem, '/uploads/files');
+            $fileUploadServiceResponse = $this->fileUploadService->fileAndImageUpload($fileItem, '/uploads/files');
             $data['path'] = $fileUploadServiceResponse[0];
             // $data['mime_type'] = $data['file']->getClientMimeType();
             // $data['size'] = $data['file']->getSize();
@@ -67,6 +67,7 @@ class TinymceFileController extends Controller
 
     public function destroy(TinymceFile $tinymceFile)
     {
+        $this->fileUploadService->fileAndImageDelete($tinymceFile->path);
         $tinymceFile->delete();
         return back()->with('success', 'File ' . __('lang.successfully_deleted'));
     }

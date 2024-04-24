@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Services\Contracts\UserServiceContract;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;
 use Spatie\Permission\Models\Role as SpatieModelsRole;
 
 class UserConroller extends Controller
 {
-    public function index(Request $request)
+    public function __construct(protected FileUploadService $fileUploadService){}
+
+    public function index()
     {
         $users = User::where('id','!=',auth()->user()->id)->orderBy('id','desc')->paginate(50);
         return view('backend.users.index',[
@@ -44,40 +47,9 @@ class UserConroller extends Controller
         $data = $request->validated();
 
         if (isset($data['userAvatar'])) {
-            $userAvatar = $data['userAvatar'];
-            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
-            // $userAvatarPath = '/uploads/users/'.Str::random(10);
-            if (!Storage::exists($userAvatarPath)) {
-                Storage::makeDirectory($userAvatarPath, 0755, true, true);
-                // File::makeDirectory($directory, 0755, true, true);
-            }
-
-            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
-            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
-            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
-            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
-
-            // $path = Storage::putFileAs(
-            //     $userAvatarPath,
-            //     $userAvatar,
-            //     $userAvatarHashName
-            // );
-            // $data['avatar'] = "/{$path}";
-
-            $imageR = new ImageResize($userAvatar->getRealPath());
-            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
-            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
-            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
-
-            $data['avatar'] = [
-                'large' => $userAvatarLargeHashName,
-                'medium' => $userAvatarMeduimHashName,
-                'small' => $userAvatarSmallHashName,
-                // 'large' => '/storage'.$userAvatarLargeHashName,
-                // 'medium' => '/storage'.$userAvatarSmallHashName,
-                // 'small' => '/storage'.$userAvatarMeduimHashName,
-            ];
+            $data['avatar'] = $this->fileUploadService->resizeImageAndUpload($data['userAvatar'], '/uploads/users');
         }
+        // $data['avatar'] = $data['userAvatar'] ? $this->fileUploadService->resizeImageAndUpload($data['userAvatar'], '/uploads/users') : null;
 
         User::create($data);
 
@@ -115,41 +87,10 @@ class UserConroller extends Controller
     {
         $data = $request->validated();
         $user = User::findOrFail($id);
+
         if (isset($data['userAvatar'])) {
-            $userAvatar = $data['userAvatar'];
-            //papaka yaratilayapti
-            $userAvatarPath = '/uploads/users/'.now()->format('Y/m/d');
-            if (!Storage::exists($userAvatarPath)) {
-                Storage::makeDirectory($userAvatarPath, 0755, true, true);
-            }
-
-            //fayl nomi va yo'li generatsiya qilinayapti
-            $userAvatarHashName = md5(Str::random(10).time()).'.'.$userAvatar->getClientOriginalExtension();
-            $userAvatarLargeHashName =  $userAvatarPath.'/l_'.$userAvatarHashName;
-            $userAvatarMeduimHashName = $userAvatarPath.'/m_'.$userAvatarHashName;
-            $userAvatarSmallHashName = $userAvatarPath.'/s_'.$userAvatarHashName;
-
-            //rasm kesilib yuklanayapti
-            $imageR = new ImageResize($userAvatar->getRealPath());
-            $imageR->resizeToBestFit(1920, 1080)->save(Storage::path($userAvatarLargeHashName));
-            $imageR->resizeToBestFit(500, 500)->save(Storage::path($userAvatarMeduimHashName));
-            $imageR->resizeToBestFit(150, 150)->save(Storage::path($userAvatarSmallHashName));
-
-            //nomlari bazaga saqlanayapti
-            $data['avatar'] = [
-                'large' =>  $userAvatarLargeHashName,
-                'medium' => $userAvatarMeduimHashName,
-                'small' =>  $userAvatarSmallHashName,
-            ];
-
-
-            //eski fayllar o'chirilayapti
-            // if (Storage::exists('images/file.jpg')) {
-            // }
-            Storage::delete($user->avatar['large'] ?? '');
-            Storage::delete($user->avatar['medium'] ?? '');
-            Storage::delete($user->avatar['small'] ?? '');
-
+            $this->fileUploadService->resizedImageDelete($user->avatar);
+            $data['avatar'] = $this->fileUploadService->resizeImageAndUpload($data['userAvatar'], '/uploads/users');
         }
 
         if (isset($data['password'])) {

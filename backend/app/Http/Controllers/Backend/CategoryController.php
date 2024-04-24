@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
         $image = $data['image'] ?? null;
         if (!is_null($image)) {
-            $data['image'] = $this->fileUploadService->imageUpload($image, '/uploads/categories');
+            $data['image'] = $this->fileUploadService->resizeImageAndUpload($image, '/uploads/categories');
         }
 
         Category::create($data);
@@ -58,8 +58,8 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $this->fileUploadService->imageDelete($category->image);
-            $data['image'] = $this->fileUploadService->imageUpload($request->file('image'), '/uploads/categories');
+            $this->fileUploadService->resizedImageDelete($category->image);
+            $data['image'] = $this->fileUploadService->resizeImageAndUpload($request->file('image'), '/uploads/categories');
         }
         $category->update($data);
         return back()->with('success', 'category ' . __('lang.successfully_updated'));
@@ -67,6 +67,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $this->fileUploadService->resizedImageDelete($category->image);
         $category->delete();
         return back()->with('success', 'category ' . __('lang.successfully_deleted'));
     }
