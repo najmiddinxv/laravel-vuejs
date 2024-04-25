@@ -25,6 +25,22 @@ function renderMenu($menu) {
 // echo '</ul>';
 
 @endphp
+
+{{-- <ul>
+    @foreach($menus as $menu)
+        <li>
+            <a href="{{ $menu->url }}">{{ $menu->name }}</a>
+            @if($menu->children->isNotEmpty())
+                <ul>
+                    @foreach($menu->children as $childMenu)
+                        <li><a href="{{ $childMenu->url }}">{{ $childMenu->name }}</a></li>
+                    @endforeach
+                </ul>
+            @endif
+        </li>
+    @endforeach
+</ul> --}}
+
 <header id="home">
 
     <!-- Start Navigation -->

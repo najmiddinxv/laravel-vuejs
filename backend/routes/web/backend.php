@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ImageController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
@@ -89,7 +90,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{tinymceFile}','edit')->name('edit');
             Route::put('update/{tinymceFile}','update')->name('update');
             Route::delete('destroy/{tinymceFile}','destroy')->name('destroy');
-            Route::delete('destroy/{tinymceFile}','destroy')->name('destroy');
+        });
+        Route::prefix('images')->name('images.')->controller(ImageController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{image}','edit')->name('edit');
+            Route::put('update/{image}','update')->name('update');
+            Route::delete('destroy/{image}','destroy')->name('destroy');
         });
 
     });

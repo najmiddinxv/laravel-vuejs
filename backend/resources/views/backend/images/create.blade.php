@@ -7,13 +7,13 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.tinymceFiles.index') }}">Files</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.images.index') }}">Image</a></li>
                 <li class="breadcrumb-item active">{{ __('lang.create') }}</li>
             </ol>
         </nav>
     </div>
     <x-alert-message-component></x-alert-message-component>
-    <form action="{{ route('backend.tinymceFiles.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backend.images.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-8">
@@ -38,18 +38,9 @@
                                         <label for="name_uz" class="form-label">Name uz</label>
                                         <input type="text" name="name[uz]" id="name_uz"
                                             class="form-control @error('name.uz') error-data-input @enderror"
-                                            value="{{ old('name.uz') }}" required>
+                                            value="{{ old('name.uz') }}">
                                         <span class="error-data">
                                             @error('name.uz')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <label for="description_uz" class="form-label">Description uz</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ old('description.uz') }}</textarea>
-                                        <span class="error-data">
-                                            @error('description.uz')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -67,15 +58,6 @@
                                             @enderror
                                         </span>
                                     </div>
-                                    <div class="form-group mt-3">
-                                        <label for="description_ru" class="form-label">Description ru</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ old('description.ru') }}</textarea>
-                                        <span class="error-data">
-                                            @error('description.ru')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-en" role="tabpanel" aria-labelledby="en-tab">
                                     <div class="form-group">
@@ -89,19 +71,9 @@
                                             @enderror
                                         </span>
                                     </div>
-                                    <div class="form-group mt-3">
-                                        <label for="description_en" class="form-label">Description en</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ old('description.en') }}</textarea>
-                                        <span class="error-data">
-                                            @error('description.en')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
                                 </div>
                               </div>
                         </div>
-
 
                     </div>
                 </div>
@@ -121,14 +93,15 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="files" class="form-label">File</label>
-                            <input type="file" name="files[]" id="files" class="form-control @error('files') error-data-input @enderror" multiple required>
+                            <label for="images" class="form-label">File</label>
+                            <input type="file" name="images[]" id="images" class="form-control @error('images') error-data-input @enderror" multiple required>
                             <span class="error-data">
-                                @error('files')
+                                @error('images')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
+
                     </div>
                 </div>
             </div>

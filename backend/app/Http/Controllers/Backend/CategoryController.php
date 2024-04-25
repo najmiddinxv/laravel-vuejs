@@ -35,9 +35,8 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
-        $image = $data['image'] ?? null;
-        if (!is_null($image)) {
-            $data['image'] = $this->fileUploadService->resizeImageAndUpload($image, '/uploads/categories');
+        if (isset($data['image'])) {
+            $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories');
         }
 
         Category::create($data);
@@ -59,7 +58,7 @@ class CategoryController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             $this->fileUploadService->resizedImageDelete($category->image);
-            $data['image'] = $this->fileUploadService->resizeImageAndUpload($request->file('image'), '/uploads/categories');
+            $data['image'] = $this->fileUploadService->resizeImageUpload($request->file('image'), '/uploads/categories');
         }
         $category->update($data);
         return back()->with('success', 'category ' . __('lang.successfully_updated'));

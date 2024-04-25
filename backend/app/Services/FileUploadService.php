@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class FileUploadService
 {
     //rasm kesib uch xil o'lchamda katta,o'rtacha,kichik qilib yuklash uchun
-    public function resizeImageAndUpload($file, $basePath)
+    public function resizeImageUpload($file, $basePath)
     {
         $imagePath = $basePath . '/' . now()->format('Y/m/d');
         if (!Storage::exists($imagePath)) {
@@ -44,7 +44,7 @@ class FileUploadService
 
     //rasmni razmerini o'zgartirmasdan faqat hajmini(mb) o'zgartirib yuklash uchun
     //rasmni kesib faqat katta hajmda yuklaydi, Bunda rasmni hajmi(mb) qisqaradi ammo o'lchami qisqarmaydi
-    public function resizeImageOnlyLargeAndUpload($image, $basePath)
+    public function resizeImageOnlyLargeUpload($image, $basePath)
     {
         $imagePath = $basePath . '/' . now()->format('Y/m/d');
         if (!Storage::exists($imagePath)) {

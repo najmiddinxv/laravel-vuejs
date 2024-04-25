@@ -25,6 +25,9 @@ class HeaderComponent extends Component
      */
     public function render(): View|Closure|string
     {
+
+        // $menus = Menu::with('children')->whereNull('parent_id')->get();
+        
         return view('frontend.components.header-component');
     }
 

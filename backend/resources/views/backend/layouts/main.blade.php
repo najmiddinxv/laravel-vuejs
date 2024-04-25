@@ -235,13 +235,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs(['backend.tags.*', 'backend.words.*', 'backend.categories.*', 'backend.menu.*', 'backend.tinymceFiles.*']) ? '' : 'collapsed' }}"
+                <a class="nav-link {{ request()->routeIs(['backend.tags.*', 'backend.words.*', 'backend.categories.*', 'backend.menu.*', 'backend.tinymceFiles.*', 'backend.images.*']) ? '' : 'collapsed' }}"
                     data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Content</span>
                     <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="content-nav"
-                    class="nav-content {{ request()->routeIs(['backend.tags.*', 'backend.words.*', 'backend.categories.*', 'backend.menu.*', 'backend.tinymceFiles.*']) ? 'show' : 'collapse' }}  "
+                    class="nav-content {{ request()->routeIs(['backend.tags.*', 'backend.words.*', 'backend.categories.*', 'backend.menu.*', 'backend.tinymceFiles.*', 'backend.images.*']) ? 'show' : 'collapse' }}  "
                     data-bs-parent="#sidebar-nav">
 
                     <li>
@@ -272,7 +272,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                        <a href="{{ route('backend.images.index') }}" class="{{ request()->routeIs('backend.images.*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Images</span>
                         </a>
                     </li>
