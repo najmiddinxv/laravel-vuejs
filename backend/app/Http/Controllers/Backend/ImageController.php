@@ -84,9 +84,12 @@ class ImageController extends Controller
 		// ]);
     }
 
-    public function update(ImageRequest $request, Image $image)
+    public function update(ImageRequest $request, int $id)
     {
-        //
+        $data = $request->validated();
+        $image = Image::findOrFail($id);
+        $image->update($data);
+        return response()->json(['success' => __('lang.successfully_updated')]);
     }
 
     public function destroy(Image $image)

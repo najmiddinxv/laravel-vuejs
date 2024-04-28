@@ -96,7 +96,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('create', 'create')->name('create');
             Route::post('store','store')->name('store');
             Route::get('edit/{id}','edit')->name('edit');
-            Route::put('update/{image}','update')->name('update');
+            Route::put('update/{id}','update')->name('update');
             Route::delete('destroy/{image}','destroy')->name('destroy');
         });
 

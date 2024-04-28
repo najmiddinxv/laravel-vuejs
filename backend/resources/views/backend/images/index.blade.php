@@ -93,13 +93,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <x-alert-message-component></x-alert-message-component>
+                        {{-- <x-alert-message-component></x-alert-message-component> --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card card-primary">
                                     <div class="card-body">
 
-                                        <div>
+
+                                        <div id="spinner" style="">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="image-edit-form-modal-body" style="">
                                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="pills-uz-tab" data-bs-toggle="pill"
@@ -179,23 +188,33 @@
             </form>
         </div>
     </div>
+
 @endsection
 @section('scripts')
     <script>
         $(document).ready(function() {
 
+            var token   = $("meta[name='csrf-token']").attr("content");
             var siteLang = '{{ app()->getLocale() }}';
+
             $('.btn-edit-image').on('click', function () {
                 let imageId = $(this).data('id');
-                //fetch detail post with ajax
+                $('#image-edit-form-modal-flash-message').remove();
+                $('#appendedContent').remove();
+                $('#image-edit-form-modal').attr('action','/admin/images/update/' + imageId);
+
+                setTimeout(function() {
                 $.ajax({
                     url: `/admin/images/edit/${imageId}`,
                     type: "GET",
                     // cache: false,
+                    beforeSend: function() {
+                        $('#spinner').css('display', 'block');
+                        $('#image-edit-form-modal-body').css('display', 'none');
+                    },
                     success:function(response){
-                        console.log(response);
-                        $('#appendedContent').remove();
-                        //fill data to form
+                        // console.log(response);
+
                         $('#name_uz').val(response.image.name.uz);
                         $('#name_ru').val(response.image.name.ru);
                         $('#name_en').val(response.image.name.en);
@@ -206,8 +225,7 @@
                             categoryOptions += "<option value='" + category.id + "' " + selected + ">" + category.name[`${siteLang}`] + "</option>";
                         });
 
-
-                        $('#image-edit-form-modal .card-body').append(
+                        $('#image-edit-form-modal #image-edit-form-modal-body').append(
                             `<div id="appendedContent" class="appended-content">
                                 <div class="form-group mt-3">
                                     <label for="category_id" class="form-label">Category</label>
@@ -225,19 +243,68 @@
                             </div>
                             `
                         );
-
-                        // $('#title-edit').val(response.data.title);
-                        // $('#content-edit').val(response.data.content);
-
-                        // //open modal
-                        // $('#modal-edit').modal('show');
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
+                    },
+                    eomplete: function() {
+                        $('#image-edit-form-modal-body').css('display', 'block'); // Hide spinner
+                        $('#spinner').css('display', 'none'); // Hide spinner
+
                     }
                 });
-            });
 
+            }, 2000); // 2 seconds delay
+                        });
+
+            //bu ham ishlayapti commenntdan chiqarsam bolle
+            // $(document).on('submit', '#yourFormId', function(event) {
+            $('#image-edit-form-modal').on('submit', function(e) {
+                e.preventDefault();
+
+                $('#image-edit-form-modal-flash-message').remove();
+
+                var formAction = $(this).attr('action');
+                // var formData = $(this).serialize();
+
+                let category_id = $('#category_id').val();
+                let name_uz = $('#name_uz').val();
+                let name_ru = $('#name_ru').val();
+                let name_en = $('#name_en').val();
+                let status = $('#status').val();
+
+                $.ajax({
+                    url: formAction,
+                    type: "PUT",
+                    cache: false,
+                    data: {
+                        "_token": token,
+                        // formData
+                        "category_id": category_id,
+                        "name": {
+                            'uz':name_uz,
+                            'ru':name_ru,
+                            'en':name_en
+                        },
+                        "status": status
+                    },
+                    success:function(response){
+                        console.log(response);
+                        $('#image-edit-form-modal #image-edit-form-modal-body').append(
+                            `<div id='image-edit-form-modal-flash-message'>
+                                   <div class="alert alert-success" role="alert">
+                                    ${response.success}
+                                    </div>
+                            </div>`
+                        );
+
+                    },
+                    error:function(error){
+                        console.log(error);
+                    }
+
+                });
+            });
 
         });
     </script>
