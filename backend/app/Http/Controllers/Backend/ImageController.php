@@ -38,7 +38,7 @@ class ImageController extends Controller
             $fileUploadServiceResponse = $this->fileUploadService->resizeImageUpload($image, '/uploads/images');
             $data['path'] = $fileUploadServiceResponse;
             $data['mime_type'] = $image->getClientOriginalExtension();
-            if(!isset($data['name.*'])){
+            if(!isset($data['name']['uz']) && !isset($data['name']['ru']) && !isset($data['name']['en'])){
                 $data['name'] = [
                     'uz'=>$image->getClientOriginalName(),
                     'ru'=>$image->getClientOriginalName(),
@@ -64,9 +64,24 @@ class ImageController extends Controller
         return redirect()->route('backend.images.index')->with('image ',__('lang.successfully_created'));
     }
 
-    public function edit(Image $image)
+    public function edit(int $id)
     {
-        //
+        $image = Image::find($id,['name','category_id','status']);
+        $categories = Category::where('categoryable_type','App\Models\Image')->orderBy('id','desc')->get();
+        return response()->json([
+            'image' => $image,
+            'categories' => $categories,
+        ]);
+
+        // // Select specified columns from all employees
+        // $employees = Employee::select(['name', 'title', 'email'])->get();
+        // // Select specified columns from all employees
+        // $employees = Employee::get(['name', 'title', 'email']);
+
+        // return view('backend.images.edit',[
+		// 	'categories' => $categories,
+		// 	'image' => $image,
+		// ]);
     }
 
     public function update(ImageRequest $request, Image $image)
