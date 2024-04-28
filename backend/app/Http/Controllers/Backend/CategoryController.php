@@ -17,6 +17,7 @@ class CategoryController extends Controller
 
     public function index()
     {
+
         $categories = Category::with('parent')->orderBy('id','desc')->paginate(30);
 		return view('backend.categories.index',[
 			'categories'=>$categories,
@@ -25,6 +26,7 @@ class CategoryController extends Controller
 
     public function create()
     {
+
         $categories = Category::all();
         return view('backend.categories.create',[
             'categories' => $categories,

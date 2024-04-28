@@ -1,6 +1,6 @@
 @extends('backend.layouts.main')
 @section('title')
-    - {{ __('lang.category') }}
+    - {{ __('lang.images') }}
 @endsection
 @section('content')
 <div class="pagetitle">
@@ -72,7 +72,7 @@
 @endsection
 @section('scripts')
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
 
     });
 </script>

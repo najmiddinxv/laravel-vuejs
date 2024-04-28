@@ -38,9 +38,6 @@ class ImageController extends Controller
             $fileUploadServiceResponse = $this->fileUploadService->resizeImageUpload($image, '/uploads/images');
             $data['path'] = $fileUploadServiceResponse;
             $data['mime_type'] = $image->getClientOriginalExtension();
-            //faqat katta o'lchamda kesilgan rasmni o'lchami saqlanayapti
-            $data['size'] = Storage::size($fileUploadServiceResponse['large']);
-
             if(!isset($data['name.*'])){
                 $data['name'] = [
                     'uz'=>$image->getClientOriginalName(),
@@ -48,6 +45,10 @@ class ImageController extends Controller
                     'en'=>$image->getClientOriginalName(),
                 ];
             }
+
+            //faqat katta o'lchamda kesilgan rasmni o'lchami saqlanayapti
+            $data['size'] = Storage::size($fileUploadServiceResponse['large']);
+
             //agar 3 ta o'lchamdagi rasmni ham hajmi kerak bo'lsa
             // $data['size'] = [
             //     'large' => Storage::size($fileUploadServiceResponse['large']),
