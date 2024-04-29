@@ -24,11 +24,11 @@ class ImageRequest extends BaseFormRequest
     public function update()
     {
         return [
-            'category_id' => 'nullable|integer',
+            'category_id' => 'required|integer',
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
             // 'images.*' => 'nullable|mimes:jpeg,png,jpg,gif',
-            'status' => 'nullable|integer',
+            'status' => 'required|integer',
         ];
     }
 }

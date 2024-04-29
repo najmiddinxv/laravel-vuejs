@@ -16,8 +16,10 @@ class ImageController extends Controller
 
     public function index()
     {
+        $categories = Category::where('categoryable_type','App\Models\Image')->orderBy('id','desc')->get();
         $images = Image::orderBy('id','desc')->paginate(30);
 		return view('backend.images.index',[
+			'categories'=>$categories,
 			'images'=>$images,
 		]);
     }
@@ -61,6 +63,10 @@ class ImageController extends Controller
             Image::create($data);
         }
 
+        if($request->ajax()){
+            return response()->json(['success' => 'image ' . __('lang.successfully_created')]);
+        }
+
         return redirect()->route('backend.images.index')->with('image ',__('lang.successfully_created'));
     }
 
@@ -89,7 +95,10 @@ class ImageController extends Controller
         $data = $request->validated();
         $image = Image::findOrFail($id);
         $image->update($data);
-        return response()->json(['success' => __('lang.successfully_updated')]);
+        if($request->ajax()){
+            return response()->json(['success' => 'image ' . __('lang.successfully_updated')]);
+        }
+        return back()->with('success', 'image ' . __('lang.successfully_updated'));
     }
 
     public function destroy(Image $image)
