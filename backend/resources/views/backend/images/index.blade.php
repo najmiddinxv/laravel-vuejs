@@ -20,6 +20,7 @@
     <div class="card">
         <div class="card-body" style="padding:20px">
             <x-alert-message-component></x-alert-message-component>
+           <p>jami : {{ $images->total() }} ta</p>
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
@@ -199,11 +200,6 @@
                 </div>
 
                     {{-- fayl yuklanayotganda ko'rsatiladigan progress --}}
-                    {{-- <div id="progress" style="display: none;">
-                        <progress max="100" value="0"></progress>
-                        <span id="progressText">0%</span>
-                    </div> --}}
-
                     <div class="progress" style="display: none;">
                         <div class="progress-bar" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"><span class="progressText">0%</span></div>
                     </div>
@@ -244,6 +240,7 @@
                                 <div class="card card-primary">
                                     <div class="card-body">
 
+
                                         <div id="spinner-div" class="pt-5">
                                             <div class="spinner-border text-primary" role="status"></div>
                                         </div>
@@ -263,29 +260,30 @@
                                             }
                                         </style>
 
+
                                         <div style="">
-                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <ul class="nav nav-pills mb-3" id="pills-edit-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" id="pills-uz-tab"
-                                                        data-bs-toggle="pill" data-bs-target="#pills-uz" type="button"
-                                                        role="tab" aria-controls="pills-home"
+                                                    <button class="nav-link active" id="pills-edit-uz-tab"
+                                                        data-bs-toggle="pill" data-bs-target="#pills-edit-uz" type="button"
+                                                        role="tab" aria-controls="pills-edit-home"
                                                         aria-selected="true">Uz</button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="pills-ru-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#pills-ru" type="button" role="tab"
-                                                        aria-controls="pills-profile" aria-selected="false"
+                                                    <button class="nav-link" id="pills-edit-ru-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#pills-edit-ru" type="button" role="tab"
+                                                        aria-controls="pills-edit-profile" aria-selected="false"
                                                         tabindex="-1">Ру</button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="pills-en-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#pills-en" type="button" role="tab"
-                                                        aria-controls="pills-contact" aria-selected="false"
+                                                    <button class="nav-link" id="pills-edit-en-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#pills-edit-en" type="button" role="tab"
+                                                        aria-controls="pills-edit-contact" aria-selected="false"
                                                         tabindex="-1">En</button>
                                                 </li>
                                             </ul>
                                             <div class="tab-content pt-2" id="myTabContent">
-                                                <div class="tab-pane fade active show" id="pills-uz" role="tabpanel"
+                                                <div class="tab-pane fade active show" id="pills-edit-uz" role="tabpanel"
                                                     aria-labelledby="uz-tab">
                                                     <div class="form-group">
                                                         <label for="name_uz_edit" class="form-label">Name uz</label>
@@ -299,7 +297,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="pills-ru" role="tabpanel"
+                                                <div class="tab-pane fade" id="pills-edit-ru" role="tabpanel"
                                                     aria-labelledby="ru-tab">
                                                     <div class="form-group">
                                                         <label for="name_ru_edit" class="form-label">Name ru</label>
@@ -313,7 +311,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="pills-en" role="tabpanel"
+                                                <div class="tab-pane fade" id="pills-edit-en" role="tabpanel"
                                                     aria-labelledby="en-tab">
                                                     <div class="form-group">
                                                         <label for="name_en_edit" class="form-label">Name en</label>
@@ -426,7 +424,7 @@
 
                 var formAction = $(this).attr('action');
 
-                let category_id = $('#category_id_edit').val();
+                let category_id_edit = $('#category_id_edit').val();
                 let name_uz = $('#name_uz_edit').val();
                 let name_ru = $('#name_ru_edit').val();
                 let name_en = $('#name_en_edit').val();
@@ -441,7 +439,7 @@
                     data: {
                         "_token": token,
                         // formData
-                        "category_id": category_id,
+                        "category_id": category_id_edit,
                         "name": {
                             'uz': name_uz,
                             'ru': name_ru,
