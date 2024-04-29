@@ -11,8 +11,7 @@
                 <li class="breadcrumb-item active">Images</li>
             </ol>
             <div>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                    data-bs-target="#create-image">Create</button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create-image">Create</button>
                 {{-- <a href="{{ route('backend.images.create') }}" class="btn btn-success">{{ __('lang.create') }}</a> --}}
             </div>
         </nav>
@@ -20,7 +19,7 @@
     <div class="card">
         <div class="card-body" style="padding:20px">
             <x-alert-message-component></x-alert-message-component>
-           <p>jami : {{ $images->total() }} ta</p>
+           <p>Jami : {{ $images->total() }} ta</p>
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
@@ -48,8 +47,7 @@
                             </td>
                             <td style="text-align: center">
                                 <a href="{{ Storage::url($image->path['large'] ?? '-') }}">
-                                    <img src="{{ Storage::url($image->path['medium'] ?? '-') }}" alt=""
-                                        style="width:30%">
+                                    <img src="{{ Storage::url($image->path['medium'] ?? '-') }}" alt="" style="width:30%">
                                 </a>
                             </td>
                             <td>{{ $image->mime_type }}</td>
