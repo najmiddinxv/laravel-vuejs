@@ -40,7 +40,12 @@
                         <tr>
                             <th scope="row">{{ $images->firstItem() + $key }}</th>
                             <td>{{ $image->category?->name }}</td>
-                            <td>{{ $image->name }}</td>
+                            {{-- <td>{{ $image->name }}</td> --}}
+                            <td>
+                                uz - {{ $image->getTranslation('name','uz') }} <br>
+                                ru - {{ $image->getTranslation('name','ru') }} <br>
+                                en - {{ $image->getTranslation('name','en') }} <br>
+                            </td>
                             <td style="text-align: center">
                                 <a href="{{ Storage::url($image->path['large'] ?? '-') }}">
                                     <img src="{{ Storage::url($image->path['medium'] ?? '-') }}" alt=""
