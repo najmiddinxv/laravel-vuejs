@@ -3,6 +3,7 @@
     - {{ __('lang.edit') }}
 @endsection
 @section('content')
+
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">
@@ -183,22 +184,9 @@
         </div>
     </form>
 
-@endsection
-@section('scripts')
-    <script>
-        $(document).ready(function(e) {
-            $('#image').on('change',function(){
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    $('#previewImage').attr('src', e.target.result);
-                    $('#previewImage').css({'display':'block'});
-                }
-                reader.readAsDataURL(this.files[0]);
 
-            });
-        });
-
-        tinymce.init({
+<script>
+    tinymce.init({
             selector: 'textarea#body_uz',
             plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons ',
             editimage_cors_hosts: ['picsum.photos'],
@@ -486,6 +474,23 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
 
         });
+
+</script>
+@endsection
+@section('scripts')
+    <script>
+        $(document).ready(function(e) {
+            $('#image').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImage').attr('src', e.target.result);
+                    $('#previewImage').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
+
+            });
+        });
+
 
 
     </script>

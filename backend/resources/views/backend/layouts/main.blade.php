@@ -44,6 +44,8 @@
     <link href="{{ asset('assets/backend/vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/custom.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('assets/backend/vendor/tinymce/tinymce.min.js') }}"></script>
     @yield('styles')
 </head>
 
@@ -379,7 +381,6 @@
     <script src="{{ asset('assets/backend/vendor/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/quill/quill.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets/backend/vendor/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/php-email-form/validate.js') }}"></script>
     <script src="{{ asset('assets/backend/js/main.js') }}"></script>
     <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
