@@ -34,7 +34,7 @@ class PostObserver
     public function updating(Post $post): void
     {
         $post->created_by = auth()->user()->id;
-        
+
         $titleTranslations = $post->getTranslations('title');
         $slugs = [];
 
@@ -53,6 +53,19 @@ class PostObserver
         //
     }
 
+
+    /**
+     * Handle the Post "deleting" event.
+     *
+     * @param  \App\Models\Post  $post
+     * @return void
+     */
+    public function deleting(Post $post)
+    {
+        // Perform actions before deleting a post
+    }
+
+
     /**
      * Handle the Post "deleted" event.
      */
@@ -60,6 +73,19 @@ class PostObserver
     {
         //
     }
+
+
+    /**
+     * Handle the Post "restoring" event.
+     *
+     * @param  \App\Models\Post  $post
+     * @return void
+     */
+    public function restoring(Post $post)
+    {
+        // Perform actions before restoring a soft-deleted post
+    }
+
 
     /**
      * Handle the Post "restored" event.
@@ -76,4 +102,7 @@ class PostObserver
     {
         //
     }
+
+
+
 }
