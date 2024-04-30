@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Repositories\Contracts\PostRepositoryContract;
-use App\Repositories\PostRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoriesProvider extends ServiceProvider
@@ -13,7 +11,7 @@ class RepositoriesProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(PostRepositoryContract::class, PostRepository::class);
+        // $this->app->bind(PostRepositoryContract::class, PostRepository::class);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use App\Traits\EscapeUniCodeJson;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 class Post extends Model
 {
     use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
-    use Searchable;
+    // use Searchable;
 
     protected $fillable = [
         'category_id',
@@ -34,7 +35,15 @@ class Post extends Model
         'main_image' => 'array',
     ];
 
-    public $translatable = ['title', 'description', 'body'];
+    public $translatable = ['title', 'slug', 'description', 'body'];
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::saving(function ($model) {
+    //         $model->slug = Str::slug($model->title);
+    //     });
+    // }
 
     public function tags()
     {
@@ -46,12 +55,16 @@ class Post extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
-    public function category(): MorphOne
+    public function category(): BelongsTo
     {
-        return $this->morphOne(Category::class, 'categoryable');
+        return $this->belongsTo(Category::class);
     }
+    // public function category(): MorphOne
+    // {
+    //     return $this->morphOne(Category::class, 'categoryable');
+    // }
 
-    public function created_by():BelongsTo
+    public function createdBy():BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }

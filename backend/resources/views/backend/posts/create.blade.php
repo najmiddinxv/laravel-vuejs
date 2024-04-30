@@ -35,12 +35,12 @@
                               <div class="tab-content pt-2" id="myTabContent">
                                 <div class="tab-pane fade active show" id="pills-uz" role="tabpanel" aria-labelledby="uz-tab">
                                     <div class="form-group">
-                                        <label for="name_uz" class="form-label">Name uz</label>
-                                        <input type="text" name="name[uz]" id="name_uz"
-                                            class="form-control @error('name.uz') error-data-input @enderror"
-                                            value="{{ old('name.uz') }}" required>
+                                        <label for="title_uz" class="form-label">Title uz</label>
+                                        <input type="text" name="title[uz]" id="title_uz"
+                                            class="form-control @error('title.uz') error-data-input @enderror"
+                                            value="{{ old('title.uz') }}" required>
                                         <span class="error-data">
-                                            @error('name.uz')
+                                            @error('title.uz')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -66,12 +66,12 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-ru" role="tabpanel" aria-labelledby="ru-tab">
                                     <div class="form-group">
-                                        <label for="name_ru" class="form-label">Name ru</label>
-                                        <input type="text" name="name[ru]" id="name_ru"
-                                            class="form-control @error('name.ru') error-data-input @enderror"
-                                            value="{{ old('name.ru') }}">
+                                        <label for="title_ru" class="form-label">Title ru</label>
+                                        <input type="text" name="title[ru]" id="title_ru"
+                                            class="form-control @error('title.ru') error-data-input @enderror"
+                                            value="{{ old('title.ru') }}">
                                         <span class="error-data">
-                                            @error('name.ru')
+                                            @error('title.ru')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -97,12 +97,12 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-en" role="tabpanel" aria-labelledby="en-tab">
                                     <div class="form-group">
-                                        <label for="name_en" class="form-label">Name en</label>
-                                        <input type="text" name="name[en]" id="name_en"
-                                            class="form-control @error('name.en') error-data-input @enderror"
-                                            value="{{ old('name.en') }}">
+                                        <label for="title_en" class="form-label">Title en</label>
+                                        <input type="text" name="title[en]" id="title_en"
+                                            class="form-control @error('title.en') error-data-input @enderror"
+                                            value="{{ old('title.en') }}">
                                         <span class="error-data">
-                                            @error('name.en')
+                                            @error('title.en')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -150,7 +150,6 @@
                         <div class="form-group mt-3">
                             <label for="status" class="form-label">status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
-                                <option value="">select status</option>
                                 <option value="1">active</option>
                                 <option value="0">no active</option>
                             </select>
@@ -158,9 +157,8 @@
                         <div class="form-group mt-3">
                             <label for="slider" class="form-label">Slider</label>
                             <select class="form-select" aria-label="Default select example" name="slider" id="slider">
-                                <option value="">select slider status</option>
-                                <option value="1">active</option>
                                 <option value="0">no active</option>
+                                <option value="1">active</option>
                             </select>
                         </div>
 

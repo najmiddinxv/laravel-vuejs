@@ -38,11 +38,11 @@
                     <th scope="row">{{ $posts->firstItem() + $key }}</th>
                     <td>{{ $post->category?->name }}</td>
                     <td>{{ $post->title }}</td>
-                    <td style="text-align: center"><a href="{{ Storage::url($post->path) }}"><img src="{{ Storage::url($post->main_image) }}" alt="img" width="20%"></a></td>
+                    <td style="text-align: center"><a href="{{ Storage::url($post->main_image['large'] ?? '') }}"><img src="{{ Storage::url($post->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
                     <td>{!! $post->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{!! $post->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{{ $post->view_count }}</td>
-                    <td>{{ $post->created_by->full_name }}</td>
+                    <td>{{ $post->createdBy?->full_name }}</td>
                     <td>
                         <div style="text-align: center;">
                             {{-- <a href="#" class="btn btn-primary" title="copy">

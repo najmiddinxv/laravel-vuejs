@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
-use App\Models\Category;
 use App\Models\Post;
-use App\Services\FileUploadService;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use App\Services\FileUploadService;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -31,13 +32,17 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        // dd($request->all());
         $data = $request->validated();
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts');
         }
+        // $data['slug'] = [
+        //     'uz' => Str::slug($data['title']['uz']),
+        //     'ru' => Str::slug($data['title']['ru']),
+        //     'en' => Str::slug($data['title']['en']),
+        // ];
         Post::create($data);
-        return redirect()->route('backend.post.index')->with('post ',__('lang.successfully_created'));
+        return redirect()->route('backend.posts.index')->with('post ',__('lang.successfully_created'));
     }
 
     public function show(Post $post)
@@ -58,7 +63,15 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+
+        if (isset($data['image'])) {
+            $this->fileUploadService->resizedImageDelete($post->main_image);
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts');
+        }
+
+        $post->update($data);
+        return redirect()->route('backend.posts.index')->with('posts ',__('lang.successfully_updated'));
     }
 
     public function destroy(Post $post)
