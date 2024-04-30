@@ -56,7 +56,8 @@ return new class extends Migration
             $table->jsonb('slug');
             $table->jsonb('description')->nullable();
             $table->jsonb('body')->nullable();
-            $table->jsonb('image')->nullable();
+            $table->jsonb('main_image')->nullable();
+            // $table->jsonb('images')->nullable(); //postni body qismida slider image chiqarish uchun kerak
             $table->integer('created_by')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->boolean('slider')->default(0);

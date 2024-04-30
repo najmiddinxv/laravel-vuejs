@@ -17,7 +17,6 @@ class CategoryController extends Controller
 
     public function index()
     {
-
         $categories = Category::with('parent')->orderBy('id','desc')->paginate(30);
 		return view('backend.categories.index',[
 			'categories'=>$categories,

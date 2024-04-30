@@ -4,3 +4,6 @@
 .error-data-input{
     border-color: #dc3545;
 }
+.tox-statusbar__branding, .tox-promotion{
+    display: none;
+}

@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ImageController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\TinymceFileController;
@@ -98,6 +99,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{id}','edit')->name('edit');
             Route::put('update/{id}','update')->name('update');
             Route::delete('destroy/{image}','destroy')->name('destroy');
+        });
+        Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show', 'show')->name('show');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{post}','edit')->name('edit');
+            Route::put('update/{post}','update')->name('update');
+            Route::delete('destroy/{post}','destroy')->name('destroy');
         });
 
     });

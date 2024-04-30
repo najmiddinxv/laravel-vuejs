@@ -22,6 +22,8 @@ class PostRequest extends FormRequest
             'description' => 'nullable|string',
             'body' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|integer',
+            'slider' => 'required|integer',
         ];
     }
 
@@ -33,6 +35,8 @@ class PostRequest extends FormRequest
             'description' => 'nullable|string',
             'body' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|integer',
+            'slider' => 'required|integer',
         ];
     }
 }
