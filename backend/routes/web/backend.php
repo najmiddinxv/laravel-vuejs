@@ -102,7 +102,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         });
         Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('show', 'show')->name('show');
+            Route::get('show/{post}', 'show')->name('show');
             Route::get('create', 'create')->name('create');
             Route::post('store','store')->name('store');
             Route::get('edit/{post}','edit')->name('edit');

@@ -45,12 +45,9 @@
                     <td>{{ $post->createdBy?->full_name }}</td>
                     <td>
                         <div style="text-align: center;">
-                            {{-- <a href="#" class="btn btn-primary" title="copy">
-                                <i class="bx bx-copy"></i>
-                            </a> --}}
-                            {{-- <button style="font-size:14px" class="copyFIlePath btn btn-primary" data-filepath="{{ "/storage/{$tinymceFile->path}" }}">
-                                <i class="bx bx-copy"></i>
-                            </button> --}}
+                            <a href="{{ route('backend.posts.show',['post'=>$post->id]) }}" class="btn btn-primary" title="show">
+                                <i class="bx bx-show"></i>
+                            </a>
                             <a href="{{ route('backend.posts.edit',['post'=>$post->id]) }}" class="btn btn-primary" title="edit">
                                 <i class="bx bx-pencil"></i>
                             </a>
@@ -73,26 +70,8 @@
 @endsection
 @section('scripts')
 <script>
-     $(document).ready(function() {
-        $('.copyFIlePath').click(function() {
-            var filePathCopied = $(this).data('filepath');
-            var tempInput = $('<input>');
+    $(document).ready(function() {
 
-            tempInput.val(filePathCopied);
-            $('body').append(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            tempInput.remove();
-
-            $(this).html('<i class="bi bi-check2"></i>');
-
-            // setTimeout(function(){
-            //     $(this).html('<i class="bx bx-copy"></i>');
-            // }, 1000);
-
-            // $(this).text('Copied');
-            // console.log('copied : ' + filePathCopied);
-        });
     });
 </script>
 @endsection
