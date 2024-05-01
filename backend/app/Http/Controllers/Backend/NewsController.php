@@ -54,26 +54,27 @@ class NewsController extends Controller
                 'slug' => Str::slug($data['title']['uz']),
                 'description' => $data['description']['uz'],
                 'body' => $data['body']['uz'],
-                'main_image' => $data['image'],
+                'main_image' => $data['main_image'],
             ],
             'ru' => [
                 'title' => $data['title']['ru'],
                 'slug' => Str::slug($data['title']['ru']),
                 'description' => $data['description']['ru'],
                 'body' => $data['body']['ru'],
-                'main_image' => $data['image'],
+                'main_image' => $data['main_image'],
             ],
             'en' => [
                 'title' => $data['title']['en'],
                 'slug' => Str::slug($data['title']['en']),
                 'description' => $data['description']['en'],
                 'body' => $data['body']['en'],
-                'main_image' => $data['image'],
+                'main_image' => $data['main_image'],
             ],
             'category_id' => $data['category_id'],
             'status' => $data['status'],
             'slider' => $data['slider'],
         ];
+        // dd($tanslatedData);
         News::create($tanslatedData);
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
 
