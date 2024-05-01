@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class NewsController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(NewsRequest $request)
     {
         // $article = new News();
         // $article->online = true;
@@ -48,8 +49,18 @@ class NewsController extends Controller
         //  News::create($article_data);
 
 
+//         $post->translate('en')->title = 'My cool post';
+// $post->save();
 
 
+// $data = [
+//     'author' => 'Gummibeer',
+//     'en' => ['title' => 'My first post'],
+//     'fr' => ['title' => 'Mon premier post'],
+//   ];
+//   $post = Post::create($data);
+
+//   echo $post->translate('fr')->title; // Mon premier post
 
         // $article->getTranslation('fr')->text;
         // yoki
@@ -68,7 +79,7 @@ class NewsController extends Controller
         //
     }
 
-    public function update(Request $request, News $news)
+    public function update(NewsRequest $request, News $news)
     {
         //
     }
