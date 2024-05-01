@@ -20,7 +20,7 @@ return new class extends Migration
             $table->jsonb('description')->nullable();
             $table->jsonb('body')->nullable();
             $table->jsonb('image')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->integer('view_count')->default(0);
             $table->boolean('slider')->default(0);
             $table->timestamps();

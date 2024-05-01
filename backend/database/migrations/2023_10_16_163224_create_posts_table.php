@@ -59,7 +59,7 @@ return new class extends Migration
             $table->jsonb('main_image')->nullable();
             // $table->jsonb('images')->nullable(); //postni body qismida slider image chiqarish uchun kerak
             $table->integer('created_by')->nullable();
-            $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->boolean('slider')->default(0);
             $table->integer('view_count')->default(0);
             $table->timestamps();

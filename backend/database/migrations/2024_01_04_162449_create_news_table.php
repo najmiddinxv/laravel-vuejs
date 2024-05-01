@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('no action');
             $table->integer('created_by')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->boolean('slider')->default(0);
             $table->integer('view_count')->default(0);
             $table->timestamps();
