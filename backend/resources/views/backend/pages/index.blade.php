@@ -28,6 +28,7 @@
                 <th>{{__('lang.status')}}</th>
                 <th>{{__('lang.slider')}}</th>
                 <th>{{__('lang.view_count')}}</th>
+                <th>{{__('lang.url')}}</th>
                 <th>{{__('lang.actions')}}</th>
             </tr>
             </thead>
@@ -41,6 +42,20 @@
                     <td>{!! $page->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{!! $page->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{{ $page->view_count }}</td>
+                    <td>
+                        <div style="text-align: center;">
+                            <button style="font-size:14px" class="copySlug btn btn-primary" data-slug="{{ "/page/{$page->getTranslation('slug','uz')}" }}">
+                                uz-url
+                            </button>
+                            <button style="font-size:14px" class="copySlug btn btn-primary" data-slug="{{ "/page/{$page->getTranslation('slug','ru')}" }}">
+                                ru-url
+                            </button>
+                            <button style="font-size:14px" class="copySlug btn btn-primary" data-slug="{{ "/page/{$page->getTranslation('slug','en')}" }}">
+                                en-url
+                                {{-- <i class="bx bx-copy"></i> --}}
+                            </button>
+                        </div>
+                    </td>
                     <td>
                         <div style="text-align: center;">
                             <a href="{{ route('backend.pages.show',['page'=>$page->id]) }}" class="btn btn-primary" title="show">
@@ -69,7 +84,23 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        $('.copySlug').click(function() {
+            var button = $(this);
+            var filePathCopied = button.data('slug');
+            var tempInput = $('<input>');
 
+            tempInput.val(filePathCopied);
+            $('body').append(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            tempInput.remove();
+
+            button.html('<i class="bi bi-check2"></i>');
+
+            setTimeout(function() {
+                button.html('uz-url');
+            }, 3000);
+        });
     });
 </script>
 @endsection
