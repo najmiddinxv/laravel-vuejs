@@ -7,21 +7,18 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.posts.index') }}">Post</a></li>
-                <li class="breadcrumb-item">{{ __('lang.edit') }}</li>
-                <li class="breadcrumb-item active">{{ $post->title }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.pages.index') }}">Page</a></li>
+                <li class="breadcrumb-item active">{{ __('lang.create') }}</li>
             </ol>
         </nav>
     </div>
     <x-alert-message-component></x-alert-message-component>
-    <form action="{{ route('backend.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backend.pages.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-primary">
                     <div class="card-body">
-
                         <div>
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -33,24 +30,23 @@
                                 <li class="nav-item" role="presentation">
                                   <button class="nav-link" id="pills-en-tab" data-bs-toggle="pill" data-bs-target="#pills-en" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">En</button>
                                 </li>
-                            </ul>
+                              </ul>
                               <div class="tab-content pt-2" id="myTabContent">
                                 <div class="tab-pane fade active show" id="pills-uz" role="tabpanel" aria-labelledby="uz-tab">
                                     <div class="form-group">
-                                        <label for="title_uz" class="form-label">Name uz</label>
+                                        <label for="title_uz" class="form-label">Title uz</label>
                                         <input type="text" name="title[uz]" id="title_uz"
                                             class="form-control @error('title.uz') error-data-input @enderror"
-                                            value="{{ $post->getTranslation('title', 'uz'), old('title.uz') }}" required>
+                                            value="{{ old('title.uz') }}" required>
                                         <span class="error-data">
                                             @error('title.uz')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </div>
-
                                     <div class="form-group mt-3">
                                         <label for="description_uz" class="form-label">Description uz</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $post->hasTranslation('description', 'uz') ? $post->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ old('description.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('description.uz')
                                                 {{ $message }}
@@ -59,7 +55,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_uz" class="form-label">Body uz</label>
-                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ $post->hasTranslation('body', 'uz') ? $post->getTranslation('body', 'uz') : '', old('body.uz') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ old('body.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('body.uz')
                                                 {{ $message }}
@@ -68,11 +64,11 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-ru" role="tabpanel" aria-labelledby="ru-tab">
-                                    <div class="form-group mt-3">
-                                        <label for="title_ru" class="form-label">Name ru</label>
+                                    <div class="form-group">
+                                        <label for="title_ru" class="form-label">Title ru</label>
                                         <input type="text" name="title[ru]" id="title_ru"
                                             class="form-control @error('title.ru') error-data-input @enderror"
-                                            value="{{ $post->hasTranslation('title', 'ru') ? $post->getTranslation('title', 'ru') : '', old('title.ru') }}">
+                                            value="{{ old('title.ru') }}">
                                         <span class="error-data">
                                             @error('title.ru')
                                                 {{ $message }}
@@ -81,7 +77,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_ru" class="form-label">Description ru</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $post->hasTranslation('description', 'ru') ? $post->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ old('description.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('description.ru')
                                                 {{ $message }}
@@ -90,7 +86,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_ru" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ $post->hasTranslation('body', 'ru') ? $post->getTranslation('body', 'ru') : '', old('body.ru') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ old('body.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('body.ru')
                                                 {{ $message }}
@@ -99,11 +95,11 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-en" role="tabpanel" aria-labelledby="en-tab">
-                                    <div class="form-group mt-3">
-                                        <label for="title_en" class="form-label">Name en</label>
-                                        <input type="text" name="title[en]" id="name_en"
+                                    <div class="form-group">
+                                        <label for="title_en" class="form-label">Title en</label>
+                                        <input type="text" name="title[en]" id="title_en"
                                             class="form-control @error('title.en') error-data-input @enderror"
-                                            value="{{ $post->hasTranslation('title', 'en') ? $post->getTranslation('title', 'en') : '', old('title.en') }}">
+                                            value="{{ old('title.en') }}">
                                         <span class="error-data">
                                             @error('title.en')
                                                 {{ $message }}
@@ -112,7 +108,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_en" class="form-label">Description en</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $post->hasTranslation('description', 'en') ? $post->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ old('description.en') }}</textarea>
                                         <span class="error-data">
                                             @error('description.en')
                                                 {{ $message }}
@@ -121,7 +117,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_en" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $post->hasTranslation('body', 'en') ? $post->getTranslation('body', 'en') : '', old('body.en') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ old('body.en') }}</textarea>
                                         <span class="error-data">
                                             @error('body.en')
                                                 {{ $message }}
@@ -141,9 +137,10 @@
 
                         <div class="form-group mt-1">
                             <label for="category_id" class="form-label">Category</label>
-                            <select class="form-select" aria-label="Default select example" name="category_id" id="category_id">
+                            <select class="form-select" aria-label="Default select example" name="category_id" id="category_id" required>
+                                <option value="">select category</option>
                                 @foreach ($categories as $category_item)
-                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $post->category?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
+                                    <option value="{{ $category_item->id }}">{{ $category_item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -151,39 +148,41 @@
                         <div class="form-group mt-3">
                             <label for="status" class="form-label">status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
-                                <option value="1" {{ $post->status == 1 ? 'selected' : '' }}>active</option>
-                                <option value="0" {{ $post->status == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="1">active</option>
+                                <option value="0">no active</option>
                             </select>
                         </div>
                         <div class="form-group mt-3">
                             <label for="slider" class="form-label">Slider</label>
                             <select class="form-select" aria-label="Default select example" name="slider" id="slider">
-                                <option value="1" {{ $post->slider == 1 ? 'selected' : '' }}>active</option>
-                                <option value="0" {{ $post->slider == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="0">no active</option>
+                                <option value="1">active</option>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="image" class="col-form-label">user avatar</label>
-                            <input type="file" class="form-control" name="image" id="image" accept=".jpg,.jpeg,.png">
-                            <img id="previewImage" src="{{ Storage::url($post->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
+                        <div class="form-group mt-3">
+                            <label for="image" class="form-label">image</label>
+                            <input type="file" name="image" id="image"
+                                class="form-control @error('image') error-data-input @enderror">
+                            <img id="previewImage" src="" alt="Img" style="max-width: 100%;">
 
-                            <div class="valid-feedback">
-                            </div>
+                            <span class="error-data">
+                                @error('image')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-
         </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
         </div>
     </form>
-    <script>
-        tinymce.init({
+
+<script>
+    tinymce.init({
             selector: 'textarea#body_uz',
             plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons ',
             editimage_cors_hosts: ['picsum.photos'],
@@ -471,11 +470,12 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
 
         });
-    </script>
+
+</script>
 @endsection
 @section('scripts')
     <script>
-       $(document).ready(function(e) {
+        $(document).ready(function(e) {
             $('#image').on('change',function(){
                 let reader = new FileReader();
                 reader.onload = (e) => {

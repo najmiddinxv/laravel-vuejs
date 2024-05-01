@@ -76,7 +76,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $this->fileUploadService->resizedImageDelete($post->image);
+        $this->fileUploadService->resizedImageDelete($post->main_image);
         $post->delete();
         return back()->with('success', 'post ' . __('lang.successfully_deleted'));
     }

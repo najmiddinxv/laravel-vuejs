@@ -141,8 +141,8 @@
                         <div class="form-group mt-1">
                             <label for="category_id" class="form-label">Category</label>
                             <select class="form-select" aria-label="Default select example" name="category_id" id="category_id" required>
+                                <option value="">select category</option>
                                 @foreach ($categories as $category_item)
-                                    <option value="">select category</option>
                                     <option value="{{ $category_item->id }}">{{ $category_item->name }}</option>
                                 @endforeach
                             </select>

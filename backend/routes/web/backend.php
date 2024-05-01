@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ImageController;
 use App\Http\Controllers\Backend\MenuController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\RoleController;
@@ -108,6 +109,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{post}','edit')->name('edit');
             Route::put('update/{post}','update')->name('update');
             Route::delete('destroy/{post}','destroy')->name('destroy');
+        });
+        Route::prefix('pages')->name('pages.')->controller(PageController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show/{page}', 'show')->name('show');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{page}','edit')->name('edit');
+            Route::put('update/{page}','update')->name('update');
+            Route::delete('destroy/{page}','destroy')->name('destroy');
         });
 
     });

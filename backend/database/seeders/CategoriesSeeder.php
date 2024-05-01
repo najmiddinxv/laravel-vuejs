@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\categories;
-use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategoriesSeeder extends Seeder
 {
