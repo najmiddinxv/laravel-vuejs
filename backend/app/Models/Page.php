@@ -46,6 +46,7 @@ class Page extends Model
     protected static function boot()
     {
         parent::boot();
+        
         static::saving(function ($model) {
             $titleTranslations = $model->getTranslations('title');
             $slugs = [];

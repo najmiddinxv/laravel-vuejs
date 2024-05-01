@@ -37,14 +37,6 @@ class Post extends Model
 
     public $translatable = ['title', 'slug', 'description', 'body'];
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //     static::saving(function ($model) {
-    //         $model->slug = Str::slug($model->title);
-    //     });
-    // }
-
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
@@ -59,6 +51,7 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
     // public function category(): MorphOne
     // {
     //     return $this->morphOne(Category::class, 'categoryable');

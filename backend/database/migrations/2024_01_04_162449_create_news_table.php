@@ -28,8 +28,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('description',500)->nullable();
             $table->text('body')->nullable();
-            $table->string('image')->nullable();
-
+            $table->jsonb('main_image')->nullable();
             $table->unique(['news_id','locale']);
         });
     }
