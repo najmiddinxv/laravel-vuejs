@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\NewsRequest;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
@@ -32,12 +33,44 @@ class NewsController extends Controller
 		]);
     }
 
-    public function store(NewsRequest $request)
+    public function store(NewsRequest $request): RedirectResponse
     {
         $data = $request->validated();
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news');
         }
+
+        $tanslatedData = [
+            'uz' => [
+                'title' => $data['title']['uz'],
+                'slug' => Str::slug($data['title']['uz']),
+                'description' => $data['description']['uz'],
+                'body' => $data['body']['uz'],
+                'main_image' => $data['main_image'] ?? null,
+            ],
+            'ru' => [
+                'title' => $data['title']['ru'],
+                'slug' => Str::slug($data['title']['ru']),
+                'description' => $data['description']['ru'],
+                'body' => $data['body']['ru'],
+                'main_image' => $data['main_image'] ?? null,
+            ],
+            'en' => [
+                'title' => $data['title']['en'],
+                'slug' => Str::slug($data['title']['en']),
+                'description' => $data['description']['en'],
+                'body' => $data['body']['en'],
+                'main_image' => $data['main_image'] ?? null,
+            ],
+            'category_id' => $data['category_id'],
+            'status' => $data['status'],
+            'slider' => $data['slider'],
+        ];
+        dd($tanslatedData);
+        News::create($tanslatedData);
+        return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
+
+
 
         // dd($data);
         // $post->translate('en')->title = 'My cool post';
@@ -48,35 +81,6 @@ class NewsController extends Controller
         //     'en' => Str::slug($data['title']['en']),
         // ];
 
-        $tanslatedData = [
-            'uz' => [
-                'title' => $data['title']['uz'],
-                'slug' => Str::slug($data['title']['uz']),
-                'description' => $data['description']['uz'],
-                'body' => $data['body']['uz'],
-                'main_image' => $data['main_image'],
-            ],
-            'ru' => [
-                'title' => $data['title']['ru'],
-                'slug' => Str::slug($data['title']['ru']),
-                'description' => $data['description']['ru'],
-                'body' => $data['body']['ru'],
-                'main_image' => $data['main_image'],
-            ],
-            'en' => [
-                'title' => $data['title']['en'],
-                'slug' => Str::slug($data['title']['en']),
-                'description' => $data['description']['en'],
-                'body' => $data['body']['en'],
-                'main_image' => $data['main_image'],
-            ],
-            'category_id' => $data['category_id'],
-            'status' => $data['status'],
-            'slider' => $data['slider'],
-        ];
-        // dd($tanslatedData);
-        News::create($tanslatedData);
-        return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
 
         // $article = new News();
         // $article->online = true;
@@ -142,9 +146,10 @@ class NewsController extends Controller
         ]);
     }
 
-    public function update(NewsRequest $request, News $news)
+    public function update(NewsRequest $request, News $news): RedirectResponse
     {
-        //
+
+        return redirect()->route('posts.index');
     }
 
     public function destroy(News $news)
