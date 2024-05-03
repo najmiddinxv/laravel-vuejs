@@ -9,6 +9,7 @@ class NewsTranslation extends Model
 {
     use HasFactory;
 
+    protected $table = 'news_translations';
     public $timestamps = false;
 
     protected $fillable = [
@@ -18,6 +19,10 @@ class NewsTranslation extends Model
         'slug',
         'description',
         'body',
-        'image',
+        'main_image',
+    ];
+
+    protected $casts = [
+        'main_image' => 'array',
     ];
 }

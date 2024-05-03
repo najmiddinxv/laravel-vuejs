@@ -7,14 +7,14 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.posts.index') }}">Post</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.news.index') }}">News</a></li>
                 <li class="breadcrumb-item">{{ __('lang.edit') }}</li>
-                <li class="breadcrumb-item active">{{ $post->title }}</li>
+                <li class="breadcrumb-item active">{{ $news->title }}</li>
             </ol>
         </nav>
     </div>
     <x-alert-message-component></x-alert-message-component>
-    <form action="{{ route('backend.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backend.news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -40,7 +40,7 @@
                                         <label for="title_uz" class="form-label">Name uz</label>
                                         <input type="text" name="title[uz]" id="title_uz"
                                             class="form-control @error('title.uz') error-data-input @enderror"
-                                            value="{{ $post->getTranslation('title', 'uz'), old('title.uz') }}" required>
+                                            value="{{ $news->getTranslation('title', 'uz'), old('title.uz') }}" required>
                                         <span class="error-data">
                                             @error('title.uz')
                                                 {{ $message }}
@@ -50,7 +50,7 @@
 
                                     <div class="form-group mt-3">
                                         <label for="description_uz" class="form-label">Description uz</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $post->hasTranslation('description', 'uz') ? $post->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $news->hasTranslation('description', 'uz') ? $news->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('description.uz')
                                                 {{ $message }}
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_uz" class="form-label">Body uz</label>
-                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ $post->hasTranslation('body', 'uz') ? $post->getTranslation('body', 'uz') : '', old('body.uz') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ $news->hasTranslation('body', 'uz') ? $news->getTranslation('body', 'uz') : '', old('body.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('body.uz')
                                                 {{ $message }}
@@ -72,7 +72,7 @@
                                         <label for="title_ru" class="form-label">Name ru</label>
                                         <input type="text" name="title[ru]" id="title_ru"
                                             class="form-control @error('title.ru') error-data-input @enderror"
-                                            value="{{ $post->hasTranslation('title', 'ru') ? $post->getTranslation('title', 'ru') : '', old('title.ru') }}">
+                                            value="{{ $news->hasTranslation('title', 'ru') ? $news->getTranslation('title', 'ru') : '', old('title.ru') }}">
                                         <span class="error-data">
                                             @error('title.ru')
                                                 {{ $message }}
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_ru" class="form-label">Description ru</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $post->hasTranslation('description', 'ru') ? $post->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $news->hasTranslation('description', 'ru') ? $news->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('description.ru')
                                                 {{ $message }}
@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_ru" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ $post->hasTranslation('body', 'ru') ? $post->getTranslation('body', 'ru') : '', old('body.ru') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ $news->hasTranslation('body', 'ru') ? $news->getTranslation('body', 'ru') : '', old('body.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('body.ru')
                                                 {{ $message }}
@@ -103,7 +103,7 @@
                                         <label for="title_en" class="form-label">Name en</label>
                                         <input type="text" name="title[en]" id="name_en"
                                             class="form-control @error('title.en') error-data-input @enderror"
-                                            value="{{ $post->hasTranslation('title', 'en') ? $post->getTranslation('title', 'en') : '', old('title.en') }}">
+                                            value="{{ $news->hasTranslation('title', 'en') ? $news->getTranslation('title', 'en') : '', old('title.en') }}">
                                         <span class="error-data">
                                             @error('title.en')
                                                 {{ $message }}
@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_en" class="form-label">Description en</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $post->hasTranslation('description', 'en') ? $post->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $news->hasTranslation('description', 'en') ? $news->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
                                         <span class="error-data">
                                             @error('description.en')
                                                 {{ $message }}
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_en" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $post->hasTranslation('body', 'en') ? $post->getTranslation('body', 'en') : '', old('body.en') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $news->hasTranslation('body', 'en') ? $news->getTranslation('body', 'en') : '', old('body.en') }}</textarea>
                                         <span class="error-data">
                                             @error('body.en')
                                                 {{ $message }}
@@ -143,7 +143,7 @@
                             <label for="category_id" class="form-label">Category</label>
                             <select class="form-select" aria-label="Default select example" name="category_id" id="category_id">
                                 @foreach ($categories as $category_item)
-                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $post->category?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
+                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $news->category?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -151,22 +151,22 @@
                         <div class="form-group mt-3">
                             <label for="status" class="form-label">status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
-                                <option value="1" {{ $post->status == 1 ? 'selected' : '' }}>active</option>
-                                <option value="0" {{ $post->status == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="1" {{ $news->status == 1 ? 'selected' : '' }}>active</option>
+                                <option value="0" {{ $news->status == 0 ? 'selected' : '' }}>no active</option>
                             </select>
                         </div>
                         <div class="form-group mt-3">
                             <label for="slider" class="form-label">Slider</label>
                             <select class="form-select" aria-label="Default select example" name="slider" id="slider">
-                                <option value="1" {{ $post->slider == 1 ? 'selected' : '' }}>active</option>
-                                <option value="0" {{ $post->slider == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="1" {{ $news->slider == 1 ? 'selected' : '' }}>active</option>
+                                <option value="0" {{ $news->slider == 0 ? 'selected' : '' }}>no active</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="image" class="col-form-label">user avatar</label>
+                            <label for="image" class="col-form-label">image</label>
                             <input type="file" class="form-control" name="image" id="image" accept=".jpg,.jpeg,.png">
-                            <img id="previewImage" src="{{ Storage::url($post->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
+                            <img id="previewImage" src="{{ Storage::url($news->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
 
                             <div class="valid-feedback">
                             </div>

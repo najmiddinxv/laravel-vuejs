@@ -179,6 +179,36 @@
                 </div>
             </div>
         </div>
+
+        {{-- @foreach(config('.locales') as $locale)
+            <fieldset class="border-2 w-full p-4 rounded-lg mb-4">
+                <label>Text for {{ $locale }}</label>
+                <div class="mb-4">
+                    <label for="{{$locale}}[title]" class="sr-only">Title</label>
+                    <input type="text" name="{{$locale}}[title]" id="{{$locale}}[title]"
+                        placeholder="Title"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg @error($locale.'.title') border-red-500 @enderror"
+                        value="{{ old($locale.'.title') }}">
+                    @error($locale.'.title')
+                    <div class="text-red-500 mt-2 text-sm">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="">
+                    <label for="{{$locale}}[post]" class="sr-only">Body</label>
+                    <textarea name="{{$locale}}[post]" id="{{$locale}}[post]" cols="30" rows="4"
+                            placeholder="Post"
+                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error($locale.'.post') border-red-500 @enderror">{{ old($locale.'.post') }}</textarea>
+                    @error($locale.'.post')
+                    <div class="text-red-500 mt-2 text-sm">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+            </fieldset>
+        @endforeach --}}
+
         <div class="mt-3">
             <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
         </div>

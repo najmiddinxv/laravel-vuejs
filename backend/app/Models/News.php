@@ -12,9 +12,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model implements TranslatableContract
-// class News extends Model
 {
     use HasFactory, Translatable;
+    protected $table = 'news';
+    protected $fillable = [
+        'category_id',
+        'created_by',
+        'status',
+        'slider',
+        'view_count'
+    ];
 
     public $translatedAttributes = [
         'title',
@@ -24,12 +31,8 @@ class News extends Model implements TranslatableContract
         'main_image'
     ];
 
-    protected $fillable = [
-        'category_id',
-        'created_by',
-        'status',
-        'slider',
-        'view_count'
+    protected $casts = [
+        'main_image' => 'array',
     ];
 
     protected static function boot()
