@@ -40,7 +40,7 @@
                                         <label for="title_uz" class="form-label">Name uz</label>
                                         <input type="text" name="title[uz]" id="title_uz"
                                             class="form-control @error('title.uz') error-data-input @enderror"
-                                            value="{{ $news->getTranslation('title', 'uz'), old('title.uz') }}" required>
+                                            value="{{ $news->translate('uz')->title, old('title.uz') }}" required>
                                         <span class="error-data">
                                             @error('title.uz')
                                                 {{ $message }}
@@ -50,7 +50,7 @@
 
                                     <div class="form-group mt-3">
                                         <label for="description_uz" class="form-label">Description uz</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $news->hasTranslation('description', 'uz') ? $news->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $news->translate('uz')->description, old('description.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('description.uz')
                                                 {{ $message }}
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_uz" class="form-label">Body uz</label>
-                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ $news->hasTranslation('body', 'uz') ? $news->getTranslation('body', 'uz') : '', old('body.uz') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.uz') error-data-input @enderror" name="body[uz]" id="body_uz"  style="height: 130px;" >{{ $news->translate('uz')->body, old('body.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('body.uz')
                                                 {{ $message }}
@@ -72,7 +72,7 @@
                                         <label for="title_ru" class="form-label">Name ru</label>
                                         <input type="text" name="title[ru]" id="title_ru"
                                             class="form-control @error('title.ru') error-data-input @enderror"
-                                            value="{{ $news->hasTranslation('title', 'ru') ? $news->getTranslation('title', 'ru') : '', old('title.ru') }}">
+                                            value="{{ $news->translate('ru')->title, old('title.ru') }}">
                                         <span class="error-data">
                                             @error('title.ru')
                                                 {{ $message }}
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_ru" class="form-label">Description ru</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $news->hasTranslation('description', 'ru') ? $news->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $news->translate('ru')->description, old('description.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('description.ru')
                                                 {{ $message }}
@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_ru" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ $news->hasTranslation('body', 'ru') ? $news->getTranslation('body', 'ru') : '', old('body.ru') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ $news->translate('ru')->body, old('body.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('body.ru')
                                                 {{ $message }}
@@ -103,7 +103,7 @@
                                         <label for="title_en" class="form-label">Name en</label>
                                         <input type="text" name="title[en]" id="name_en"
                                             class="form-control @error('title.en') error-data-input @enderror"
-                                            value="{{ $news->hasTranslation('title', 'en') ? $news->getTranslation('title', 'en') : '', old('title.en') }}">
+                                            value="{{ $news->translate('en')->title, old('title.en') }}">
                                         <span class="error-data">
                                             @error('title.en')
                                                 {{ $message }}
@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_en" class="form-label">Description en</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $news->hasTranslation('description', 'en') ? $news->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $news->translate('en')->description, old('description.en') }}</textarea>
                                         <span class="error-data">
                                             @error('description.en')
                                                 {{ $message }}
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="body_en" class="form-label">Body ru</label>
-                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $news->hasTranslation('body', 'en') ? $news->getTranslation('body', 'en') : '', old('body.en') }}</textarea>
+                                        <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $news->translate('en')->body, old('body.en') }}</textarea>
                                         <span class="error-data">
                                             @error('body.en')
                                                 {{ $message }}

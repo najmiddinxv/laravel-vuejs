@@ -40,40 +40,22 @@ class NewsController extends Controller
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news');
         }
 
-        $translatedData = [
-            'category_id' =>  $data['category_id'],
-            'status' =>  $data['status'],
-            'slider' =>  $data['slider'],
+        $news = new News();
+        $news->category_id = $data['category_id'];
+        $news->status = $data['status'];
+        $news->slider = $data['slider'];
+        $news->save();
 
-            'uz' => [
-                'title' => $data['title']['uz'],
-                'slug' => Str::slug($data['title']['uz']),
-                'description' => $data['description']['uz'],
-                'body' => $data['body']['uz'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-            'ru' => [
-                'title' => $data['title']['ru'],
-                'slug' => Str::slug($data['title']['ru']),
-                'description' => $data['description']['ru'],
-                'body' => $data['body']['ru'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-            'en' => [
-                'title' => $data['title']['en'],
-                'slug' => Str::slug($data['title']['en']),
-                'description' => $data['description']['en'],
-                'body' => $data['body']['en'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-
-        ];
-
-        //  dd($translatedData);
-        News::create($translatedData);
+        foreach(config('app.locales') as $key => $configLocale){
+            $news->translateOrNew($configLocale)->title = $data['title'][$configLocale] ?? $data['title']['uz'];
+            $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
+            $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
+            $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
+            $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+            $news->save();
+        }
 
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
-
     }
 
     public function show(News $news)
@@ -96,39 +78,30 @@ class NewsController extends Controller
     {
 
         $data = $request->validated();
+
         if (isset($data['image'])) {
+            $this->fileUploadService->resizedImageDelete($news->main_image);
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news');
+        }else{
+            $data['main_image'] = $news->main_image;
         }
 
-        $tanslatedData = [
-            'uz' => [
-                'title' => $data['title']['uz'],
-                'slug' => Str::slug($data['title']['uz']),
-                'description' => $data['description']['uz'],
-                'body' => $data['body']['uz'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-            'ru' => [
-                'title' => $data['title']['ru'],
-                'slug' => Str::slug($data['title']['ru']),
-                'description' => $data['description']['ru'],
-                'body' => $data['body']['ru'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-            'en' => [
-                'title' => $data['title']['en'],
-                'slug' => Str::slug($data['title']['en']),
-                'description' => $data['description']['en'],
-                'body' => $data['body']['en'],
-                'main_image' => $data['main_image'] ?? null,
-            ],
-            'category_id' => $data['category_id'],
-            'status' => $data['status'],
-            'slider' => $data['slider'],
-        ];
+        $news->category_id = $data['category_id'];
+        $news->status = $data['status'];
+        $news->slider = $data['slider'];
+        $news->save();
 
-        News::create($tanslatedData);
+        foreach(config('app.locales') as $configLocale){
+            $news->translateOrNew($configLocale)->title = $data['title'][$configLocale] ?? $data['title']['uz'];
+            $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
+            $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
+            $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
+            $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+            $news->save();
+        }
+
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
+
     }
 
     public function destroy(News $news)
@@ -138,3 +111,56 @@ class NewsController extends Controller
         return back()->with('success', 'news ' . __('lang.successfully_deleted'));
     }
 }
+
+
+
+
+
+
+
+
+//https://github.com/Astrotomic/laravel-translatable
+
+// Filling multiple translations
+// $data = [
+//   'author' => 'Gummibeer',
+//   'en' => ['title' => 'My first post'],
+//   'fr' => ['title' => 'Mon premier post'],
+// ];
+// $post = Post::create($data);
+
+// echo $post->translate('fr')->title; // Mon premier post
+
+//shunday saqlash mumkin deb keltirilgan ekan lekin menda nimagadur o'xshamadi faqat bitta til uchun saqlaydigan boldi
+// $translatedData = [
+//     'category_id' =>  $data['category_id'],
+//     'status' =>  $data['status'],
+//     'slider' =>  $data['slider'],
+
+//     'uz' => [
+//         'title' => $data['title']['uz'],
+//         'slug' => Str::slug($data['title']['uz']),
+//         'description' => $data['description']['uz'],
+//         'body' => $data['body']['uz'],
+//         'main_image' => $data['main_image'] ?? null,
+//     ],
+//     'ru' => [
+//         'title' => $data['title']['ru'],
+//         'slug' => Str::slug($data['title']['ru']),
+//         'description' => $data['description']['ru'],
+//         'body' => $data['body']['ru'],
+//         'main_image' => $data['main_image'] ?? null,
+//     ],
+//     'en' => [
+//         'title' => $data['title']['en'],
+//         'slug' => Str::slug($data['title']['en']),
+//         'description' => $data['description']['en'],
+//         'body' => $data['body']['en'],
+//         'main_image' => $data['main_image'] ?? null,
+//     ],
+
+// ];
+
+// //  dd($translatedData);
+// News::create($translatedData);
+// return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));

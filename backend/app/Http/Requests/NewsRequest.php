@@ -16,9 +16,9 @@ class NewsRequest extends BaseFormRequest
         return [
             'category_id' => 'required|integer',
 
-            'title.uz' => 'required|string|max:1000',
-            'title.*' => ['nullable','string','max:1000'],
-            'description.*' => ['nullable','string','max:1000'],
+            'title.uz' => 'required|string|max:255',
+            'title.*' => ['nullable','string','max:255'],
+            'description.*' => ['nullable','string','max:500'],
             'body.uz' => 'required|string|max:65000',
             'body.*' => ['nullable','string','max:65000'],
 
@@ -32,9 +32,9 @@ class NewsRequest extends BaseFormRequest
     {
         return [
             'category_id' => 'required|integer',
-            'title.uz' => 'required|string|max:1000',
-            'title.*' => ['nullable','string','max:1000'],
-            'description.*' => ['nullable','string','max:1000'],
+            'title.uz' => 'required|string|max:255',
+            'title.*' => ['nullable','string','max:255'],
+            'description.*' => ['nullable','string','max:500'],
             'body.uz' => 'required|string|max:65000',
             'body.*' => ['nullable','string','max:65000'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
