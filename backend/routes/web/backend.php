@@ -145,7 +145,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('/', 'index')->name('index');
             Route::get('show/{comment}', 'show')->name('show');
             // Route::get('create', 'create')->name('create');
-            // Route::post('store','store')->name('store');
+            Route::post('store','store')->name('store');
             // Route::get('edit/{comment}','edit')->name('edit');
             // Route::put('update/{comment}','update')->name('update');
             Route::delete('destroy/{comment}','destroy')->name('destroy');

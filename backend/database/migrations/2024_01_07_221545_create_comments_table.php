@@ -16,8 +16,11 @@ return new class extends Migration
             $table->morphs('commentable');
             // $table->unsignedBigInteger('commentable_id');
             // $table->string('commentable_type');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->text('body');
             $table->timestamps();
+            // $table->softDeletes();
         });
     }
 
