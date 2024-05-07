@@ -247,7 +247,9 @@
                     'backend.images.*',
                     'backend.posts.*',
                     'backend.pages.*',
-                    'backend.news.*'
+                    'backend.news.*',
+                    'backend.videos.*',
+                    'backend.comments.*'
                     ]) ? '' : 'collapsed' }}"
                     data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Content</span>
@@ -264,7 +266,9 @@
                         'backend.images.*',
                         'backend.posts.*',
                         'backend.pages.*',
-                        'backend.news.*'
+                        'backend.news.*',
+                        'backend.videos.*',
+                        'backend.comments.*'
                         ]) ? 'show' : 'collapse' }}"
                     data-bs-parent="#sidebar-nav">
                     <li>
@@ -317,12 +321,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                        <a href="{{ route('backend.videos.index') }}" class="{{ request()->routeIs('backend.videos.*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Videos</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                        <a href="{{ route('backend.comments.index') }}" class="{{ request()->routeIs('backend.comments.*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Comments</span>
                         </a>
                     </li>
@@ -330,19 +334,19 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs(['backend..*', 'backend..*']) ? '' : 'collapsed' }}"
+                <a class="nav-link {{ request()->routeIs(['backend.contacts.*', 'backend.contact-subjects.*']) ? '' : 'collapsed' }}"
                     data-bs-target="#contact-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-person-rolodex"></i><span>Contact</span>
                     <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="contact-nav"
-                    class="nav-content {{ request()->routeIs(['backend..*', 'backend..*']) ? 'show' : 'collapse' }}  "
+                    class="nav-content {{ request()->routeIs(['backend.contacts.*', 'backend.contact-subjects.*']) ? 'show' : 'collapse' }}  "
                     data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                        <a href="{{ route('backend.contacts.index') }}" class="{{ request()->routeIs('backend.contacts.*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Contacts</span>
                         </a>
-                        <a href="#" class="{{ request()->routeIs('backend..*') ? 'active' : '' }}">
+                        <a href="{{ route('backend.contact-subjects.index') }}" class="{{ request()->routeIs('backend.contact-subjects.*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Contact Subjects</span>
                         </a>
                     </li>

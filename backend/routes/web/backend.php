@@ -3,6 +3,8 @@
 use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\ContactSubjectController;
 use App\Http\Controllers\Backend\ImageController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NewsController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\TinymceFileController;
 use App\Http\Controllers\Backend\UserConroller;
+use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\Backend\WordController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -128,6 +131,40 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('edit/{news}','edit')->name('edit');
             Route::put('update/{news}','update')->name('update');
             Route::delete('destroy/{news}','destroy')->name('destroy');
+        });
+        Route::prefix('videos')->name('videos.')->controller(VideoController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show/{video}', 'show')->name('show');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{video}','edit')->name('edit');
+            Route::put('update/{video}','update')->name('update');
+            Route::delete('destroy/{video}','destroy')->name('destroy');
+        });
+        Route::prefix('comments')->name('comments.')->controller(NewsController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show/{comment}', 'show')->name('show');
+            // Route::get('create', 'create')->name('create');
+            // Route::post('store','store')->name('store');
+            // Route::get('edit/{comment}','edit')->name('edit');
+            // Route::put('update/{comment}','update')->name('update');
+            Route::delete('destroy/{comment}','destroy')->name('destroy');
+        });
+        Route::prefix('contact-subjects')->name('contact-subjects.')->controller(ContactSubjectController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show/{contactSubject}', 'show')->name('show');
+            Route::get('create', 'create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('edit/{contactSubject}','edit')->name('edit');
+            Route::put('update/{contactSubject}','update')->name('update');
+            Route::delete('destroy/{contactSubject}','destroy')->name('destroy');
+        });
+        Route::prefix('contacts')->name('contacts.')->controller(ContactController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('show/{contact}', 'show')->name('show');
+            Route::get('edit/{contact}','edit')->name('edit');
+            Route::put('update/{contact}','update')->name('update');
+            Route::delete('destroy/{contact}','destroy')->name('destroy');
         });
 
     });
