@@ -162,7 +162,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::prefix('contacts')->name('contacts.')->controller(ContactController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('show/{contact}', 'show')->name('show');
-            Route::get('edit/{contact}','edit')->name('edit');
             Route::put('update/{contact}','update')->name('update');
             Route::delete('destroy/{contact}','destroy')->name('destroy');
         });
