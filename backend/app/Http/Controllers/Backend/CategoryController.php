@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Helpers\ImageResize;
 use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Services\FileUploadService;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -36,7 +32,7 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         if (isset($data['image'])) {
-            $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories');
+            $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories/'.now()->format('Y/m/d'));
         }
 
         Category::create($data);
@@ -58,7 +54,7 @@ class CategoryController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             $this->fileUploadService->resizedImageDelete($category->image);
-            $data['image'] = $this->fileUploadService->resizeImageUpload($request->file('image'), '/uploads/categories');
+            $data['image'] = $this->fileUploadService->resizeImageUpload($request->file('image'), '/uploads/categories/'.now()->format('Y/m/d'));
         }
         $category->update($data);
         return back()->with('success', 'category ' . __('lang.successfully_updated'));

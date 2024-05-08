@@ -37,7 +37,7 @@ class ImageController extends Controller
         $data = $request->validated();
 
         foreach ($data['images'] as $key => $image) {
-            $fileUploadServiceResponse = $this->fileUploadService->resizeImageUpload($image, '/uploads/images');
+            $fileUploadServiceResponse = $this->fileUploadService->resizeImageUpload($image, '/uploads/images/'.now()->format('Y/m/d'));
             $data['path'] = $fileUploadServiceResponse;
             $data['mime_type'] = $image->getClientOriginalExtension();
             if(!isset($data['name']['uz']) && !isset($data['name']['ru']) && !isset($data['name']['en'])){

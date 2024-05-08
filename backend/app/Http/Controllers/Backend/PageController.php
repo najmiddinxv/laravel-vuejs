@@ -34,7 +34,7 @@ class PageController extends Controller
     {
         $data = $request->validated();
         if (isset($data['image'])) {
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/pages');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/pages/'.now()->format('Y/m/d'));
         }
         Page::create($data);
         return redirect()->route('backend.pages.index')->with('Page ',__('lang.successfully_created'));
@@ -62,7 +62,7 @@ class PageController extends Controller
 
         if (isset($data['image'])) {
             $this->fileUploadService->resizedImageDelete($page->main_image);
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/Pages');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/pages/'.now()->format('Y/m/d'));
         }
 
         $page->update($data);

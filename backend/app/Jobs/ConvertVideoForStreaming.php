@@ -18,15 +18,20 @@ class ConvertVideoForStreaming implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private int $id, private string $guid){}
+    public function __construct(private string $original_path){}
 
     public function handle()
     {
-        // $lowBitrate = (new X264)->setKiloBitrate(250);
+        $path = '/uploads/videos/2024/05/08/a7a261a2d83035c22b649d4ac5095b27.mp4';
+
+        $hlsPath = substr($this->original_path, 0, -4);
+
+
+        $lowBitrate = (new X264)->setKiloBitrate(250);
         $midBitrate = (new X264)->setKiloBitrate(500);
-        // $highBitrate = (new X264)->setKiloBitrate(1000);
+        $highBitrate = (new X264)->setKiloBitrate(1000);
         FFMpeg::fromDisk('public')
-            ->open("video/{$this->id}/{$this->guid}")
+            ->open("{$this->original_path}")
             ->exportForHLS()
             // ->setSegmentLength(10) // optional
             // ->setKeyFrameInterval(48) // optional
@@ -36,19 +41,18 @@ class ConvertVideoForStreaming implements ShouldQueue
             // ->addFormat($midBitrate, function($media) {
             //     $media->scale(960, 720);
             // })
-            // ->addFormat($lowBitrate)
+            ->addFormat($lowBitrate)
             ->addFormat($midBitrate)
-            // ->addFormat($highBitrate)
+            ->addFormat($highBitrate)
             // ->onProgress(function ($percentage, $remaining, $rate) {
             //     $this->info("{$remaining} seconds left at rate: {$rate}");
             // })
             // ->onProgress(function ($percentage) {
             //    $this->info("{$percentage}% transcoded");
             // })
-            ->save("video/{$this->id}/".substr($this->guid, 0, -5).".m3u8");
+            ->save("{$hlsPath}.m3u8");
 
-        Storage::delete("video/{$this->id}/{$this->guid}");
-
+        // Storage::delete("video/{$this->id}/{$this->guid}");
         // ConvertVideoForStreaming::dispatch($model->id,$fileName);
     }
 }

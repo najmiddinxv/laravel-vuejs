@@ -47,7 +47,7 @@ class UserConroller extends Controller
         $data = $request->validated();
 
         if (isset($data['userAvatar'])) {
-            $data['avatar'] = $this->fileUploadService->resizeImageUpload($data['userAvatar'], '/uploads/users');
+            $data['avatar'] = $this->fileUploadService->resizeImageUpload($data['userAvatar'], '/uploads/users/'.now()->format('Y/m/d'));
         }
         // $data['avatar'] = $data['userAvatar'] ? $this->fileUploadService->resizeImageAndUpload($data['userAvatar'], '/uploads/users') : null;
 
@@ -90,7 +90,7 @@ class UserConroller extends Controller
 
         if (isset($data['userAvatar'])) {
             $this->fileUploadService->resizedImageDelete($user->avatar);
-            $data['avatar'] = $this->fileUploadService->resizeImageUpload($data['userAvatar'], '/uploads/users');
+            $data['avatar'] = $this->fileUploadService->resizeImageUpload($data['userAvatar'], '/uploads/users/'.now()->format('Y/m/d'));
         }
 
         if (isset($data['password'])) {

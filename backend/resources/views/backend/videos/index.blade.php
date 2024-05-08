@@ -4,14 +4,14 @@
 @endsection
 @section('content')
 <div class="pagetitle">
-    <h1>Posts</h1>
+    <h1>Videos</h1>
     <nav style="display: flex;justify-content:space-between;align-items: center;">
       <ol class="breadcrumb" style="margin:0">
         <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active">Posts</li>
+        <li class="breadcrumb-item active">Videos</li>
       </ol>
       <div>
-        <a href="{{ route('backend.posts.create') }}" class="btn btn-success">{{ __('lang.create') }}</a>
+        <a href="{{ route('backend.videos.create') }}" class="btn btn-success">{{ __('lang.create') }}</a>
       </div>
     </nav>
 </div>
@@ -24,34 +24,42 @@
                 <th>#</th>
                 <th>{{__('lang.category')}}</th>
                 <th>{{__('lang.title')}}</th>
-                <th>{{__('lang.main_image')}}</th>
+                <th>{{__('lang.description')}}</th>
+                <th>{{__('lang.thumbanil')}}</th>
+                <th>{{__('lang.mime_type')}}</th>
+                <th>{{__('lang.size')}}</th>
+                <th>{{__('lang.download_count')}}</th>
                 <th>{{__('lang.status')}}</th>
-                <th>{{__('lang.slider')}}</th>
-                <th>{{__('lang.view_count')}}</th>
-                <th>{{__('lang.created_by')}}</th>
+                <th>{{__('lang.uploaded_by')}}</th>
                 <th>{{__('lang.actions')}}</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($posts as $key => $post)
+            @foreach($videos as $key => $video)
                 <tr>
-                    <th scope="row">{{ $posts->firstItem() + $key }}</th>
-                    <td>{{ $post->category?->name }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td style="text-align: center"><a href="{{ Storage::url($post->main_image['large'] ?? '') }}"><img src="{{ Storage::url($post->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
-                    <td>{!! $post->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
-                    <td>{!! $post->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
-                    <td>{{ $post->view_count }}</td>
-                    <td>{{ $post->createdBy?->full_name }}</td>
+                    <th scope="row">{{ $videos->firstItem() + $key }}</th>
+                    <td>{{ $video->category?->name }}</td>
+                    <td>{{ $video->name }}</td>
+                    <td>{{ $video->description }}</td>
+                    <td style="text-align: center">
+                        <a href="{{ Storage::url($video->thumbnail['large'] ?? '') }}">
+                            <img src="{{ Storage::url($video->thumbnail['medium'] ?? '') }}" alt="img" width="20%">
+                        </a>
+                    </td>
+                    <td>{{ $video->mime_type }}</td>
+                    <td>{{ Number::fileSize($video->size); }}</td>
+                    <td>{{ $video->download_count }}</td>
+                    <td>{!! $video->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
+                    <td>{{ $video->uploaded_by }}</td>
                     <td>
                         <div style="text-align: center;">
-                            <a href="{{ route('backend.posts.show',['post'=>$post->id]) }}" class="btn btn-primary" title="show">
+                            <a href="{{ route('backend.videos.show',['video'=>$video->id]) }}" class="btn btn-primary" title="show">
                                 <i class="bx bx-show"></i>
                             </a>
-                            <a href="{{ route('backend.posts.edit',['post'=>$post->id]) }}" class="btn btn-primary" title="edit">
+                            <a href="{{ route('backend.videos.edit',['video'=>$video->id]) }}" class="btn btn-primary" title="edit">
                                 <i class="bx bx-pencil"></i>
                             </a>
-                            <form style="display: inline-block;" action="{{ route('backend.posts.destroy',['post'=>$post->id]) }}" method="POST">
+                            <form style="display: inline-block;" action="{{ route('backend.videos.destroy',['video'=>$video->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="delete-data-item btn btn-danger" title="delete">
@@ -64,7 +72,7 @@
             @endforeach
             </tbody>
         </table>
-        {{ $posts->links() }}
+        {{ $videos->links() }}
     </div>
 </div>
 @endsection

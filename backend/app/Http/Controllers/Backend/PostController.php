@@ -34,7 +34,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
         if (isset($data['image'])) {
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
         // $data['slug'] = [
         //     'uz' => Str::slug($data['title']['uz']),
@@ -67,7 +67,7 @@ class PostController extends Controller
 
         if (isset($data['image'])) {
             $this->fileUploadService->resizedImageDelete($post->main_image);
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
 
         $post->update($data);

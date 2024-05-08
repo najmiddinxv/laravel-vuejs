@@ -37,7 +37,7 @@ class NewsController extends Controller
     {
         $data = $request->validated();
         if (isset($data['image'])) {
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
         }
 
         $news = new News();
@@ -81,7 +81,7 @@ class NewsController extends Controller
 
         if (isset($data['image'])) {
             $this->fileUploadService->resizedImageDelete($news->main_image);
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news');
+            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
         }else{
             $data['main_image'] = $news->main_image;
         }

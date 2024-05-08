@@ -35,7 +35,7 @@ class TinymceFileController extends Controller
         $data = $request->validated();
 
         foreach ($data['files'] as $fileItem) {
-            $fileUploadServiceResponse = $this->fileUploadService->fileAndImageUpload($fileItem, '/uploads/files');
+            $fileUploadServiceResponse = $this->fileUploadService->fileAndImageUpload($fileItem, '/uploads/files/'.now()->format('Y/m/d'));
             $data['path'] = $fileUploadServiceResponse[0];
             // $data['mime_type'] = $data['file']->getClientMimeType();
             // $data['size'] = $data['file']->getSize();

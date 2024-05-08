@@ -12,7 +12,8 @@ class FileUploadService
     //rasm kesib uch xil o'lchamda katta,o'rtacha,kichik qilib yuklash uchun
     public function resizeImageUpload($file, $basePath)
     {
-        $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        // $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        $imagePath = $basePath;
         if (!Storage::exists($imagePath)) {
             Storage::makeDirectory($imagePath, 0755, true, true);
         }
@@ -46,7 +47,9 @@ class FileUploadService
     //rasmni kesib faqat katta hajmda yuklaydi, Bunda rasmni hajmi(mb) qisqaradi ammo o'lchami qisqarmaydi
     public function resizeImageOnlyLargeUpload($image, $basePath)
     {
-        $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        // $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        $imagePath = $basePath;
+
         if (!Storage::exists($imagePath)) {
             Storage::makeDirectory($imagePath, 0755, true, true);
         }
@@ -72,7 +75,8 @@ class FileUploadService
     //rasmni original holati bo'yicha hajmi necha mb bo'lsa ham yuklash uchun
     public function originalImageUpload($image, $basePath)
     {
-        $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        // $imagePath = $basePath . '/' . now()->format('Y/m/d');
+        $imagePath = $basePath;
         if (!Storage::exists($imagePath)) {
             Storage::makeDirectory($imagePath, 0755, true, true);
         }
@@ -91,7 +95,9 @@ class FileUploadService
     //fayl yuklash uchun
     public function fileUpload($file, $basePath)
     {
-        $filePath = $basePath . '/' . now()->format('Y/m/d');
+        // $filePath = $basePath . '/' . now()->format('Y/m/d');
+        $filePath = $basePath;
+
         if (!Storage::exists($filePath)) {
             Storage::makeDirectory($filePath, 0755, true, true);
         }
@@ -115,7 +121,8 @@ class FileUploadService
     //ram yoki fayl yuklash uchun
     public function fileAndImageUpload($file, $basePath)
     {
-        $filePath = $basePath . '/' . now()->format('Y/m/d');
+        // $filePath = $basePath . '/' . now()->format('Y/m/d');
+        $filePath = $basePath;
         if (!Storage::exists($filePath)) {
             Storage::makeDirectory($filePath, 0755, true, true);
         }
