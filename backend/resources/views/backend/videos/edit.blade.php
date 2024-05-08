@@ -7,14 +7,14 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.tinymceFiles.index') }}">Files</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.videos.index') }}">Videos</a></li>
                 <li class="breadcrumb-item">{{ __('lang.edit') }}</li>
-                <li class="breadcrumb-item active">{{ $tinymceFile->name }}</li>
+                <li class="breadcrumb-item active">{{ $video->name }}</li>
             </ol>
         </nav>
     </div>
     <x-alert-message-component></x-alert-message-component>
-    <form action="{{ route('backend.tinymceFiles.update', $tinymceFile->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backend.videos.update', $video->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -37,12 +37,12 @@
                               <div class="tab-content pt-2" id="myTabContent">
                                 <div class="tab-pane fade active show" id="pills-uz" role="tabpanel" aria-labelledby="uz-tab">
                                     <div class="form-group">
-                                        <label for="name_uz" class="form-label">Name uz</label>
-                                        <input type="text" name="name[uz]" id="name_uz"
-                                            class="form-control @error('name.uz') error-data-input @enderror"
-                                            value="{{ $tinymceFile->getTranslation('name', 'uz'), old('name.uz') }}" required>
+                                        <label for="title_uz" class="form-label">title uz</label>
+                                        <input type="text" name="title[uz]" id="title_uz"
+                                            class="form-control @error('title.uz') error-data-input @enderror"
+                                            value="{{ $video->getTranslation('title', 'uz'), old('title.uz') }}" required>
                                         <span class="error-data">
-                                            @error('name.uz')
+                                            @error('title.uz')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -50,7 +50,7 @@
 
                                     <div class="form-group mt-3">
                                         <label for="description_uz" class="form-label">Description uz</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $tinymceFile->hasTranslation('description', 'uz') ? $tinymceFile->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[uz]" id="description_uz"  style="height: 130px;" >{{ $video->hasTranslation('description', 'uz') ? $video->getTranslation('description', 'uz') : '', old('description.uz') }}</textarea>
                                         <span class="error-data">
                                             @error('description.uz')
                                                 {{ $message }}
@@ -60,19 +60,19 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-ru" role="tabpanel" aria-labelledby="ru-tab">
                                     <div class="form-group mt-3">
-                                        <label for="name_ru" class="form-label">Name ru</label>
-                                        <input type="text" name="name[ru]" id="name_ru"
-                                            class="form-control @error('name.ru') error-data-input @enderror"
-                                            value="{{ $tinymceFile->hasTranslation('name', 'ru') ? $tinymceFile->getTranslation('name', 'ru') : '', old('name.ru') }}">
+                                        <label for="title_ru" class="form-label">title ru</label>
+                                        <input type="text" name="title[ru]" id="title_ru"
+                                            class="form-control @error('title.ru') error-data-input @enderror"
+                                            value="{{ $video->hasTranslation('title', 'ru') ? $video->getTranslation('title', 'ru') : '', old('title.ru') }}">
                                         <span class="error-data">
-                                            @error('name.ru')
+                                            @error('title.ru')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_ru" class="form-label">Description ru</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $tinymceFile->hasTranslation('description', 'ru') ? $tinymceFile->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[ru]" id="description_ru" style="height: 130px;" >{{ $video->hasTranslation('description', 'ru') ? $video->getTranslation('description', 'ru') : '', old('description.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('description.ru')
                                                 {{ $message }}
@@ -82,19 +82,19 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-en" role="tabpanel" aria-labelledby="en-tab">
                                     <div class="form-group mt-3">
-                                        <label for="name_en" class="form-label">Name en</label>
-                                        <input type="text" name="name[en]" id="name_en"
-                                            class="form-control @error('name.en') error-data-input @enderror"
-                                            value="{{ $tinymceFile->hasTranslation('name', 'en') ? $tinymceFile->getTranslation('name', 'en') : '', old('name.en') }}">
+                                        <label for="title_en" class="form-label">title en</label>
+                                        <input type="text" name="title[en]" id="title_en"
+                                            class="form-control @error('title.en') error-data-input @enderror"
+                                            value="{{ $video->hasTranslation('title', 'en') ? $video->getTranslation('title', 'en') : '', old('title.en') }}">
                                         <span class="error-data">
-                                            @error('name.en')
+                                            @error('title.en')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="description_en" class="form-label">Description en</label>
-                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $tinymceFile->hasTranslation('description', 'en') ? $tinymceFile->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
+                                        <textarea class="form-control @error('description.uz') error-data-input @enderror" name="description[en]" id="description_en" style="height: 130px;" >{{ $video->hasTranslation('description', 'en') ? $video->getTranslation('description', 'en') : '', old('description.en') }}</textarea>
                                         <span class="error-data">
                                             @error('description.en')
                                                 {{ $message }}
@@ -116,7 +116,7 @@
                             <label for="category_id" class="form-label">Category</label>
                             <select class="form-select" aria-label="Default select example" name="category_id" id="category_id">
                                 @foreach ($categories as $category_item)
-                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $tinymceFile->category?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
+                                    <option value="{{ $category_item->id }}" {{ $category_item->id == $video->category?->id ? 'selected' : '' }}>{{ $category_item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -125,9 +125,18 @@
                             <label for="status" class="form-label">status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
                                 <option value="">select status</option>
-                                <option value="1" {{ $tinymceFile->status == 1 ? 'selected' : '' }}>active</option>
-                                <option value="0" {{ $tinymceFile->status == 0 ? 'selected' : '' }}>no active</option>
+                                <option value="1" {{ $video->status == 1 ? 'selected' : '' }}>active</option>
+                                <option value="0" {{ $video->status == 0 ? 'selected' : '' }}>no active</option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="image" class="col-form-label">image</label>
+                            <input type="file" class="form-control" name="image" id="image" accept=".jpg,.jpeg,.png">
+                            <img id="previewImage" src="{{ Storage::url($video->thumbnail['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
+
+                            <div class="valid-feedback">
+                            </div>
                         </div>
 
 
@@ -135,8 +144,6 @@
                 </div>
             </div>
         </div>
-
-
 
         </div>
         <div class="mt-3">

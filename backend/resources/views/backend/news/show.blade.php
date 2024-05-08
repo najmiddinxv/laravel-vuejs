@@ -59,6 +59,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>image</td>
+                    <td><a href="{{ Storage::url($news->main_image['large'] ?? '') }}"><img src="{{ Storage::url($news->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
+                </tr>
+                <tr>
                     <td>status</td>
                     <td>{!! $news->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                 </tr>

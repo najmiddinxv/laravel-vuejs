@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('no action');
             $table->jsonb('title');
+            $table->jsonb('slug');
             $table->jsonb('description')->nullable();
             $table->string('hls_path')->nullable();
             $table->string('original_path')->nullable();
             $table->string('mime_type');
             $table->unsignedBigInteger('size');
             $table->jsonb('thumbnail')->nullable();
+            $table->integer('view_count')->default(0);
             $table->unsignedInteger('download_count')->default(0);
             $table->string('status')->default(1);
             $table->unsignedBigInteger('uploaded_by');

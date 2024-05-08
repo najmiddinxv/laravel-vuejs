@@ -2,6 +2,14 @@
 @section('title')
     - {{ __('lang.edit') }}
 @endsection
+@section('styles')
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+    {{-- <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js"></script> --}}
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
+
+@endsection
 @section('content')
     <div class="pagetitle">
         <nav>
@@ -9,15 +17,11 @@
                 <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('backend.posts.index') }}">Post</a></li>
                 <li class="breadcrumb-item">{{ __('lang.show') }}</li>
-                <li class="breadcrumb-item active">{{ $post->id }}</li>
+                <li class="breadcrumb-item active">{{ $video->id }}</li>
             </ol>
         </nav>
     </div>
     <div>
-        {{-- @dd($post->body) --}}
-        {{-- <p>
-            {!! $post->body !!}
-        </p> --}}
 
         <table class="table table-bordered">
             <thead>
@@ -29,63 +33,84 @@
             <tbody>
                 <tr>
                     <td>category</td>
-                    <td>{{ $post->category?->name }}</td>
+                    <td>{{ $video->category?->name }}</td>
                 </tr>
                 <tr>
                     <td>title</td>
                     <td>
-                        uz - {{ $post->getTranslation('title','uz') }} <br>
-                        ru - {{ $post->getTranslation('title','ru') }} <br>
-                        en - {{ $post->getTranslation('title','en') }} <br>
+                        uz - {{ $video->getTranslation('title','uz') }} <br>
+                        ru - {{ $video->getTranslation('title','ru') }} <br>
+                        en - {{ $video->getTranslation('title','en') }} <br>
                     </td>
                 </tr>
                 <tr>
                     <td>slug</td>
                     <td>
-                        uz - {{ $post->getTranslation('slug','uz') }} <br>
-                        ru - {{ $post->getTranslation('slug','ru') }} <br>
-                        en - {{ $post->getTranslation('slug','en') }} <br>
+                        uz - {{ $video->getTranslation('slug','uz') }} <br>
+                        ru - {{ $video->getTranslation('slug','ru') }} <br>
+                        en - {{ $video->getTranslation('slug','en') }} <br>
                     </td>
                 </tr>
                 <tr>
                     <td>description</td>
                     <td>
-                        uz - {{ $post->getTranslation('description','uz') }} <br>
-                        ru - {{ $post->getTranslation('description','ru') }} <br>
-                        en - {{ $post->getTranslation('description','en') }} <br>
+                        uz - {{ $video->getTranslation('description','uz') }} <br>
+                        ru - {{ $video->getTranslation('description','ru') }} <br>
+                        en - {{ $video->getTranslation('description','en') }} <br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>image</td>
+                    <td><a href="{{ Storage::url($video->thumbnail['large'] ?? '') }}"><img src="{{ Storage::url($video->thumbnail['medium'] ?? '') }}" alt="img" width="20%"></a></td>
+                </tr>
+                <tr>
+                    <td>original video</td>
+                    <td>
+
+                        <video width=600 height=300 class="vjs-default-skin" controls>
+                            <source
+                               src="/storage/{{ $video->original_path }}"
+                               >
+                          </video>
+                          {{-- <script src="video.js"></script>
+                          <script src="videojs-contrib-hls.min.js"></script> --}}
                     </td>
                 </tr>
                 <tr>
-                    <td>body</td>
+                    <td>hls video (ffmpeg)</td>
                     <td>
-                        uz - {!! $post->getTranslation('body','uz') !!} <br>
-                        ru - {!! $post->getTranslation('body','ru') !!} <br>
-                        en - {!! $post->getTranslation('body','en') !!} <br>
+                        <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264">
+                            <source src="/storage/{{ $video->hls_path }}" type="application/x-mpegURL">
+                            Your browser does not support the video tag.
+                        </video>
                     </td>
+
                 </tr>
+
                 <tr>
                     <td>status</td>
-                    <td>{!! $post->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
-                </tr>
-                <tr>
-                    <td>slider</td>
-                    <td>{!! $post->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
+                    <td>{!! $video->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                 </tr>
                 <tr>
                     <td>view count</td>
-                    <td>{{ $post->view_count }}</td>
+                    <td>{{ $video->view_count }}</td>
+                </tr>
+                <tr>
+                    <td>download count</td>
+                    <td>{{ $video->download_count }}</td>
                 </tr>
                 <tr>
                     <td>created by</td>
-                    <td>{{ $post->createdBy?->full_name }}</td>
+                    <td>{{ $video->uploadedBy?->full_name }}</td>
                 </tr>
                 <tr>
                     <td>created at</td>
-                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $video->created_at }}</td>
                 </tr>
                 <tr>
                     <td>updated at</td>
-                    <td>{{ $post->updated_at }}</td>
+                    <td>{{ $video->updated_at }}</td>
                 </tr>
             </tbody>
         </table>
@@ -93,8 +118,37 @@
 @endsection
 @section('scripts')
     <script>
-        $(document).ready(function(e) {
+        document.addEventListener('DOMContentLoaded', function() {
+            var player = videojs('videoPlayer');
+            player.qualitySelector();
 
+            player.ready(function() {
+                var qualityLevels = player.tech_.hls.representations();
+
+                var qualitySelector = document.createElement('select');
+                qualitySelector.setAttribute('id', 'qualitySelector');
+
+                qualityLevels.forEach(function(level, index) {
+                    var option = document.createElement('option');
+                    option.text = level.height + 'p';
+                    option.value = index;
+                    qualitySelector.appendChild(option);
+                });
+
+                player.controlBar.addChild('qualitySelector', {}, qualitySelector);
+
+                qualitySelector.addEventListener('change', function() {
+                    var selectedQualityIndex = parseInt(qualitySelector.value);
+                    player.tech_.hls.representations().forEach(function(level, index) {
+                        if (index === selectedQualityIndex) {
+                            level.enabled(true);
+                        } else {
+                            level.enabled(false);
+                        }
+                    });
+                });
+            });
         });
     </script>
+
 @endsection

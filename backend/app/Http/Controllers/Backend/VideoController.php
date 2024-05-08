@@ -23,6 +23,13 @@ class VideoController extends Controller
 		]);
     }
 
+    public function show(Video $video)
+    {
+        return view('backend.videos.show',[
+            'video' => $video,
+        ]);
+    }
+
     public function create()
     {
         $categories = Category::where('categoryable_type','App\Models\Video')->orderBy('id','desc')->get();
@@ -69,11 +76,13 @@ class VideoController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $this->fileUploadService->resizedImageDelete($video->image);
-            $data['image'] = $this->fileUploadService->resizeImageUpload($request->file('image'), '/uploads/categories');
+            $this->fileUploadService->resizedImageDelete($video->thumbnail);
+            $parts = explode('/', $video->thumbnail['large']);
+            $folderNumber = $parts[count($parts) - 2];
+            $data['thumbnail'] = $this->fileUploadService->resizeImageUpload($request->file('image'), '/uploads/videos/'.now()->format('Y/m/d').'/'.$folderNumber);
         }
         $video->update($data);
-        return back()->with('success', 'category ' . __('lang.successfully_updated'));
+        return redirect()->route('backend.videos.index')->with('success', 'video ' . __('lang.successfully_updated'));
     }
 
     public function destroy(Video $video)

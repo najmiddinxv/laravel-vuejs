@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Category;
 use App\Traits\EscapeUniCodeJson;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 class Video extends Model
@@ -15,6 +17,7 @@ class Video extends Model
     protected $fillable = [
         'category_id',
         'title',
+        'slug',
         'description',
         'hls_path',
         'original_path',
@@ -26,7 +29,7 @@ class Video extends Model
         'uploaded_by',
     ];
 
-    public $translatable = ['title','description'];
+    public $translatable = ['title','description','slug'];
 
     protected $casts = [
         'thumbnail' => 'array',
@@ -43,10 +46,26 @@ class Video extends Model
         parent::boot();
 
         static::saving(function ($model) {
+            $titleTranslations = $model->getTranslations('title');
+            $slugs = [];
+
+            foreach ($titleTranslations as $titleLocale => $title) {
+                $slugs[$titleLocale] = Str::slug($title);
+            }
+
+            $model->slug = $slugs;
             $model->uploaded_by = auth()->user()->id;
         });
 
         static::updating(function ($model) {
+            $titleTranslations = $model->getTranslations('title');
+            $slugs = [];
+
+            foreach ($titleTranslations as $titleLocale => $title) {
+                $slugs[$titleLocale] = Str::slug($title);
+            }
+
+            $model->slug = $slugs;
             $model->uploaded_by = auth()->user()->id;
         });
     }
