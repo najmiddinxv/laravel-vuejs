@@ -7,6 +7,7 @@ use App\Traits\EscapeUniCodeJson;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
@@ -35,10 +36,13 @@ class Video extends Model
         'thumbnail' => 'array',
     ];
 
-
-    public function category()
+    public function category() : BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function uploadedBy() : BelongsTo
+    {
+        return $this->belongsTo(User::class,'uploaded_by','id');
     }
 
     protected static function boot()

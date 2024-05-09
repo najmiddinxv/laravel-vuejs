@@ -22,10 +22,7 @@ class ConvertVideoForStreaming implements ShouldQueue
 
     public function handle()
     {
-        $path = '/uploads/videos/2024/05/08/a7a261a2d83035c22b649d4ac5095b27.mp4';
-
         $hlsPath = substr($this->original_path, 0, -4);
-
 
         $lowBitrate = (new X264)->setKiloBitrate(250);
         $midBitrate = (new X264)->setKiloBitrate(500);

@@ -18,7 +18,7 @@
 <div class="card">
     <div class="card-body" style="padding:20px">
           <x-alert-message-component></x-alert-message-component>
-        <table class="table table-hover table-bordered">
+        <table class="table-responsive table-hover table-bordered">
             <thead>
             <tr>
                 <th>#</th>

@@ -15,6 +15,7 @@
     <x-alert-message-component></x-alert-message-component>
     <form id="create-video-form" action="{{ route('backend.videos.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-primary">
@@ -152,7 +153,7 @@
         <div class="progress mt-3" style="display: none;">
             <div class="progress-bar" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"><span class="progressText">0%</span></div>
         </div>
-        
+
     </form>
 @endsection
 @section('scripts')
