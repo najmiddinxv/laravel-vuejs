@@ -21,7 +21,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'tagsable_type' => 'required|string|max:255',
+            'tagsable_type' => 'nullable|string|max:255',
             'name.uz' => ['required'],
             'name.*' => [
                 'nullable',

@@ -31,6 +31,8 @@ class PostRequest extends BaseFormRequest
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'status' => 'required|integer',
             'slider' => 'required|integer',
+            'tags' => 'nullable|array',
+            'tags.*' => 'integer',
         ];
     }
 
@@ -46,6 +48,8 @@ class PostRequest extends BaseFormRequest
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'status' => 'required|integer',
             'slider' => 'required|integer',
+            'tags' => 'nullable|array',
+            'tags.*' => 'integer',
         ];
     }
 }

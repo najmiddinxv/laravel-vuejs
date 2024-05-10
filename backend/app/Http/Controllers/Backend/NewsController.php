@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\NewsRequest;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -26,9 +27,12 @@ class NewsController extends Controller
 
     public function create()
     {
+        $tags = Tag::where('tagsable_type','App\Models\News')->orWhere('tagsable_type',null)->get();
+
         $categories = Category::where('categoryable_type','App\Models\News')->orderBy('id','desc')->get();
         return view('backend.news.create',[
             'categories' => $categories,
+            'tags' => $tags,
 		]);
     }
 
@@ -54,7 +58,7 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
             $news->save();
         }
-
+        $news->tags()->sync($data['tags']);
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
     }
 
@@ -67,10 +71,13 @@ class NewsController extends Controller
 
     public function edit(News $news)
     {
+        $tags = Tag::where('tagsable_type','App\Models\News')->orWhere('tagsable_type',null)->get();
+
         $categories = Category::where('categoryable_type','App\Models\News')->orderBy('id','desc')->get();
         return view('backend.news.edit',[
             'news' => $news,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -99,6 +106,8 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
             $news->save();
         }
+
+        $news->tags()->sync($data['tags']);
 
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
 

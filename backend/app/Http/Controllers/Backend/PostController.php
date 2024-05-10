@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -24,9 +25,11 @@ class PostController extends Controller
 
     public function create()
     {
+        $tags = Tag::where('tagsable_type','App\Models\Post')->orWhere('tagsable_type',null)->get();
         $categories = Category::where('categoryable_type','App\Models\Post')->orderBy('id','desc')->get();
         return view('backend.posts.create',[
             'categories' => $categories,
+            'tags' => $tags,
 		]);
     }
 
@@ -36,12 +39,17 @@ class PostController extends Controller
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
+
         // $data['slug'] = [
         //     'uz' => Str::slug($data['title']['uz']),
         //     'ru' => Str::slug($data['title']['ru']),
         //     'en' => Str::slug($data['title']['en']),
         // ];
-        Post::create($data);
+
+
+        $post = Post::create($data);
+        $post->tags()->sync($data['tags']);
+
         return redirect()->route('backend.posts.index')->with('post ',__('lang.successfully_created'));
     }
 
@@ -54,10 +62,12 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $tags = Tag::where('tagsable_type','App\Models\Post')->orWhere('tagsable_type',null)->get();
         $categories = Category::where('categoryable_type','App\Models\Post')->orderBy('id','desc')->get();
         return view('backend.posts.edit',[
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -71,6 +81,8 @@ class PostController extends Controller
         }
 
         $post->update($data);
+        $post->tags()->sync($data['tags']);
+
         return redirect()->route('backend.posts.index')->with('posts ',__('lang.successfully_updated'));
     }
 

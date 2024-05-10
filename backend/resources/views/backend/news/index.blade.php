@@ -24,6 +24,7 @@
                 <th>#</th>
                 <th>{{__('lang.category')}}</th>
                 <th>{{__('lang.title')}}</th>
+                <th>{{__('lang.tags')}}</th>
                 <th>{{__('lang.main_image')}}</th>
                 <th>{{__('lang.status')}}</th>
                 <th>{{__('lang.slider')}}</th>
@@ -44,7 +45,7 @@
 
                     {{-- yoki mana shunday qilib qo'ysak ham bo'ladi chunki mcamara yordamida avtomatik shu saytni tili bo'yicha tortayapti --}}
                     <td>{{ $newsItem->title }}</td>
-
+                    <td>{{ $newsItem->tags()->pluck('name')->implode(', ')}}</td>
                     <td style="text-align: center"><a href="{{ Storage::url($newsItem->main_image['large'] ?? '') }}"><img src="{{ Storage::url($newsItem->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
                     <td>{!! $newsItem->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{!! $newsItem->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>

@@ -149,17 +149,29 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="status" class="form-label">status</label>
+                            <label for="status" class="form-label">Status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
                                 <option value="1">active</option>
                                 <option value="0">no active</option>
                             </select>
                         </div>
+
                         <div class="form-group mt-3">
                             <label for="slider" class="form-label">Slider</label>
                             <select class="form-select" aria-label="Default select example" name="slider" id="slider">
                                 <option value="0">no active</option>
                                 <option value="1">active</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <select class="form-select tags" name="tags[]" id="tags" multiple="multiple">
+                                @forelse($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                @empty
+                                    <option value="">no tags</option>
+                                @endforelse
                             </select>
                         </div>
 
@@ -517,8 +529,9 @@
                     $('#previewImage').css({'display':'block'});
                 }
                 reader.readAsDataURL(this.files[0]);
-
             });
+
+            $('.tags').select2();
         });
 
     </script>

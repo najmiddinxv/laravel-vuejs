@@ -8,7 +8,9 @@ use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Spatie\Translatable\HasTranslations;
 
@@ -37,7 +39,7 @@ class Post extends Model
 
     public $translatable = ['title', 'slug', 'description', 'body'];
 
-    public function tags()
+    public function tags() : MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }

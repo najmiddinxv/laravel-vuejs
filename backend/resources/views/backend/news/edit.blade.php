@@ -162,6 +162,17 @@
                                 <option value="0" {{ $news->slider == 0 ? 'selected' : '' }}>no active</option>
                             </select>
                         </div>
+                        <div class="form-group mt-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <select class="form-select tags" name="tags[]" id="tags" multiple="multiple">
+                                @forelse($tags as $tag)
+                                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $news->tags->pluck('id')->toArray()) ? 'selected' : ''}}>{{ $tag->name }}</option>
+                                @empty
+                                    <option value="">no tags</option>
+                                @endforelse
+                            </select>
+                        </div>
+
 
                         <div class="form-group">
                             <label for="image" class="col-form-label">image</label>
@@ -483,11 +494,10 @@
                     $('#previewImage').css({'display':'block'});
                 }
                 reader.readAsDataURL(this.files[0]);
-
             });
+
+            $('.tags').select2();
         });
-
-
 
     </script>
 @endsection

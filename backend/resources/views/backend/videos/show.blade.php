@@ -3,7 +3,9 @@
     - {{ __('lang.edit') }}
 @endsection
 @section('styles')
-<link href="https://vjs.zencdn.net/7.16.0/video-js.css" rel="stylesheet">
+{{-- <link href="https://vjs.zencdn.net/7.16.0/video-js.css" rel="stylesheet"> --}}
+
+<link href="{{ asset('assets/backend/vendor/videojs/video-js.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="pagetitle">
@@ -129,9 +131,12 @@
 @endsection
 @section('scripts')
 
-<script src="https://vjs.zencdn.net/7.16.0/video.min.js"></script>
+{{-- <script src="https://vjs.zencdn.net/7.16.0/video.min.js"></script> --}}
+
+<script src="{{ asset('assets/backend/vendor/videojs/video.min.js') }}"></script>
+
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-http-streaming/2.10.8/videojs-http-streaming.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-http-streaming/2.10.8/videojs-http-streaming.min.js"></script> --}}
 
     <script>
       $(document).ready(function() {

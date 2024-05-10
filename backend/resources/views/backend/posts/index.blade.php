@@ -24,6 +24,7 @@
                 <th>#</th>
                 <th>{{__('lang.category')}}</th>
                 <th>{{__('lang.title')}}</th>
+                <th>{{__('lang.tags')}}</th>
                 <th>{{__('lang.main_image')}}</th>
                 <th>{{__('lang.status')}}</th>
                 <th>{{__('lang.slider')}}</th>
@@ -38,6 +39,7 @@
                     <th scope="row">{{ $posts->firstItem() + $key }}</th>
                     <td>{{ $post->category?->name }}</td>
                     <td>{{ $post->title }}</td>
+                    <td>{{ $post->tags()->pluck('name')->implode(', ')}}</td>
                     <td style="text-align: center"><a href="{{ Storage::url($post->main_image['large'] ?? '') }}"><img src="{{ Storage::url($post->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
                     <td>{!! $post->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{!! $post->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>

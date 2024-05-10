@@ -10,30 +10,24 @@
 
     <meta name="description" content="Deluck - Business Agency & Corporate Template">
     <meta name="keywords" content="website, blog, foo, bar">
-    {{--
-    <meta name="author" content="John Doe">
+    {{-- <meta name="author" content="John Doe">
     <meta name="publisher" content="John Doe">
     <meta name="copyright" content="John Doe">
     <meta name="page-topic" content="Media">
     <meta name="page-type" content="Blogging">
     <meta name="audience" content="Everyone">
     <meta name="robots" content="index, follow">
-    <meta http-equiv="content-language" content="en">
-    --}}
-
+    <meta http-equiv="content-language" content="en"> --}}
     {{-- <meta property="og:title" content="News of Uzbekistan and the World">
     <meta property="og:description" content="Eng qiziqarli yangiliklar — bizda! Dunyo, mahalliy, shou-biznes, gadjetlar, sport, avtomobillar olami yangiliklaridan xabardor bo‘ling.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kun.uz/en">
     <meta property="og:site_name" content="Kun.uz"> --}}
-
     <link href="{{ asset('assets/backend/img/favicon.png') }}" rel="icon">
     <link href="{{ asset('assets/backend/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <link href="{{ asset('assets/backend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -42,9 +36,9 @@
     <link href="{{ asset('assets/backend/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/vendor/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/custom.css') }}" rel="stylesheet">
-
     <script src="{{ asset('assets/backend/vendor/tinymce/tinymce.min.js') }}"></script>
     @yield('styles')
 </head>
@@ -407,6 +401,7 @@
     <script src="{{ asset('assets/backend/vendor/quill/quill.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('assets/backend/vendor/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/main.js') }}"></script>
     <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
     @yield('scripts')

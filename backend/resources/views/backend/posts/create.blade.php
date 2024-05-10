@@ -164,6 +164,17 @@
                         </div>
 
                         <div class="form-group mt-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <select class="form-select tags" name="tags[]" id="tags" multiple="multiple">
+                                @forelse($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                @empty
+                                    <option value="">no tags</option>
+                                @endforelse
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-3">
                             <label for="image" class="form-label">image</label>
                             <input type="file" name="image" id="image"
                                 class="form-control @error('image') error-data-input @enderror">
@@ -487,11 +498,10 @@
                     $('#previewImage').css({'display':'block'});
                 }
                 reader.readAsDataURL(this.files[0]);
-
             });
+
+            $('.tags').select2();
         });
-
-
 
     </script>
 @endsection
