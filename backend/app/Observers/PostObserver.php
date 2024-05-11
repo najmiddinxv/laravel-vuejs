@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class PostObserver
@@ -27,6 +28,8 @@ class PostObserver
      */
     public function created(Post $post): void
     {
+        Cache::forget('banners');
+
         // $user = $post->created_by;
         // $user->notify(new NewPostNotification($post));
     }
@@ -50,7 +53,7 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        //
+        Cache::forget('banners');
     }
 
 

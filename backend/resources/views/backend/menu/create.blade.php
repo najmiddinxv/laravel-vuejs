@@ -110,21 +110,29 @@
                             <label for="image" class="form-label">Parent</label>
                             <select class="form-select" aria-label="Default select example" name="parent_id">
                                 <option value="">Select parent</option>
-                                @foreach ($menu as $menuItem)
-                                    @if ($menuItem->position == 1)
-                                        <optgroup label="Header menu">
+                                <optgroup label="Header menu">
+                                    @foreach ($menu as $menuItem)
+                                        @if ($menuItem->position == 1)
                                             <option value="{{ $menuItem->id }}">{{ $menuItem->name }}</option>
-                                        </optgroup>
-                                    @elseif($menuItem->position == 2)
-                                        <optgroup label="Footer menu">
+                                        @endif
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Footer menu">
+                                    @foreach ($menu as $menuItem)
+                                        @if ($menuItem->position == 2)
                                             <option value="{{ $menuItem->id }}">{{ $menuItem->name }}</option>
-                                        </optgroup>
-                                    @elseif($menuItem->position == 3)
-                                        <optgroup label="Sidebar menu">
+                                        @endif
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Sidebar menu">
+                                    @foreach ($menu as $menuItem)
+                                        @if ($menuItem->position == 3)
                                             <option value="{{ $menuItem->id }}">{{ $menuItem->name }}</option>
-                                        </optgroup>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
+                                </optgroup>
                             </select>
                         </div>
 

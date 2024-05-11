@@ -54,16 +54,16 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    // public function category(): MorphOne
-    // {
-    //     return $this->morphOne(Category::class, 'categoryable');
-    // }
-
     public function createdBy():BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+
+    public function scopeActiveBanner($q)
+    {
+        return $q->where('slider',true)->where('status',1);
+    }
 
 
 }

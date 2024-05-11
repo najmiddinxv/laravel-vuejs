@@ -375,6 +375,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="{{ route('frontend.index') }}">
+                    <i class="bi bi-window"></i>
+                    <span>Saytga o'tish</span>
+                </a>
+            </li>
         </ul>
     </aside>
     <main id="main" class="main">
