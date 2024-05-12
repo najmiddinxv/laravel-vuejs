@@ -24,36 +24,6 @@ class CommentController extends Controller
 		]);
     }
 
-    public function store(CommentRequest $request)
-    {
-        $data = $request->validated();
-        
-        Comment::create($data);
-
-        return response()->json([
-            'success' => 'Comment posted successfully!'
-        ]);
-    }
-
-//     <!-- show_comments.blade.php -->
-// @foreach ($comments as $comment)
-//     <div class="comment">
-//         <p>{{ $comment->content }}</p>
-//         <p>By: {{ $comment->user->name }}</p>
-
-//         <!-- Display replies recursively -->
-//         @include('comments.show_comments', ['comments' => $comment->replies])
-
-//         <!-- Reply form -->
-//         <form action="{{ route('comments.reply', ['commentableType' => $commentableType, 'commentableId' => $commentableId]) }}" method="post">
-//             @csrf
-//             <textarea name="content" placeholder="Your reply"></textarea>
-//             <button type="submit">Reply</button>
-//         </form>
-//     </div>
-// @endforeach
-
-
     public function destroy(Comment $comment)
     {
         $comment->delete();

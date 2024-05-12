@@ -13,9 +13,9 @@ class FrontendController extends Controller
     {
         $banners = Cache::rememberForever('banners', function () {
             return Post::activeBanner()
-            ->orderBy('id','desc')
-            ->limit(3)
-            ->get();
+                ->latest('id')
+                ->limit(3)
+                ->get();
         });
 
         return view("frontend.index",[

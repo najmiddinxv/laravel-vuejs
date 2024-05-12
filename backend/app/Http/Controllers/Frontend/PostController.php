@@ -19,7 +19,7 @@ class PostController extends Controller
     {
         $lang = app()->getLocale();
 
-        $post = Post::where("slug->{$lang}",$slug)->firstOrFail();
+        $post = Post::with(['tags','comments'])->where("slug->{$lang}",$slug)->firstOrFail();
 
         $post->increment('view_count');
 
@@ -37,6 +37,17 @@ class PostController extends Controller
             'post' => $post,
             'prevPost' => $prevPost,
             'nextPost' => $nextPost
+        ]);
+    }
+
+    public function byTag($tagId)
+    {
+        $posts = Post::whereHas('tags', function ($query) use ($tagId) {
+            $query->where('tags.id', $tagId);
+        })->paginate(config('settings.paginate'));
+
+        return view('frontend.posts.byTag', [
+            'posts' => $posts
         ]);
     }
 }

@@ -38,6 +38,7 @@
     <link href="{{asset('assets/frontend/css/bootsnav.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/frontend/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/frontend/css/responsive.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/frontend/css/custom.css')}}" rel="stylesheet" />
     @yield('styles')
     <!-- ========== End Stylesheet ========== -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

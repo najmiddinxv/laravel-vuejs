@@ -46,7 +46,7 @@ class Post extends BaseModel
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id')->with(['user','replies']);
     }
 
     public function category(): BelongsTo
@@ -62,7 +62,7 @@ class Post extends BaseModel
 
     public function scopeActiveBanner($q)
     {
-        return $q->where('slider',true)->where('status',1);
+        return $q->where('slider',true);
     }
 
 

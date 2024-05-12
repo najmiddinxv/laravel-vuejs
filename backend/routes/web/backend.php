@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AuthBackendController;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ContactSubjectController;
 use App\Http\Controllers\Backend\ImageController;
@@ -141,11 +142,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::put('update/{video}','update')->name('update');
             Route::delete('destroy/{video}','destroy')->name('destroy');
         });
-        Route::prefix('comments')->name('comments.')->controller(NewsController::class)->group(function () {
+        Route::prefix('comments')->name('comments.')->controller(CommentController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('show/{comment}', 'show')->name('show');
             // Route::get('create', 'create')->name('create');
-            Route::post('store','store')->name('store');
+            // Route::post('store','store')->name('store');
             // Route::get('edit/{comment}','edit')->name('edit');
             // Route::put('update/{comment}','update')->name('update');
             Route::delete('destroy/{comment}','destroy')->name('destroy');

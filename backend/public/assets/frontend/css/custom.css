@@ -1,0 +1,32 @@
+.pagination li.active .page-link {
+    background: #f71735 none repeat scroll 0 0;
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.pagination li .page-link {
+    border: 1px solid #e7e7e7;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #232323;
+    font-weight: 600;
+    height: 50px;
+    line-height: 50px;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 50px;
+}
+
+.post-link.active {
+    color: #000;
+}
+
+.post-link.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    color: grey;
+}

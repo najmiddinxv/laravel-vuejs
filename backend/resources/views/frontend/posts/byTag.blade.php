@@ -67,7 +67,11 @@
                     @endforelse
                     <div class="row">
                         <div class="col-md-12 pagi-area">
-                            {{ $posts->links() }}
+                            <nav aria-label="navigation">
+
+                                {{ $posts->links() }}
+
+                            </nav>
                         </div>
                     </div>
 

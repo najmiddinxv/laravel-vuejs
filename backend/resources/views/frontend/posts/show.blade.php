@@ -66,103 +66,39 @@
                                 </a>
                             </div>
 
-                            <style>
-                              .post-link {
-                                /* display: inline-block;
-                                margin-right: 10px;
-                                padding: 5px 10px;
-                                text-decoration: none;
-                                color: black;
-                                border: 1px solid black;
-                                border-radius: 5px; */
-                            }
-
-                            .post-link.active {
-                                /* background-color: #007bff; */
-                                color: #000;
-                            }
-
-                            .post-link.disabled {
-                                pointer-events: none;
-                                opacity: 0.5;
-                                color: grey;
-                            }
-
-                            </style>
-
-                            <!-- End Post Pagination -->
-
-                            <!-- Start Post Tag s-->
                             <div class="post-tags share">
                                 <div class="tags">
                                     <span>Tags: </span>
-                                    <a href="#">Consulting</a>
-                                    <a href="#">Planing</a>
-                                    <a href="#">Business</a>
-                                    <a href="#">Fashion</a>
+                                    @forelse ($post->tags as $tag)
+                                        <a href="{{ route('frontend.posts.byTag', ['tagId' => $tag->id]) }}">{{ $tag->name }}</a>
+                                    @empty
+
+                                    @endforelse
                                 </div>
                             </div>
-                            <!-- End Post Tags -->
 
-                            <!-- Start Comments Form -->
                             <div class="comments-area">
                                 <div class="comments-title">
-                                    <h4>
-                                        5 comments
-                                    </h4>
-                                    <div class="comments-list">
-                                        <div class="commen-item">
-                                            <div class="avatar">
-                                                <img src="assets/img/800x800.png" alt="Author">
-                                            </div>
-                                            <div class="content">
-                                                <h5>Jonathom Doe</h5>
-                                                <div class="comments-info">
-                                                    <p>July 15, 2018</p> <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                </div>
-                                                <p>
-                                                    Delivered ye sportsmen zealously arranging frankness estimable as. Nay any article enabled musical shyness yet sixteen yet blushes. Entire its the did figure wonder off.
-                                                </p>
-                                            </div>
+                                    @if($post->comments->isNotEmpty())
+                                        <h4>
+                                            {{ $post->comments?->count() }} comments
+                                        </h4>
+                                        <div class="comments-list">
+                                            @include('frontend.comments.show', ['comments' => $post->comments])
                                         </div>
-                                        <div class="commen-item reply">
-                                            <div class="avatar">
-                                                <img src="assets/img/800x800.png" alt="Author">
-                                            </div>
-                                            <div class="content">
-                                                <h5>Spark Lee</h5>
-                                                <div class="comments-info">
-                                                    <p>July 15, 2018</p> <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                </div>
-                                                <p>
-                                                    Delivered ye sportsmen zealously arranging frankness estimable as. Nay any article enabled musical shyness yet sixteen yet blushes. Entire its the did figure wonder off.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endif
                                 </div>
+
                                 <div class="comments-form">
                                     <div class="title">
                                         <h4>Leave a comments</h4>
                                     </div>
-                                    <form action="#" class="contact-comments">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!-- Name -->
-                                                    <input name="name" class="form-control" placeholder="Name *" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!-- Email -->
-                                                    <input name="email" class="form-control" placeholder="Email *" type="email">
-                                                </div>
-                                            </div>
+                                    <form action="{{ route('frontend.comments.store', ['commentableId' => $post->id, 'commentableType' => get_class($post)]) }}" method="POST">
+                                        @csrf
+                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group comments">
-                                                    <!-- Comment -->
-                                                    <textarea class="form-control" placeholder="Comment"></textarea>
+                                                    <textarea name="body" class="form-control" placeholder="Comment"></textarea>
                                                 </div>
                                                 <div class="form-group full-width submit">
                                                     <button type="submit">
