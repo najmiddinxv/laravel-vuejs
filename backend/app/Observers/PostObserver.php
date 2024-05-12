@@ -36,16 +36,18 @@ class PostObserver
 
     public function updating(Post $post): void
     {
-        $post->created_by = auth()->user()->id;
+        if(auth()->user()?->user_type == 1){
+            $post->created_by = auth()->user()->id;
 
-        $titleTranslations = $post->getTranslations('title');
-        $slugs = [];
+            $titleTranslations = $post->getTranslations('title');
+            $slugs = [];
 
-        foreach ($titleTranslations as $titleLocale => $title) {
-            $slugs[$titleLocale] = Str::slug($title);
+            foreach ($titleTranslations as $titleLocale => $title) {
+                $slugs[$titleLocale] = Str::slug($title);
+            }
+
+            $post->slug = $slugs;
         }
-
-        $post->slug = $slugs;
     }
 
     /**
@@ -53,7 +55,9 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        Cache::forget('banners');
+        if(auth()->user()?->user_type == 1){
+            Cache::forget('banners');
+        }
     }
 
 

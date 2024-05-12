@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Spatie\Translatable\HasTranslations;
 
-class Post extends Model
+class Post extends BaseModel
 {
     use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
     // use Searchable;

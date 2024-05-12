@@ -81,19 +81,7 @@
                 </li>
             </ul>
         </div>
-        <div class="sidebar-item archives">
-            <div class="title">
-                <h4>Archives</h4>
-            </div>
-            <div class="sidebar-info">
-                <ul>
-                    <li><a href="#">Aug 2018</a></li>
-                    <li><a href="#">Sept 2018</a></li>
-                    <li><a href="#">Nov 2018</a></li>
-                    <li><a href="#">Dec 2018</a></li>
-                </ul>
-            </div>
-        </div>
+        
         <div class="sidebar-item gallery">
             <div class="title">
                 <h4>Gallery</h4>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\PostController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -9,8 +10,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['loc
         Route::controller(FrontendController::class)->group(function() {
             Route::get('/', 'index')->name('index');
         });
-
+        Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('{slug}', 'show')->name('show');
+        });
     });
-
-
 });
