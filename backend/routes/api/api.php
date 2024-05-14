@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\V1\AuthApiController;
 use App\Http\Controllers\Api\BaseApiController;
-use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\VideoController;
 use App\Http\Controllers\Backend\TagController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +25,13 @@ Route::as('api')->name('api.')->middleware('addRequestHeader')->group(function (
         Route::get('/', 'index')->name('index');
     });
 
-    Route::apiResource('users', UserController::class);
+    Route::apiResources([
+        'users' => UserController::class,
+        'posts' => PostController::class,
+    ]);
+
+    // Route::apiResource('users', UserController::class);
+    // Route::apiResource('posts', PostController::class);
 
     // Route::apiResource('post',PostController::class);
     // Route::controller(PostController::class)->name('post.')->group(function() {

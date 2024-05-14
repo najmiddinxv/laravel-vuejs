@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class PostRequest extends BaseFormRequest
 {
     public function authorize(): bool
@@ -52,4 +50,18 @@ class PostRequest extends BaseFormRequest
             'tags.*' => 'integer',
         ];
     }
+
+
+    public function view()
+    {
+        return [
+            'title' => 'nullable|string|max:255',
+            'titleSortBy' => 'nullable|in:asc,desc',
+            'createdAt' => 'nullable|in:asc,desc',
+            'viewCount' => 'nullable|in:asc,desc',
+            'listType' => 'nullable|in:pagination,collection',
+            'perPage' => 'nullable|integer|max:100',
+        ];
+    }
+
 }

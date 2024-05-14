@@ -46,6 +46,6 @@
 </div>
 
 @empty
-<!-- No comments message -->
+
 @endforelse
 

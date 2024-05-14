@@ -14,7 +14,8 @@ class BaseApiFormRequest extends FormRequest
         return match($this->method()){
             'POST' => $this->store(),
             'PUT', 'PATCH' => $this->update(),
-            // 'DELETE' => $this->destroy(),
+            'DELETE' => $this->destroy(),
+            'GET','HEAD' => $this->view()
             // default => $this->view()
         };
 

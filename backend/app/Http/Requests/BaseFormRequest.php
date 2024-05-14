@@ -15,8 +15,10 @@ class BaseFormRequest  extends FormRequest
 
     public function rules()
     {
+        if ($this->method() === 'GET' || $this->method() === 'HEAD') return $this->view();
         if ($this->method() === 'POST') return $this->store();
         if ($this->method() === 'PUT' || $this->method() === 'PATCH') return $this->update();
+        if ($this->method() === 'DELETE') return $this->destroy();
     }
 
     public function view()
