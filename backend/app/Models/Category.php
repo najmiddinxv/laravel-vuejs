@@ -41,9 +41,19 @@ class Category extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function categoryable()
+    public function posts()
     {
-        return $this->morphTo();
+        return $this->hasMany(Post::class,'id','parent_id');
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class,'id','parent_id');
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class,'id','parent_id');
     }
 
 }

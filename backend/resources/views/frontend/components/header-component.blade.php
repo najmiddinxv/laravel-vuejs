@@ -1,16 +1,19 @@
 <div>
 @php
-function renderMenu($menu) {
-    foreach ($menu as $menu_item) {
-        if ($menu_item->children->isNotEmpty()) {
-            echo '<li class="dropdown">';
-            echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' . $menu_item->name . '</a>';
-            echo '<ul class="dropdown-menu">';
-            renderMenu($menu_item->children);
-            echo '</ul>';
-            echo '</li>';
-        } else {
-            echo '<li><a href="' . url($menu_item->url) . '">' . $menu_item->name . '</a></li>';
+
+if (!function_exists('renderMenu')) {
+    function renderMenu($menu) {
+        foreach ($menu as $menu_item) {
+            if ($menu_item->children->isNotEmpty()) {
+                echo '<li class="dropdown">';
+                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' . $menu_item->name . '</a>';
+                echo '<ul class="dropdown-menu">';
+                renderMenu($menu_item->children);
+                echo '</ul>';
+                echo '</li>';
+            } else {
+                echo '<li><a href="' . url($menu_item->url) . '">' . $menu_item->name . '</a></li>';
+            }
         }
     }
 }

@@ -93,6 +93,7 @@
                                     <div class="title">
                                         <h4>Leave a comments</h4>
                                     </div>
+                                    @auth
                                     <form action="{{ route('frontend.comments.store', ['commentableId' => $post->id, 'commentableType' => get_class($post)]) }}" method="POST">
                                         @csrf
                                          <div class="row">
@@ -108,6 +109,13 @@
                                             </div>
                                         </div>
                                     </form>
+                                    @else
+                                        <p>comment qoldirish uchun tizimga kiring
+                                            <a href="{{route('userProfile.auth.login')}}" title="login" class="btn btn-success">
+                                                login
+                                            </a>
+                                        </p>
+                                    @endauth
                                 </div>
                             </div>
                             <!-- End Comments Form -->

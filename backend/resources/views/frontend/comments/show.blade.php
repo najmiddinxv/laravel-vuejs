@@ -15,6 +15,8 @@
             {{ $comment->body }}
         </p>
     </div>
+
+    @auth
     <form method="POST" action="{{ route('frontend.comments.storeReply', ['commentId' => $comment->id]) }}">
         @csrf
         <div class="row">
@@ -30,6 +32,13 @@
             </div>
         </div>
     </form>
+    @else
+        <p>comment qoldirish uchun tizimga kiring
+            <a href="{{route('userProfile.auth.login')}}" title="login" class="btn btn-success">
+                login
+            </a>
+        </p>
+    @endauth
      <!-- Recursively include replies -->
      @if($comment->replies?->isNotEmpty())
         @include('frontend.comments.show', ['comments' => $comment->replies])

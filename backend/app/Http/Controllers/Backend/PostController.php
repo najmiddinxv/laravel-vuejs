@@ -48,7 +48,9 @@ class PostController extends Controller
 
 
         $post = Post::create($data);
-        $post->tags()->sync($data['tags']);
+        if(isset($data['tags'])){
+            $post->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('backend.posts.index')->with('post ',__('lang.successfully_created'));
     }
@@ -81,7 +83,9 @@ class PostController extends Controller
         }
 
         $post->update($data);
-        $post->tags()->sync($data['tags']);
+        if(isset($data['tags'])){
+            $post->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('backend.posts.index')->with('posts ',__('lang.successfully_updated'));
     }

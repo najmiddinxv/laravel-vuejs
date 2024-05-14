@@ -58,7 +58,9 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
             $news->save();
         }
-        $news->tags()->sync($data['tags']);
+        if(isset($data['tags'])){
+            $news->tags()->sync($data['tags']);
+        }
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
     }
 
@@ -107,7 +109,9 @@ class NewsController extends Controller
             $news->save();
         }
 
-        $news->tags()->sync($data['tags']);
+        if(isset($data['tags'])){
+            $news->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
 
