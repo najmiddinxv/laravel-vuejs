@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -11,7 +10,7 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::orderBy(['id' => 'desc', 'status' => 0])->paginate(30);
+        $comments = Comment::latest('id')->paginate(30);
 		return view('backend.comments.index',[
 			'comments'=>$comments,
 		]);

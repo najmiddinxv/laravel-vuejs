@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
-class PostRequest extends BaseFormRequest
+use App\Http\Requests\BaseApiFormRequest;
+
+class PostRequest extends BaseApiFormRequest
 {
     public function authorize(): bool
     {

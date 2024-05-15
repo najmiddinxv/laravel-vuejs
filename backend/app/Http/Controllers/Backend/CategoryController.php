@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\Web\CategoryRequest;
 use App\Services\FileUploadService;
 
 class CategoryController extends Controller

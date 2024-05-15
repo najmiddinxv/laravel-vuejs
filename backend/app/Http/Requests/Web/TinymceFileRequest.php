@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Web;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class MenuRequest extends BaseFormRequest
+class TinymceFileRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -17,25 +17,22 @@ class MenuRequest extends BaseFormRequest
     public function store()
     {
         return [
-            'parent_id' => 'nullable|integer',
+            'category_id' => 'required|integer',
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
-            'url.*' => 'nullable|string|max:255',
-            'position' => 'nullable|integer',
-            'menu_order' => 'nullable|integer',
-            'status' => 'nullable|integer',
+            'description.*' => ['nullable','string','max:255'],
+            'files.*' => 'required|mimes:jpeg,png,jpg,gif,doc,docx,xls,xlsx,txt,mp4,pdf,mp3|max:102400',
         ];
     }
 
     public function update()
     {
         return [
-            'parent_id' => 'nullable|integer',
+            'category_id' => 'nullable|integer',
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
-            'url.*' => 'nullable|string|max:255',
-            'position' => 'nullable|integer',
-            'menu_order' => 'nullable|integer',
+            'description.*' => ['nullable','string','max:255'],
+            // 'files.*' => 'nullable|mimes:jpeg,png,jpg,gif,doc,docx,xls,xlsx,txt,mp4,pdf,mp3|max:102400',
             'status' => 'nullable|integer',
         ];
     }

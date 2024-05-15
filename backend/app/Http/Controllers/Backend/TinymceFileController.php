@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TinymceFileRequest;
+use App\Http\Requests\Web\TinymceFileRequest;
 use App\Jobs\FileUploadJob;
 use App\Models\Category;
 use App\Models\TinymceFile;
 use App\Services\FileUploadService;
-use Illuminate\Http\Request;
 
 class TinymceFileController extends Controller
 {

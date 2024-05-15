@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Web;
+
+use App\Http\Requests\BaseFormRequest;
 
 class ContactRequest extends BaseFormRequest
 {

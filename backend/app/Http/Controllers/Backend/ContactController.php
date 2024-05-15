@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ContactRequest;
+use App\Http\Requests\Web\ContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 

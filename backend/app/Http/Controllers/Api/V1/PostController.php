@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
-use App\Http\Resources\PostResource;
+use App\Http\Requests\V1\PostRequest;
+use App\Http\Resources\V1\PostResource;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 

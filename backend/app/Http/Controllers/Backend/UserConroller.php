@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Helpers\ImageResize;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Permission;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\Web\UserRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Services\Contracts\UserServiceContract;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission as SpatieModelsPermission;

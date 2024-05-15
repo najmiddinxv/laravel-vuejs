@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ImageRequest;
+use App\Http\Requests\Web\ImageRequest;
 use App\Models\Category;
 use App\Models\Image;
 use App\Services\FileUploadService;

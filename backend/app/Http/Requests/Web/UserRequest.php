@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Web;
 
-use Illuminate\Validation\Rule;
+use App\Http\Requests\BaseFormRequest;
+
 class UserRequest extends BaseFormRequest
 {
     public function authorize(): bool

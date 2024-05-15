@@ -6,9 +6,9 @@ use App\Models\Page;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\PageRequest;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\PageRequest;
 
 class PageController extends Controller
 {

@@ -6,9 +6,9 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\PostRequest;
 use App\Models\Tag;
 
 class PostController extends Controller

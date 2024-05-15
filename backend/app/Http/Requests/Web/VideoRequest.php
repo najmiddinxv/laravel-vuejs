@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Web;
 
-class VideoRequest extends BaseApiFormRequest
+use App\Http\Requests\BaseFormRequest;
+
+class VideoRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {

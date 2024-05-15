@@ -4,9 +4,6 @@ namespace App\Services;
 
 use App\Contracts\PostServiceContract;
 use App\Models\Post;
-use Illuminate\Http\Request;
-
-use function Clue\StreamFilter\fun;
 
 class PostService implements PostServiceContract
 {

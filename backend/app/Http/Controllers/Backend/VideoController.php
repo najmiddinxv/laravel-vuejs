@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VideoRequest;
-use App\Jobs\ConvertVideoForDownloading;
+use App\Http\Requests\Web\VideoRequest;
 use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Category;
 use App\Models\Video;

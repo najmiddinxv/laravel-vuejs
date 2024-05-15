@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Faker\Provider\Base;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
+
 class BaseApiFormRequest extends FormRequest
 {
     public function rules()
