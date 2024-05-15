@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Data;
+namespace App\DTO;
 
 use Spatie\LaravelData\Attributes\Validation\Exists;
 use Spatie\LaravelData\Attributes\Validation\Regex;

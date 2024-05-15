@@ -28,9 +28,9 @@ class PostResource extends JsonResource
             "slug"=> $this->slug,
             "description"=> $this->description,
             "main_image"=> [
-                'large' => "/storage{$this->main_image['large']}",
-                'medium' => "/storage{$this->main_image['medium']}",
-                'small' => "/storage{$this->main_image['small']}",
+                // 'large' => "/storage{$this->main_image['large']}",
+                // 'medium' => "/storage{$this->main_image['medium']}",
+                // 'small' => "/storage{$this->main_image['small']}",
             ],
             "view_count"=> $this->view_count,
             "status"=> $this->status,
