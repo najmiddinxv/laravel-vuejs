@@ -2,8 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Content\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 

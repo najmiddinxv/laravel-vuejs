@@ -22,7 +22,7 @@ class TinymceFileController extends Controller
 
     public function create()
     {
-        $categories = Category::where('categoryable_type','App\Models\TinymceFile')->orderBy('id','desc')->get();
+        $categories = Category::byModel(TinymceFile::class)->latest()->get();
         return view('backend.tinymceFiles.create',[
             'categories' => $categories,
 		]);
@@ -49,7 +49,7 @@ class TinymceFileController extends Controller
 
     public function edit(TinymceFile $tinymceFile)
     {
-        $categories = Category::where('categoryable_type','App\Models\TinymceFile')->orderBy('id','desc')->get();
+        $categories = Category::byModel(TinymceFile::class)->latest()->get();
         return view('backend.tinymceFiles.edit',[
             'categories' => $categories,
             'tinymceFile' => $tinymceFile,

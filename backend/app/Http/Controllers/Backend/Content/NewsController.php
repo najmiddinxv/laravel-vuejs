@@ -25,9 +25,9 @@ class NewsController extends Controller
 
     public function create()
     {
-        $tags = Tag::where('tagsable_type','App\Models\News')->orWhere('tagsable_type',null)->get();
+        $tags = Tag::newsModel()->get();
 
-        $categories = Category::where('categoryable_type','App\Models\News')->orderBy('id','desc')->get();
+        $categories = Category::byModel(News::class)->latest()->get();
         return view('backend.news.create',[
             'categories' => $categories,
             'tags' => $tags,
@@ -71,9 +71,10 @@ class NewsController extends Controller
 
     public function edit(News $news)
     {
-        $tags = Tag::where('tagsable_type','App\Models\News')->orWhere('tagsable_type',null)->get();
+        $tags = Tag::newsModel()->get();
 
-        $categories = Category::where('categoryable_type','App\Models\News')->orderBy('id','desc')->get();
+        $categories = Category::byModel(News::class)->latest()->get();
+
         return view('backend.news.edit',[
             'news' => $news,
             'categories' => $categories,

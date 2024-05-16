@@ -30,7 +30,7 @@ class VideoController extends Controller
 
     public function create()
     {
-        $categories = Category::where('categoryable_type','App\Models\Video')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Video::class)->latest()->get();
         return view('backend.videos.create',[
             'categories' => $categories,
 		]);
@@ -62,7 +62,7 @@ class VideoController extends Controller
 
     public function edit(Video $video)
     {
-        $categories = Category::where('categoryable_type','App\Models\Video')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Video::class)->latest()->get();
 
         return view('backend.videos.edit',[
 			'categories' => $categories,

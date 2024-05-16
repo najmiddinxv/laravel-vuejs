@@ -22,7 +22,7 @@ class PageController extends Controller
 
     public function create()
     {
-        $categories = Category::where('categoryable_type','App\Models\Page')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Page::class)->latest()->get();
         return view('backend.pages.create',[
             'categories' => $categories,
 		]);
@@ -47,7 +47,7 @@ class PageController extends Controller
 
     public function edit(Page $page)
     {
-        $categories = Category::where('categoryable_type','App\Models\Page')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Page::class)->latest()->get();
         return view('backend.pages.edit',[
             'page' => $page,
             'categories' => $categories

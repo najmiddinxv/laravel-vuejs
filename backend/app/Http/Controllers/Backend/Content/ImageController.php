@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Content\ImageRequest;
 use App\Models\Content\Category;
 use App\Models\Content\Image;
+use App\Models\Content\News;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,8 +16,8 @@ class ImageController extends Controller
 
     public function index()
     {
-        $categories = Category::where('categoryable_type','App\Models\Image')->latest('id')->get();
-        $images = Image::orderBy('id','desc')->paginate(30);
+        $categories = Category::byModel(News::class)->latest('id')->get();
+        $images = Image::latest()->paginate(30);
 		return view('backend.images.index',[
 			'categories'=>$categories,
 			'images'=>$images,
@@ -25,7 +26,7 @@ class ImageController extends Controller
 
     public function create()
     {
-        $categories = Category::where('categoryable_type','App\Models\Image')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Image::class)->latest()->get();
         return view('backend.images.create',[
             'categories' => $categories,
 		]);
@@ -72,7 +73,7 @@ class ImageController extends Controller
     public function edit(int $id)
     {
         $image = Image::find($id,['name','category_id','status']);
-        $categories = Category::where('categoryable_type','App\Models\Image')->orderBy('id','desc')->get();
+        $categories = Category::byModel(Image::class)->latest()->get();
         return response()->json([
             'image' => $image,
             'categories' => $categories,
