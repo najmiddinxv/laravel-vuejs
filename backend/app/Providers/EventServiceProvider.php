@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Post;
+use App\Models\Content\Post;
 use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
