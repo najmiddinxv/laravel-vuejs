@@ -2,11 +2,10 @@
 
 namespace App\View\Components;
 
-use App\Models\Category;
-use App\Models\Image;
+use App\Models\Content\Category;
+use App\Models\Content\Image;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class SidebarComponent extends Component

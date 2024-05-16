@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\TinymceFileRequest;
+use App\Http\Requests\Web\Content\TinymceFileRequest;
 use App\Models\Content\Category;
 use App\Models\Content\TinymceFile;
 use App\Services\FileUploadService;
@@ -14,7 +14,7 @@ class TinymceFileController extends Controller
 
     public function index()
     {
-        $tinymceFiles = TinymceFile::orderBy('id','desc')->paginate(30);
+        $tinymceFiles = TinymceFile::latest()->paginate(30);
 		return view('backend.tinymceFiles.index',[
 			'tinymceFiles'=>$tinymceFiles,
 		]);

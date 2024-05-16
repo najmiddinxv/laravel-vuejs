@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web;
+namespace App\Http\Requests\Web\User;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends BaseFormRequest
 {
 
     public function authorize(): bool

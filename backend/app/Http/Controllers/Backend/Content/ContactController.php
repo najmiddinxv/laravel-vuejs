@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Backend\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\ContactRequest;
+use App\Http\Requests\Web\Content\ContactRequest;
 use App\Models\Content\Contact;
 
 class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::orderBy('id','desc')->paginate(30);
+        $contacts = Contact::latest('id')->paginate(30);
 		return view('backend.contacts.index',[
 			'contacts' => $contacts,
 		]);

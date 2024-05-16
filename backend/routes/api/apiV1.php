@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AuthApiController;
 use App\Http\Controllers\Api\BaseApiController;
-use App\Http\Controllers\Api\V1\PostController;
-use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\{
+    AuthApiController,
+    UserController,
+    PostController,
+    TagController,
+};
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,6 +30,7 @@ Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->gro
     Route::apiResources([
         'users' => UserController::class,
         'posts' => PostController::class,
+        'tags' => TagController::class,
     ]);
 
 

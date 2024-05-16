@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Backend\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\MenuRequest;
+use App\Http\Requests\Web\Content\MenuRequest;
 use App\Models\Content\Menu;
 
 class MenuController extends Controller
 {
     public function index()
     {
-        $menu = Menu::orderBy('id','desc')->paginate(30);
+        $menu = Menu::latest('id')->paginate(30);
 		return view('backend.menu.index',[
 			'menu'=>$menu,
 		]);

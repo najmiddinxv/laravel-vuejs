@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Content\Post;
 use Illuminate\Support\Facades\Cache;
 
 class FrontendController extends Controller

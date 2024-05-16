@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web;
+namespace App\Http\Requests\Web\Content;
 
 use App\Http\Requests\BaseFormRequest;
 
-class CategoryRequest extends BaseFormRequest
+class MenuRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -20,11 +20,10 @@ class CategoryRequest extends BaseFormRequest
             'parent_id' => 'nullable|integer',
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
-            'categoryable_type' => 'nullable|string|max:255',
-            'icon' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-            'order' => 'nullable|integer',
-            // 'status' => 'nullable|integer',
+            'url.*' => 'nullable|string|max:255',
+            'position' => 'nullable|integer',
+            'menu_order' => 'nullable|integer',
+            'status' => 'nullable|integer',
         ];
     }
 
@@ -34,10 +33,9 @@ class CategoryRequest extends BaseFormRequest
             'parent_id' => 'nullable|integer',
             'name.uz' => 'required|string|max:255',
             'name.*' => ['nullable','string','max:255'],
-            'categoryable_type' => 'nullable|string|max:255',
-            'icon' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-            'order' => 'nullable|integer',
+            'url.*' => 'nullable|string|max:255',
+            'position' => 'nullable|integer',
+            'menu_order' => 'nullable|integer',
             'status' => 'nullable|integer',
         ];
     }

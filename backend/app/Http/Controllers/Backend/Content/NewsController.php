@@ -7,7 +7,7 @@ use App\Models\Content\Category;
 use Illuminate\Support\Str;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\NewsRequest;
+use App\Http\Requests\Web\Content\NewsRequest;
 use App\Models\Content\Tag;
 use Illuminate\Http\RedirectResponse;
 
@@ -17,7 +17,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::orderBy('id','desc')->paginate(30);
+        $news = News::latest('id')->paginate(30);
 		return view('backend.news.index',[
 			'news'=>$news,
 		]);

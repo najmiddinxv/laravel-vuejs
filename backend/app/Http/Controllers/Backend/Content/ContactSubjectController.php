@@ -11,7 +11,7 @@ class ContactSubjectController extends Controller
 {
     public function index()
     {
-        $contactSubjects = ContactSubject::orderBy('id','desc')->paginate(30);
+        $contactSubjects = ContactSubject::latest('id')->paginate(30);
 		return view('backend.contactSubjects.index',[
 			'contactSubjects'=>$contactSubjects,
 		]);

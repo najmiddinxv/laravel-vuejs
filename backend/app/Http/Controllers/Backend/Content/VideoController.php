@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\VideoRequest;
+use App\Http\Requests\Web\Content\VideoRequest;
 use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Content\Category;
 use App\Models\Content\Video;
@@ -15,7 +15,7 @@ class VideoController extends Controller
 
     public function index()
     {
-        $videos = Video::orderBy('id','desc')->paginate(30);
+        $videos = Video::latest()->paginate(30);
 		return view('backend.videos.index',[
 			'videos'=>$videos,
 		]);

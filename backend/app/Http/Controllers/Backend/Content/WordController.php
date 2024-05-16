@@ -11,7 +11,7 @@ class WordController extends Controller
 {
     public function index()
     {
-        $words = Word::orderBy('id','desc')->paginate(30);
+        $words = Word::latest()->paginate(30);
 		return view('backend.words.index',[
 			'words'=>$words,
 		]);

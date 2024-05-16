@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\ImageRequest;
+use App\Http\Requests\Web\Content\ImageRequest;
 use App\Models\Content\Category;
 use App\Models\Content\Image;
 use App\Services\FileUploadService;
@@ -15,7 +15,7 @@ class ImageController extends Controller
 
     public function index()
     {
-        $categories = Category::where('categoryable_type','App\Models\Image')->orderBy('id','desc')->get();
+        $categories = Category::where('categoryable_type','App\Models\Image')->latest('id')->get();
         $images = Image::orderBy('id','desc')->paginate(30);
 		return view('backend.images.index',[
 			'categories'=>$categories,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Web;
+namespace App\Http\Requests\Web\User;
 
 use App\Http\Requests\BaseFormRequest;
 

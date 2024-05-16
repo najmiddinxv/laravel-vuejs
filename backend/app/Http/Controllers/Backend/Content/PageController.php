@@ -6,7 +6,7 @@ use App\Models\Content\Page;
 use App\Models\Content\Category;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\PageRequest;
+use App\Http\Requests\Web\Content\PageRequest;
 
 class PageController extends Controller
 {
@@ -14,7 +14,7 @@ class PageController extends Controller
 
     public function index()
     {
-        $pages = Page::orderBy('id','desc')->paginate(30);
+        $pages = Page::latest()->paginate(30);
 		return view('backend.pages.index',[
 			'pages'=>$pages,
 		]);

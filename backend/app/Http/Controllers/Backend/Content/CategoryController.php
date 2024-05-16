@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Content;
 
 use App\Models\Content\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\CategoryRequest;
+use App\Http\Requests\Web\Content\CategoryRequest;
 use App\Services\FileUploadService;
 
 class CategoryController extends Controller
@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::with('parent')->orderBy('id','desc')->paginate(30);
+        $categories = Category::with('parent')->latest('id')->paginate(30);
 		return view('backend.categories.index',[
 			'categories'=>$categories,
 		]);

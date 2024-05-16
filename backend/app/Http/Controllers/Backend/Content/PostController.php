@@ -6,7 +6,7 @@ use App\Models\Content\Post;
 use App\Models\Content\Category;
 use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Web\PostRequest;
+use App\Http\Requests\Web\Content\PostRequest;
 use App\Models\Content\Tag;
 
 class PostController extends Controller
@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('id','desc')->paginate(30);
+        $posts = Post::latest()->paginate(30);
 		return view('backend.posts.index',[
 			'posts'=>$posts,
 		]);

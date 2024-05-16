@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\User;
 use App\Models\User\Role;
 use App\Models\User\User;
 use App\Models\User\Permission;
-use App\Http\Requests\Web\UserRequest;
+use App\Http\Requests\Web\User\UserRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +20,7 @@ class UserConroller extends Controller
 
     public function index()
     {
-        $users = User::where('id','!=',auth()->user()->id)->orderBy('id','desc')->paginate(50);
+        $users = User::where('id','!=',auth()->user()->id)->latest()->paginate(50);
         return view('backend.users.index',[
 			'users' => $users,
 		]);

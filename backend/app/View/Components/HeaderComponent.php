@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Models\Menu;
+use App\Models\Content\Menu;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
