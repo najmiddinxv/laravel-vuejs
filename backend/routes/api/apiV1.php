@@ -28,7 +28,6 @@ Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->gro
     });
 
     Route::apiResources([
-        'users' => UserController::class,
         'posts' => PostController::class,
         'tags' => TagController::class,
     ]);

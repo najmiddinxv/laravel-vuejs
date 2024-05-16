@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\User;
 
 use App\Models\User\Role;
-use App\Models\User\User;
+use App\Models\User;
 use App\Models\User\Permission;
 use App\Http\Requests\Web\User\UserRequest;
 use Illuminate\Support\Facades\DB;

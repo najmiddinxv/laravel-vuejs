@@ -77,11 +77,11 @@
                             <select class="form-select" name="categoryable_type" id="categoryable_type">
                                 {{-- <option selected="" disabled="" value="">---------</option> --}}
                                 <option value="">All</option>
-                                <option value="App\Models\News" {{ $category->categoryable_type == 'App\Models\News' ? 'selected' : '' }}>News</option>
-                                <option value="App\Models\Post" {{ $category->categoryable_type == 'App\Models\Post' ? 'selected' : '' }}>Post</option>
-                                <option value="App\Models\Image" {{ $category->categoryable_type == 'App\Models\Image' ? 'selected' : '' }}>Image</option>
-                                <option value="App\Models\Page" {{ $category->categoryable_type == 'App\Models\Page' ? 'selected' : '' }}>Page</option>
-                                <option value="App\Models\Video" {{ $category->categoryable_type == 'App\Models\Video' ? 'selected' : '' }}>Video</option>
+                                <option value="App\Models\News" {{ $category->categoryable_type == 'App\Models\Content\News' ? 'selected' : '' }}>News</option>
+                                <option value="App\Models\Post" {{ $category->categoryable_type == 'App\Models\Content\Post' ? 'selected' : '' }}>Post</option>
+                                <option value="App\Models\Image" {{ $category->categoryable_type == 'App\Models\Content\Image' ? 'selected' : '' }}>Image</option>
+                                <option value="App\Models\Page" {{ $category->categoryable_type == 'App\Models\Content\Page' ? 'selected' : '' }}>Page</option>
+                                <option value="App\Models\Video" {{ $category->categoryable_type == 'App\Models\Content\Video' ? 'selected' : '' }}>Video</option>
                             </select>
                             <span class="error-data">
                                 @error('categoryable_type')

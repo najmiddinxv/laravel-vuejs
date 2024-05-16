@@ -57,4 +57,29 @@ class Category extends Model
         return $this->hasMany(Page::class,'id','parent_id');
     }
 
+    public function scopePostModel($q)
+    {
+        return $q->where('categoryable_type', Post::class)->orWhere('categoryable_type',null);
+    }
+
+    public function scopeNewsModel($q)
+    {
+        return $q->where('categoryable_type', News::class)->orWhere('categoryable_type',null);
+    }
+
+    public function scopeImageModel($q)
+    {
+        return $q->where('categoryable_type', Image::class)->orWhere('categoryable_type',null);
+    }
+
+    public function scopeTinymceFileModel($q)
+    {
+        return $q->where('categoryable_type', TinymceFile::class)->orWhere('categoryable_type',null);
+    }
+
+    public function scopeVideoModel($q)
+    {
+        return $q->where('categoryable_type', Video::class)->orWhere('categoryable_type',null);
+    }
+
 }

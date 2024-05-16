@@ -23,8 +23,8 @@ class PostController extends Controller
 
     public function create()
     {
-        $tags = Tag::where('tagsable_type','App\Models\Post')->orWhere('tagsable_type',null)->get();
-        $categories = Category::where('categoryable_type','App\Models\Post')->orderBy('id','desc')->get();
+        $tags = Tag::postModel()->orWhere('tagsable_type',null)->get();
+        $categories = Category::postModel()->orderBy('id','desc')->get();
         return view('backend.posts.create',[
             'categories' => $categories,
             'tags' => $tags,
@@ -62,8 +62,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $tags = Tag::where('tagsable_type','App\Models\Post')->orWhere('tagsable_type',null)->get();
-        $categories = Category::where('categoryable_type','App\Models\Post')->orderBy('id','desc')->get();
+        $tags = Tag::where('tagsable_type',Post::class)->orWhere('tagsable_type',null)->get();
+        $categories = Category::where('categoryable_type',Post::class)->orderBy('id','desc')->get();
         return view('backend.posts.edit',[
             'post' => $post,
             'categories' => $categories,

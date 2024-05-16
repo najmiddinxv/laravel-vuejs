@@ -3,7 +3,7 @@
 namespace App\Models\Content;
 
 use App\Models\Content\Category;
-use App\Models\User\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Traits\TranslateMethods;
 use App\Traits\EscapeUniCodeJson;

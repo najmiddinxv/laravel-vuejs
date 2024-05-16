@@ -26,11 +26,11 @@
                             <select class="form-select" name="tagsable_type" id="tagsable_type" required="">
                                 <option selected="" disabled="" value="">---------</option>
                                 <option value="">All</option>
-                                <option value="App\Models\News" {{ $tag->tagsable_type == 'App/Models/News' ? 'selected' : '' }}>News</option>
-                                <option value="App\Models\Post" {{ $tag->tagsable_type == 'App/Models/Post' ? 'selected' : '' }}>Post</option>
-                                <option value="App\Models\Image" {{ $tag->tagsable_type == 'App/Models/Image' ? 'selected' : '' }}>Image</option>
-                                <option value="App\Models\Page" {{ $tag->tagsable_type == 'App/Models/Page' ? 'selected' : '' }}>Page</option>
-                                <option value="App\Models\Video" {{ $tag->tagsable_type == 'App/Models/Video' ? 'selected' : '' }}>Video</option>
+                                <option value="App\Models\Content\News" {{ $tag->tagsable_type == 'App\Models\Content\News' ? 'selected' : '' }}>News</option>
+                                <option value="App\Models\Content\Post" {{ $tag->tagsable_type == 'App\Models\Content\Post' ? 'selected' : '' }}>Post</option>
+                                <option value="App\Models\Content\Image" {{ $tag->tagsable_type == 'App\Models\Content\Image' ? 'selected' : '' }}>Image</option>
+                                <option value="App\Models\Content\Page" {{ $tag->tagsable_type == 'AApp\Models\Content\Page' ? 'selected' : '' }}>Page</option>
+                                <option value="App\Models\Content\Video" {{ $tag->tagsable_type == 'App\Models\Content\Video' ? 'selected' : '' }}>Video</option>
                             </select>
                             <span class="error-data">
                                 @error('tagsable_type')

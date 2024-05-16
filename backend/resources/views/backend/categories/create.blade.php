@@ -75,11 +75,11 @@
                             <select class="form-select" name="categoryable_type" id="categoryable_type">
                                 {{-- <option selected="" disabled="" value="">---------</option> --}}
                                 <option value="">All</option>
-                                <option value="App\Models\News">News</option>
-                                <option value="App\Models\Post">Post</option>
-                                <option value="App\Models\Image">Image</option>
-                                <option value="App\Models\Page">Page</option>
-                                <option value="App\Models\Video">Video</option>
+                                <option value="App\Models\Content\News">News</option>
+                                <option value="App\Models\Content\Post">Post</option>
+                                <option value="App\Models\Content\Image">Image</option>
+                                <option value="App\Models\Content\Page">Page</option>
+                                <option value="App\Models\Content\Video">Video</option>
                             </select>
                             <span class="error-data">
                                 @error('categoryable_type')

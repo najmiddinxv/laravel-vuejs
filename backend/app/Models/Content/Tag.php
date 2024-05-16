@@ -29,4 +29,15 @@ class Tag extends Model
     {
         return $this->morphedByMany(News::class, 'taggable');
     }
+
+    public function scopePostModel($q)
+    {
+        return $q->where('tagsable_type',Post::class)->orWhere('tagsable_type',null);
+    }
+
+    public function scopeNewsModel($q)
+    {
+        return $q->where('tagsable_type',News::class)->orWhere('tagsable_type',null);
+    }
+
 }

@@ -3,15 +3,11 @@
 namespace App\Models\Content;
 
 use App\Models\BaseModel;
-use App\Models\User\User;
-use Illuminate\Support\Str;
+use App\Models\User;
 use App\Traits\EscapeUniCodeJson;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Spatie\Translatable\HasTranslations;
