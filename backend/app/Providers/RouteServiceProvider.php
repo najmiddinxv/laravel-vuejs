@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('api')
                 ->prefix('api/v1')
-                ->middleware('addRequestHeader')
+                // ->middleware(['addRequestHeader','auth:api'])
                 ->group(base_path('routes/api/apiV1.php'));
 
             Route::middleware('api')

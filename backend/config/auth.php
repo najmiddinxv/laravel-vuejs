@@ -15,15 +15,15 @@ return [
 
     //Auth::guard('web') //Auth::guard('api') routeda shunday foydalanayapmiz
 
-    // 'defaults' => [
-    //     'guard' => 'web',
-    //     'passwords' => 'users',
-    // ],
-
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
+
+    // 'defaults' => [
+    //     'guard' => 'api',
+    //     'passwords' => 'users',
+    // ],
 
     /*
     |--------------------------------------------------------------------------
