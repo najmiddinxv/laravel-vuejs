@@ -35,6 +35,12 @@ class CategoryController extends Controller
             $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories/'.now()->format('Y/m/d'));
         }
 
+        // "name" => array:3 [▼
+        //     "uz" => "Candice Gillespie"
+        //     "ru" => "Coby Wilkinson"
+        //     "en" => "Madonna Gibson"
+        // ]
+
         Category::create($data);
 
         return redirect()->route('backend.categories.index')->with('category ',__('lang.successfully_created'));

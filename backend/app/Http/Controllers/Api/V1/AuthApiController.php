@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\V1\AuthLoginRequest;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthApiController extends BaseApiController
 {
@@ -37,6 +38,7 @@ class AuthApiController extends BaseApiController
     {
         # When access token will be expired, we are going to generate a new one wit this function
         # and return it here in response
+        // $newToken = JWTAuth::parseToken()->refresh();
         return $this->respondWithToken(auth('api')->refresh());
     }
 
@@ -51,10 +53,5 @@ class AuthApiController extends BaseApiController
             'user' => $this->me(),
         ]);
     }
-
-
-
-
-
 
 }

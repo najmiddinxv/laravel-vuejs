@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthApiController::class, 'register'])->name('api.auth.register');
 Route::post('login', [AuthApiController::class, 'login'])->name('api.auth.login');
-Route::get('test',function (){
-    return 'hello';
-});
 
 Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->group(function () {
     Route::controller(AuthApiController::class)->group(function () {
@@ -31,8 +28,6 @@ Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->gro
         'posts' => PostController::class,
         'tags' => TagController::class,
     ]);
-
-
 
 });
 

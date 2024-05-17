@@ -14,17 +14,18 @@ class ServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $appEnv = config('app.env');
-        if($appEnv == 'local'){
-            $this->app->bind(PostServiceContract::class, PostLocalService::class);
-        }elseif($appEnv == 'production'){
-            $this->app->bind(PostServiceContract::class, PostService::class);
-        }
+        // $appEnv = config('app.env');
+        // if($appEnv == 'local'){
+        //     $this->app->bind(PostServiceContract::class, PostLocalService::class);
+        // }elseif($appEnv == 'production'){
+        //     $this->app->bind(PostServiceContract::class, PostService::class);
+        // }
+        $this->app->bind(PostServiceContract::class, PostService::class);
         // $this->app->bind(PostServiceContract::class, PostLocalService::class);
 
 
 
-        
+
         /***
         Do not get data from the .env file directly
         Pass the data to config files instead and then use the config() helper function to use the data in an application.
