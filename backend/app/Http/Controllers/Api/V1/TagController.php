@@ -11,7 +11,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::latest('id')->paginate(30);
+        $tags = Tag::latest('id')->paginate(3);
         $tagResource = TagResource::collection($tags);
 		return sendResponse(message:'tags list ',data:$tagResource);
     }

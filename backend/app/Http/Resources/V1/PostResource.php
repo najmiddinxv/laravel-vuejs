@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Content\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
@@ -36,6 +37,16 @@ class PostResource extends JsonResource
             "status"=> $this->status,
             // 'links' => [
             //     'self' => 'link-value',
+            // ],
+
+            // 'data' => $this->collection->transform(function ($post) {
+            //     return new PostResource($post);
+            // }),
+            // 'links' => $this->paginationLinks(), // Get pagination links
+            // 'meta' => [
+            //     'current_page' => $this->currentPage(),
+            //     'per_page' => $this->perPage(),
+            //     'total' => $this->total(),
             // ],
         ];
     }

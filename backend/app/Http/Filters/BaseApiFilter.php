@@ -11,15 +11,17 @@ use ReflectionClass;
 
 abstract class BaseApiFilter
 {
+    protected $lang;
     protected $queryParams;
     protected ?Builder $builder;
 
     //bu pastdagi paginatsiya uchun
-    // protected bool $pagination = false;
-    // protected int $defaultSize = 20;
+    protected bool $pagination = false;
+    protected int $defaultSize = 20;
 
     public function __construct(protected readonly Request $request)
     {
+        $this->lang = app()->getLocale();
         if ($this->request instanceof BaseApiFormRequest) {
             $this->queryParams = $this->request->validated();
         } else {
@@ -27,7 +29,6 @@ abstract class BaseApiFilter
                 array_map('trim', $this->request->all())
             );
         }
-
     }
 
     /**
@@ -50,29 +51,32 @@ abstract class BaseApiFilter
         if ($reflectionClass->getMethod('defaultOrder')->class === $filterClass) {
             $this->defaultOrder();
         }
+        //yana qanaqadur methodni defaultOrder o'xshatib default query qilib ishlatmoqchi bo'lsak shu tartibda ishlatamiz
+        //oxirgi qatorda abstract method qilib yaratilgan method
         // if ($reflectionClass->getMethod('applyWith')->class === $filterClass) {
         //     $this->applyWith();
         // }
 
         //paginatsiyani chaqrish
-        // if ($this->pagination) {
-        //     return $this->paginate();
-        // }
+        if ($this->pagination) {
+            return $this->paginate();
+        }
 
-        return $this->builder;
+        // return $this->builder;
+        return $this->builder->get();
     }
 
     //paginatsiyani ham filterni ichida chaqirish uchun
     // public function paginate(): LengthAwarePaginator
-    // {
-    //     return $this->builder->paginate(
-    //         perPage: $this->request->integer('per_page', $this->defaultSize),
-    //         page: $this->request->integer('page', 1)
-    //     );
-    // }
+    public function paginate()
+    {
+        return $this->builder->paginate(
+            perPage: $this->request->integer('per_page', $this->defaultSize),
+            page: $this->request->integer('page', 1)
+        );
+    }
 
     abstract function defaultOrder();
     // abstract function applyWith();
-
 
 }
