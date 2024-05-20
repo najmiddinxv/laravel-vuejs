@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
+use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostResource;
 use App\Services\PostService;
@@ -11,10 +12,9 @@ class PostController extends BaseApiController
 {
     public function __construct(protected PostService $postService){}
 
-    public function index(PostRequest $request)
+    public function index(PostFilter $filter)
     {
-        $data = $request->validated();
-        $posts = PostResource::collection($this->postService->index($data));
+        $posts = PostResource::collection($this->postService->index($filter));
         return sendResponse(message:'posts list', data:$posts);
     }
 

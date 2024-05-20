@@ -57,12 +57,15 @@ class PostRequest extends BaseApiFormRequest
     public function view()
     {
         return [
+            'id' => 'nullable|integer',
             'title' => 'nullable|string|max:255',
-            'titleSortBy' => 'nullable|in:asc,desc',
-            'createdAt' => 'nullable|in:asc,desc',
-            'viewCount' => 'nullable|in:asc,desc',
-            'listType' => 'nullable|in:pagination,collection',
-            'perPage' => 'nullable|integer|max:100',
+            'view_count' => 'nullable|in:asc,desc',
+            'per_page' => 'nullable|integer',
+            'page' => 'nullable|integer',
+            // 'titleSortBy' => 'nullable|in:asc,desc',
+            // 'createdAt' => 'nullable|in:asc,desc',
+            // 'listType' => 'nullable|in:pagination,collection',
+            // 'perPage' => 'nullable|integer|max:100',
         ];
     }
 

@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthApiController::class, 'register'])->name('api.auth.register');
 Route::post('login', [AuthApiController::class, 'login'])->name('api.auth.login');
 
-Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->group(function () {
+// Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->group(function () {
+Route::as('api')->name('api.')->middleware(['addRequestHeader'])->group(function () {
     Route::controller(AuthApiController::class)->group(function () {
         Route::post('logout', 'logout')->name('auth.logout');
         Route::post('logout-all', 'logout_all_devices')->name('auth.logout-all');

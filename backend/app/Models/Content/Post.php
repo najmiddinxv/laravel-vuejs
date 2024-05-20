@@ -5,6 +5,7 @@ namespace App\Models\Content;
 use App\Models\BaseModel;
 use App\Models\User;
 use App\Traits\EscapeUniCodeJson;
+use App\Traits\Filterable;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Post extends BaseModel
 {
-    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
+    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson, Filterable;
     // use Searchable;
 
     protected $fillable = [

@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Filters\V1;
+
+use App\Http\Filters\BaseApiFilter;
+use App\Http\Requests\V1\PostRequest;
+
+class PostFilter extends BaseApiFilter
+{
+    protected bool $pagination = true;
+
+    public function __construct(PostRequest $request)
+    {
+        parent::__construct($request);
+    }
+
+    protected function defaultOrder(): void
+    {
+        // $this->builder->orderBy('created_at', 'desc');
+        $this->builder->orderBy('id', 'desc');
+    }
+
+    public function id(int $value): void
+    {
+        $this->builder->where('id','=',$value);
+    }
+
+    public function viewCount(string $value): void
+    {
+        $this->builder->orderBy('view_count', $value);
+    }
+
+    // public function createdStartAt(string $value): void
+    // {
+    //     $this->builder->where('created_at', '>=', $value);
+    // }
+
+    // public function createdEndAt(string $value): void
+    // {
+    //     $this->builder->where('created_at', '<=', $value);
+    // }
+
+    // public function updatedStartAt(string $value): void
+    // {
+    //     $this->builder->where('updated_at', '>=', $value);
+    // }
+
+    // public function updatedEndAt(string $value): void
+    // {
+    //     $this->builder->where('updated_at', '<=', $value);
+    // }
+
+    // public function status(int $value): void
+    // {
+    //     $this->builder->where('status', '=', $value);
+    // }
+
+}
