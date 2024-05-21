@@ -53,23 +53,4 @@ class BaseApiFormRequest extends FormRequest
 
     }
 
-
-    // protected function failedValidation(Validator $validator)
-    // {
-    //     if($this->wantsJson())
-    //     {
-    //         $response = response()->json([
-    //             'success' => false,
-    //             'message' => 'Ops! Some errors occurred',
-    //             'errors' => $validator->errors()
-    //         ]);
-    //     }else{
-    //         $response = back()->with('error', __('locale.ops'))->withErrors($validator)->withInput();
-    //     }
-
-    //     throw (new ValidationException($validator, $response))
-    //         ->errorBag($this->errorBag)
-    //         ->redirectTo($this->getRedirectUrl());
-    // }
-
 }

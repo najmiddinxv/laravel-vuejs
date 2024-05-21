@@ -62,8 +62,23 @@ class BaseFormRequest  extends FormRequest
             ->redirectTo($this->getRedirectUrl());
     }
 
+    // protected function failedValidation(Validator $validator)
+    // {
+    //     if($this->wantsJson())
+    //     {
+    //         $response = response()->json([
+    //             'success' => false,
+    //             'message' => 'Ops! Some errors occurred',
+    //             'errors' => $validator->errors()
+    //         ]);
+    //     }else{
+    //         $response = back()->with('error', __('locale.ops'))->withErrors($validator)->withInput();
+    //     }
 
-
+    //     throw (new ValidationException($validator, $response))
+    //         ->errorBag($this->errorBag)
+    //         ->redirectTo($this->getRedirectUrl());
+    // }
 
     //boshqa error message chiqarish uchun
     // public function messages()
@@ -130,7 +145,6 @@ class BaseFormRequest  extends FormRequest
     //     ];
     // }
 
-
     // bu php8 da ishlaydi match funksiya php8 da qo'shilgan
     // public function rules()
     // {
@@ -140,7 +154,6 @@ class BaseFormRequest  extends FormRequest
     //         'DELETE' => $this->destroy(),
     //         default => $this->view()
     //     }
-
     // }
 
     // public function rules()
@@ -163,7 +176,5 @@ class BaseFormRequest  extends FormRequest
     //        // if ($this->method() === 'GET') return $this->view();
     //        // if ($this->method() === 'DELETE') return $this->destroy();
     //    }
-
-
 
 }

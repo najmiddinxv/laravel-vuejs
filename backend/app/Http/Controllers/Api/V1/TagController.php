@@ -11,7 +11,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::latest('id')->paginate(3);
+        $tags = Tag::latest()->paginate(3);
         $tagResource = TagResource::collection($tags);
 		return sendResponse(message:'tags list ',data:$tagResource);
     }
@@ -20,7 +20,7 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tagResource = new TagResource($tag);
-		return sendResponse(message:'tags item ', data: $tagResource);
+		return sendResponse(message:'tags item ', data:$tagResource);
     }
 
     public function store(TagRequest $request)
@@ -28,7 +28,7 @@ class TagController extends Controller
         $data = $request->validated();
 
         $tag = Tag::create($data);
-        $tagResource = new TagResource($tag);
+        $tagResource = TagResource::make($tag);
         return sendResponse(code:201, message:'tag '.__('lang.successfully_created'), data:$tagResource);
     }
 
