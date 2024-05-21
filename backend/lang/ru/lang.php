@@ -17,4 +17,6 @@ return [
     'successful_created' => 'успешно создано',
     'successful_deleted' => 'успешно удалено',
     'successful_deleted_all' => 'все успешно удалено',
+    'no_records' => 'нет записей',
+    'not_found' => 'не найдено',
 ];

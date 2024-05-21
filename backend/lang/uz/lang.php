@@ -17,4 +17,6 @@ return [
     'successfully_created' => 'muvaffaqiyatli yaratildi',
     'successfully_deleted' => 'muvaffaqiyatli o\'chirildi',
     'successfully_deleted_all' => 'barchasi muvaffaqiyatli o\'chirildi',
+    'no_records' => 'yozuvlar yo\'q',
+    'not_found' => 'topilmadi',
 ];

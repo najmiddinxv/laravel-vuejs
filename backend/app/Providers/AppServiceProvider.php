@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Macros\StringMacros;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         StringMacros::register();
-//        Model::preventLazyLoading(app()->isLocal());
+        // JsonResource::withoutWrapping();
+        // Model::preventLazyLoading(app()->isLocal());
     }
 }

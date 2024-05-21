@@ -17,5 +17,7 @@ return [
     'successfully_created' => 'successfully created',
     'successfully_deleted' => 'successfully deleted',
     'successfully_deleted_all' => 'successfully deleted all',
+    'no_records' => 'no records',
+    'not_found' => 'not found',
 
 ];

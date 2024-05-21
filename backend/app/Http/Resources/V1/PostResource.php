@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Models\Content\Post;
+use App\Http\Resources\V1\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\JsonResponse;
 
 class PostResource extends JsonResource
 {
@@ -20,6 +19,7 @@ class PostResource extends JsonResource
         return [
             "id"=> $this->id,
             "category_id" => new CategoryResource($this->whenLoaded('category')),
+            // 'posts' => PostResource::collection($this->posts),
             // "category_id"=> $this->category_id,
             // "category" => [
             //     "id" => $this->category->id,
@@ -35,21 +35,25 @@ class PostResource extends JsonResource
             ],
             "view_count"=> $this->view_count,
             "status"=> $this->status,
-            // 'links' => [
-            //     'self' => 'link-value',
-            // ],
-
-            // 'data' => $this->collection->transform(function ($post) {
-            //     return new PostResource($post);
-            // }),
-            // 'links' => $this->paginationLinks(), // Get pagination links
-            // 'meta' => [
-            //     'current_page' => $this->currentPage(),
-            //     'per_page' => $this->perPage(),
-            //     'total' => $this->total(),
-            // ],
+          
         ];
     }
+
+    // public function withResponse($request, $response)
+    // {
+    //     // $jsonResponse = json_decode($response->getContent(), true);
+    //     // unset($jsonResponse['links'],$jsonResponse['meta']);
+    //     // $response->setContent(json_encode($jsonResponse['data']));
+    //     $default['links']['custom'] = 'https://example.com';
+    //     return $default;
+    // }
+
+    // public function paginationInformation($request, $paginated, $default)
+    // {
+    //     $default['links']['custom'] = 'https://example.com';
+    
+    //     return $default;
+    // }
 
     // public function withResponse(Request $request, JsonResponse $response): void
     // {

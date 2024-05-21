@@ -6,7 +6,11 @@ use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostResource;
+use App\Http\Responses\ApiErrorResponse;
+use App\Http\Responses\ApiSuccessResponse;
 use App\Services\PostService;
+use Illuminate\Http\Response;
+use Throwable;
 
 class PostController extends BaseApiController
 {
@@ -16,6 +20,16 @@ class PostController extends BaseApiController
     {
         $posts = PostResource::collection($this->postService->index($filter));
         return sendResponse(message:'posts list', data:$posts);
+
+        // try {
+        //     $posts = PostResource::collection($this->postService->index($filter));
+        //     return $posts;
+        // } catch (Throwable $exception) {
+        //     return new ApiErrorResponse(
+        //         'An error occurred while trying to create the user',
+        //         $exception
+        //     );
+        // }
     }
 
     public function show(int $id)
