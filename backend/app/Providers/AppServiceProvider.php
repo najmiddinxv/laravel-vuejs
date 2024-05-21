@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         StringMacros::register();
-        JsonResource::withoutWrapping();
+        // JsonResource::withoutWrapping();
         // Model::preventLazyLoading(app()->isLocal());
     }
 }

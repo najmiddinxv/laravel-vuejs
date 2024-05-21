@@ -1,46 +1,45 @@
 <?php
+use Illuminate\Http\JsonResponse;
 
-function sendResponse($code = 200, $message = null, $data = [])
+/**
+ * Send a successful JSON response.
+ *
+ * @param int $code
+ * @param string|null $message
+ * @param mixed $data
+ * @return JsonResponse
+ */
+function sendResponse(int $code = 200, string $message = null, mixed $data = null): JsonResponse
 {
-    // shu yerni show va paginate uchun togirlash kerak
-   
-    if (is_object($data) && property_exists($data, 'resource')) {
-        $data = $data->resource;
-    }
-    // dd($data);
-
     $response = [
         'success' => true,
         'code' => $code,
-        'message' => $message,
+        'message' => $message ?? 'ok',
         'data' => $data,
     ];
+
     return response()->json($response, $code);
 }
 
-function sendError($code = 404, $message = null, $data = [])
+/**
+ * Send an error JSON response.
+ *
+ * @param int $code
+ * @param string|null $message
+ * @param mixed $data
+ * @return JsonResponse
+ */
+function sendError(int $code = 404, string $message = null, mixed $data = null): JsonResponse
 {
     $response = [
         'success' => false,
         'code' => $code,
-        'message' => $message,
-        'data' => $data,
+        'message' => $message ?? 'An error occurred',
     ];
 
-    // if (!empty($data)) {
-    //     $response['data'] = $data;
-    // }
+    if (!is_null($data)) {
+        $response['data'] = $data;
+    }
 
     return response()->json($response, $code);
 }
-
-// function sendResponse($code = 200, $message = null, $data = [])
-// {
-//     $response = [
-//         'success' => true,
-//         'code' => $code,
-//         'message' => $message,
-//         'data' => $data,
-//     ];
-//     return response()->json($response, $code);
-// }
