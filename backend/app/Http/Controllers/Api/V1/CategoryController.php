@@ -6,6 +6,7 @@ use App\Models\Content\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\V1\CategoryFilter;
 use App\Http\Requests\Web\Content\CategoryRequest;
+use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
 use App\Services\CategoryService;
 use App\Services\FileUploadService;
@@ -19,12 +20,10 @@ class CategoryController extends Controller
     public function index(CategoryFilter $filter)
     {
         try {
-            $posts = CategoryResource::collection($this->categoryService->index($filter));
-        return sendResponse(message:'categories list', data:$posts);
+            $posts = new CategoryCollection($this->categoryService->index($filter));
+            return sendResponse(message:'categories list', data:$posts);
         } catch (Throwable $exception) {
-            return sendError(
-                $exception->getMessage(),
-            );
+            return sendError(data:$exception->getMessage());
         }
     }
 

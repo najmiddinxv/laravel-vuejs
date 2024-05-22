@@ -12,7 +12,7 @@ class CategoryService implements CategoryServiceContract
 
     public function index(CategoryFilter $filter)
     {
-        $categories = Category::with('parent')->latest('id')->paginate(3);
+        $categories = Category::with(['posts','children'])->getByFilter($filter);
         return $categories;
     }
 

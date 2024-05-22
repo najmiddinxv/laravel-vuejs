@@ -136,7 +136,7 @@ class Handler extends ExceptionHandler
                 }
 
                 if ($e instanceof Exception) {
-                    return sendError(code:500, message: $e->getMessage(), data:$e->getTrace());
+                    return sendError(code:500, message: $e->getMessage());
                     // return response()->json([
                     //     'success' => false,
                     //     'code' => 500,

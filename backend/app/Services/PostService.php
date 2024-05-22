@@ -12,9 +12,7 @@ class PostService implements PostServiceContract
 
     public function index(PostFilter $filter)
     {
-        // $posts = Post::filter($filter)->paginate(50);
-        $posts = Post::with('category', 'tags')->filter($filter);
-        // $posts = Post::paginate(2);
+        $posts = Post::with('category', 'tags')->getByFilter($filter);
         return $posts;
     }
 
@@ -24,9 +22,7 @@ class PostService implements PostServiceContract
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
 
-
         $post = Post::create($data);
-        // dd($post);
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }

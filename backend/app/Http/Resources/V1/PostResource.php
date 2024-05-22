@@ -18,6 +18,7 @@ class PostResource extends JsonResource
             "description"=> $this->description,
             "view_count"=> $this->view_count,
             "status"=> $this->status,
+            "slider"=> $this->slider,
             'main_image' => [
                 'large' => isset($this->main_image['large']) ? "/storage{$this->main_image['large']}" : null,
                 'medium' => isset($this->main_image['medium']) ? "/storage{$this->main_image['medium']}" : null,

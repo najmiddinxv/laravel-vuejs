@@ -4,25 +4,24 @@ namespace App\Http\Filters\V1;
 
 use App\Http\Filters\BaseApiFilter;
 use App\Http\Requests\V1\PostRequest;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class PostFilter extends BaseApiFilter
 {
     protected bool $pagination = true;
+    protected int $defaultSize = 20;
 
     public function __construct(PostRequest $request)
     {
         parent::__construct($request);
     }
 
+    // public function applyWith()
+    // {}
+
     public function defaultOrder()
     {
         $this->builder->orderBy('id', 'desc');
-        // $this->builder->orderBy('created_at', 'desc');
     }
-
-    // public function applyWith()
-    // {}
 
     public function viewCount(string $value): void
     {
@@ -31,7 +30,6 @@ class PostFilter extends BaseApiFilter
 
     public function title(string $value): void
     {
-
         $this->builder->where("title->$this->lang", 'ILIKE', '%'.$value.'%');
 
         //har bitta so'z bo'yicha izlash

@@ -85,6 +85,4 @@ class BaseResourceCollection extends ResourceCollection
     //         ];
     //     }, $links);
     // }
-
-
 }

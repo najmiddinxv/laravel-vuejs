@@ -4,6 +4,7 @@ namespace App\Models\Content;
 
 use App\Models\Content\Post;
 use App\Traits\EscapeUniCodeJson;
+use App\Traits\Filterable;
 use App\Traits\TranslateMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
+    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson, Filterable;
 
     protected $fillable = [
         'parent_id',
