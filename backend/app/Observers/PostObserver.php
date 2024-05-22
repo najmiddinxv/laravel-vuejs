@@ -35,7 +35,7 @@ class PostObserver
 
     public function updating(Post $post): void
     {
-        if(auth()->user()?->user_type == 1 || auth()->user('api')?->user_type == 1){
+        if(auth()->user()?->user_type == 1 ||auth('api')->user()?->user_type == 1){
             $post->created_by = auth()->user()->id ?? auth('api')->user()->id;
 
             $titleTranslations = $post->getTranslations('title');
@@ -54,7 +54,7 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        if(auth()->user()?->user_type == 1 || auth()->user('api')?->user_type == 1){
+        if(auth()->user()?->user_type == 1 || auth('api')->user()?->user_type == 1){
             Cache::forget('banners');
         }
     }

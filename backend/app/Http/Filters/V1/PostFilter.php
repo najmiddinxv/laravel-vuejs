@@ -9,7 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 class PostFilter extends BaseApiFilter
 {
     protected bool $pagination = true;
-   
+
     public function __construct(PostRequest $request)
     {
         parent::__construct($request);
@@ -63,7 +63,5 @@ class PostFilter extends BaseApiFilter
             50 offset 0
         **/
     }
-
-
 
 }

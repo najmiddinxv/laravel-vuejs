@@ -13,17 +13,22 @@ class PostResource extends JsonResource
     {
         return [
             "id"=> $this->id,
-            "category_id" => new CategoryResource($this->whenLoaded('category')),
             "title"=> $this->title,
             "slug"=> $this->slug,
             "description"=> $this->description,
-            "main_image"=> [
-                'large' => "/storage{$this->main_image['large']}",
-                'medium' => "/storage{$this->main_image['medium']}",
-                'small' => "/storage{$this->main_image['small']}",
-            ],
             "view_count"=> $this->view_count,
             "status"=> $this->status,
+            'main_image' => [
+                'large' => isset($this->main_image['large']) ? "/storage{$this->main_image['large']}" : null,
+                'medium' => isset($this->main_image['medium']) ? "/storage{$this->main_image['medium']}" : null,
+                'small' => isset($this->main_image['small']) ? "/storage{$this->main_image['small']}" : null,
+            ],
+            "category" => [
+                "id" => $this->category_id,
+                "name" => $this->category->name,
+            ],
+            // "category_id" => new CategoryResource($this->whenLoaded('category')),
+            "tags" => TagResource::collection($this->whenLoaded('tags')),
             // 'meta' => [
             //     'key' => 'value',
             // ],

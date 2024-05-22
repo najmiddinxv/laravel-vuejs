@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
                     if (str_contains($message, 'No query results for model')) {
                         $message = __('lang.no_records');
                     }
-                    
+
                     return sendError(message:$message);
 
                     // return response()->json([
@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
                     //    'message' => __('lang.not_found'),
                     //    'data' => []
                     // ], 404);
-                    
+
                     // yoki bu usulda
                     // return response()->json([
                     //     'error' => true,
@@ -82,7 +82,7 @@ class Handler extends ExceptionHandler
                     //     'message' => __('lang.no_records'),
                     //     'data' => []
                     // ], 404);
-                    
+
                 }
                 if ($e instanceof AuthorizationException) {
                     return sendError(code:403, message: $e->getMessage());
@@ -136,7 +136,7 @@ class Handler extends ExceptionHandler
                 }
 
                 if ($e instanceof Exception) {
-                    return sendError(code:500, message: $e->getMessage());
+                    return sendError(code:500, message: $e->getMessage(), data:$e->getTrace());
                     // return response()->json([
                     //     'success' => false,
                     //     'code' => 500,

@@ -13,8 +13,8 @@ class PostService implements PostServiceContract
     public function index(PostFilter $filter)
     {
         // $posts = Post::filter($filter)->paginate(50);
-        // $posts = Post::filter($filter);
-        $posts = Post::paginate(2);
+        $posts = Post::with('category', 'tags')->filter($filter);
+        // $posts = Post::paginate(2);
         return $posts;
     }
 
