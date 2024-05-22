@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\TagRequest;
 use App\Http\Resources\V1\TagCollection;
 use App\Http\Resources\V1\TagResource;
-use App\Http\Responses\ApiSuccessResponse;
 use App\Models\Content\Tag;
 use Illuminate\Http\Response;
 
@@ -14,8 +13,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::latest()->paginate(3);
-        // $tagResource = TagResource::collection($tags);
+        $tags = Tag::latest()->paginate(1);
         $tagCollection = new TagCollection($tags);
 		return sendResponse(message:'tags list',data:$tagCollection);
     }
@@ -50,6 +48,6 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
-        return sendResponse(code:204, message:'tag '.__('lang.successfully_deleted'));
+        return sendResponse(code:Response::HTTP_NO_CONTENT, message:'tag '.__('lang.successfully_deleted'));
     }
 }

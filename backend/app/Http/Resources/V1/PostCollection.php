@@ -4,7 +4,7 @@ namespace App\Http\Resources\V1;
 
 use App\Http\Resources\BaseResourceCollection;
 
-class TagCollection extends BaseResourceCollection
+class PostCollection extends BaseResourceCollection
 {
 
     public function __construct($resource)
@@ -15,7 +15,7 @@ class TagCollection extends BaseResourceCollection
     public function toArray($request)
     {
         return [
-            'tags' => $this->collection,
+            'posts' => $this->collection,
             'pagination' => $this->pagination
         ];
     }

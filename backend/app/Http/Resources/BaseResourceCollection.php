@@ -11,63 +11,20 @@ class BaseResourceCollection extends ResourceCollection
     public function __construct($resource)
     {
         $this->pagination = [
-            'path' => $resource->path(),
-            'first_page_url' => $resource->path()."?page=1",
-            'next_page_url' => $resource->path()."?page=".$resource->currentPage()+1,
-            'last_page_url' => $resource->path()."?page=".$resource->lastPage(),
-            'total' => $resource->total(),
-            'per_page' => $resource->perPage(),
+            'first_page_url' => $resource->url(1),
+            'last_page_url' => $resource->url($resource->lastPage()),
+            'prev_page_url' => $resource->previousPageUrl(),
+            'next_page_url' => $resource->nextPageUrl(),
             'current_page' => $resource->currentPage(),
             'from' => $resource->firstItem(),
-            'to' => $resource->lastItem(),
             'last_page' => $resource->lastPage(),
-            'prev_page_url' => $resource->currentPage() > 1 ? $resource->path()."?page=".$resource->currentPage()-1 : null,
-                
-            // {
-                
-            //     "links": {
-            //         "first": "http://127.0.0.1:8000/api/v1/posts?page=1",
-            //         "last": "http://127.0.0.1:8000/api/v1/posts?page=3",
-            //         "prev": null,
-            //         "next": "http://127.0.0.1:8000/api/v1/posts?page=2"
-            //     },
-            //     "meta": {
-            //         "current_page": 1,
-            //         "from": 1,
-            //         "last_page": 3,
-            //         "links": [
-            //             {
-            //                 "url": null,
-            //                 "label": "&laquo; Previous",
-            //                 "active": false
-            //             },
-            //             {
-            //                 "url": "http://127.0.0.1:8000/api/v1/posts?page=1",
-            //                 "label": "1",
-            //                 "active": true
-            //             },
-            //             {
-            //                 "url": "http://127.0.0.1:8000/api/v1/posts?page=2",
-            //                 "label": "2",
-            //                 "active": false
-            //             },
-            //             {
-            //                 "url": "http://127.0.0.1:8000/api/v1/posts?page=3",
-            //                 "label": "3",
-            //                 "active": false
-            //             },
-            //             {
-            //                 "url": "http://127.0.0.1:8000/api/v1/posts?page=2",
-            //                 "label": "Next &raquo;",
-            //                 "active": false
-            //             }
-            //         ],
-            //         "path": "http://127.0.0.1:8000/api/v1/posts",
-            //         "per_page": 2,
-            //         "to": 2,
-            //         "total": 6
-            //     }
-            // }
+            'path' => $resource->path(),
+            'per_page' => $resource->perPage(),
+            'to' => $resource->lastItem(),
+            'total' => $resource->total(),
+            // 'links' => $this->formatLinks($resource)
+            // // bu paginatsiyani soni bo'yicha link yaratib tashaydi
+            // // 'links' => $this->formatLinks($resource->linkCollection()->toArray())
         ];
 
         $resource = $resource->getCollection(); // Necessary to remove meta and links
@@ -75,12 +32,59 @@ class BaseResourceCollection extends ResourceCollection
         parent::__construct($resource);
     }
 
-    // public function toArray($request)
+    //links ni nechta chiqishini o'zimiz belgilaymiz
+    // private function formatLinks($resource)
     // {
-    //     return [
-    //         'data' => $this->collection,
-    //         'pagination' => $this->pagination,
+    //     $links = [];
+
+    //     // Previous page link
+    //     $links[] = [
+    //         'url' => $resource->previousPageUrl(),
+    //         'label' => '&laquo; Previous',
+    //         'active' => false
     //     ];
+
+    //     // Current page link
+    //     $links[] = [
+    //         'url' => $resource->url($resource->currentPage()),
+    //         'label' => (string) $resource->currentPage(),
+    //         'active' => true
+    //     ];
+
+    //     // Adding next three pages links for demonstration
+    //     for ($i = 1; $i <= 2; $i++) {
+    //         $pageNumber = $resource->currentPage() + $i;
+    //         if ($pageNumber <= $resource->lastPage()) {
+    //             $links[] = [
+    //                 'url' => $resource->url($pageNumber),
+    //                 'label' => (string) $pageNumber,
+    //                 'active' => false
+    //             ];
+    //         }
+    //     }
+    
+    //     // Next page link
+    //     $nextPage = $resource->currentPage() < $resource->lastPage() ? $resource->currentPage() + 1 : null;
+    //     $links[] = [
+    //         'url' => $nextPage ? $resource->url($nextPage) : null,
+    //         'label' => 'Next &raquo;',
+    //         'active' => false
+    //     ];
+
+    //     return $links;
     // }
+
+    //links ni sonini biz belgila olmyamiz bu yerda ko'p chiqib ketadi
+    // protected function formatLinks($links)
+    // {
+    //     return array_map(function ($link) {
+    //         return [
+    //             'url' => $link['url'],
+    //             'label' => $link['label'],
+    //             'active' => $link['active'],
+    //         ];
+    //     }, $links);
+    // }
+
 
 }

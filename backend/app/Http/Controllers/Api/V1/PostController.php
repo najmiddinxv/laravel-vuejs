@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
+use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
 use App\Http\Responses\ApiErrorResponse;
 use App\Http\Responses\ApiSuccessResponse;
@@ -18,7 +19,9 @@ class PostController extends BaseApiController
 
     public function index(PostFilter $filter)
     {
-        $posts = PostResource::collection($this->postService->index($filter));
+        // $posts = PostResource::collection($this->postService->index($filter));
+        // return sendResponse(message:'posts list', data:$posts->resource);
+        $posts = new PostCollection($this->postService->index($filter));
         return sendResponse(message:'posts list', data:$posts);
 
         // try {

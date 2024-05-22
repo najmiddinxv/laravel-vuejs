@@ -9,7 +9,6 @@ class CategoryResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
         return [
             "id"=> $this->id,
             "parent_id"=> $this->parent_id,
@@ -18,8 +17,6 @@ class CategoryResource extends JsonResource
             "icon"=> $this->icon,
             "image"=> $this->image,
             "order"=> $this->order,
-            // "created_at"=> $this->created_at,
-            // "updated_at"=> $this->updated_at,
         ];
     }
 }
