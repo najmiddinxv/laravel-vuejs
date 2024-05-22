@@ -24,29 +24,11 @@ class PostResource extends JsonResource
             ],
             "view_count"=> $this->view_count,
             "status"=> $this->status,
-
+            // 'meta' => [
+            //     'key' => 'value',
+            // ],
         ];
     }
 
-
-    // public function withResponse(Request $request, JsonResponse $response): void
-    // {
-    //     $response->header('X-Value', 'True');
-    // }
-
-
-    // public function withResponse($request, $response)
-    // {
-    //     $response->header('X-Value', 'True');
-    // }
-
-    // public function with(Request $request): array
-    // {
-    //     return [
-    //         'meta' => [
-    //             'key' => 'value',
-    //         ],
-    //     ];
-    // }
 
 }

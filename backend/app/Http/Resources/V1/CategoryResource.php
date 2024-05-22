@@ -7,6 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
+
+    // public $preserveKeys = true;
+
+    
     public function toArray(Request $request): array
     {
         return [
@@ -19,4 +23,11 @@ class CategoryResource extends JsonResource
             "order"=> $this->order,
         ];
     }
+
+
+    public function withResponse($request, $response)
+    {
+        $response->header('X-Custom-Header', 'Your-Value');
+    }
+
 }

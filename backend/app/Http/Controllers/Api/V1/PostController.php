@@ -7,11 +7,8 @@ use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
-use App\Http\Responses\ApiErrorResponse;
-use App\Http\Responses\ApiSuccessResponse;
+use App\Models\Content\Post;
 use App\Services\PostService;
-use Illuminate\Http\Response;
-use Throwable;
 
 class PostController extends BaseApiController
 {
@@ -19,8 +16,6 @@ class PostController extends BaseApiController
 
     public function index(PostFilter $filter)
     {
-        // $posts = PostResource::collection($this->postService->index($filter));
-        // return sendResponse(message:'posts list', data:$posts->resource);
         $posts = new PostCollection($this->postService->index($filter));
         return sendResponse(message:'posts list', data:$posts);
 
@@ -28,8 +23,8 @@ class PostController extends BaseApiController
         //     $posts = PostResource::collection($this->postService->index($filter));
         //     return $posts;
         // } catch (Throwable $exception) {
-        //     return new ApiErrorResponse(
-        //         'An error occurred while trying to create the user',
+        //     return sendError(
+        //         message:'An error occurred while trying to create the user',
         //         $exception
         //     );
         // }
@@ -37,22 +32,22 @@ class PostController extends BaseApiController
 
     public function show(int $id)
     {
-        $post = $this->postService->show($id);
-        return sendResponse(message:'post item', data:new PostResource($post));
+        $post = new PostResource($this->postService->show($id));
+        return sendResponse(message:'post item', data: $post);
     }
 
     public function store(PostRequest $request)
     {
         $data = $request->validated();
-        $post = $this->postService->store($data);
-        return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:new PostResource($post));
+        $post = new PostResource($this->postService->store($data));
+        return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$post);
     }
 
     public function update(PostRequest $request, int $id)
     {
         $data = $request->validated();
-        $post = $this->postService->update($data, $id);
-        return sendResponse(message:'post '.__('lang.successfully_updated'), data:new PostResource($post));
+        $post = new PostResource($this->postService->update($data, $id));
+        return sendResponse(message:'post '.__('lang.successfully_updated'), data:$post);
     }
 
     public function destroy(int $id)

@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 
 class TagResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
@@ -17,5 +16,4 @@ class TagResource extends JsonResource
             "tagsable_type" => $this->tagsable_type,
         ];
     }
-
 }

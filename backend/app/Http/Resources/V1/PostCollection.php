@@ -16,7 +16,10 @@ class PostCollection extends BaseResourceCollection
     {
         return [
             'posts' => $this->collection,
-            'pagination' => $this->pagination
+            'pagination' => $this->pagination,
+            // 'meta' => [
+            //     'key' => 'value',
+            // ],
         ];
     }
 

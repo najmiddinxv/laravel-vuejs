@@ -62,7 +62,7 @@ class BaseResourceCollection extends ResourceCollection
     //             ];
     //         }
     //     }
-    
+
     //     // Next page link
     //     $nextPage = $resource->currentPage() < $resource->lastPage() ? $resource->currentPage() + 1 : null;
     //     $links[] = [

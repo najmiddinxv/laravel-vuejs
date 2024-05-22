@@ -13,7 +13,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::latest()->paginate(1);
+        $tags = Tag::latest()->paginate(30);
         $tagCollection = new TagCollection($tags);
 		return sendResponse(message:'tags list',data:$tagCollection);
     }
