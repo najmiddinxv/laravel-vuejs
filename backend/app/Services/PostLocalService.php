@@ -3,13 +3,14 @@
 namespace App\Services;
 
 use App\Contracts\PostServiceContract;
+use App\Http\Filters\V1\PostFilter;
 use App\Models\Content\Post;
 
 class PostLocalService implements PostServiceContract
 {
     public function __construct(protected FileUploadService $fileUploadService){}
 
-    public function index(array $data)
+    public function index(PostFilter $filter)
     {
         $posts = Post::latest('id')->paginate(50);
         return $posts;

@@ -6,10 +6,10 @@ use App\Http\Filters\BaseApiFilter;
 use App\Http\Requests\V1\PostRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
-class PostFilter extends BaseApiFilter
+class CategoryFilter extends BaseApiFilter
 {
     protected bool $pagination = true;
-   
+
     public function __construct(PostRequest $request)
     {
         parent::__construct($request);

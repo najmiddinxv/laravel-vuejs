@@ -16,10 +16,6 @@ trait Filterable
 
 
 
-
-
-
-
     //this method from Filterable.txt
     /**
      * @param Builder $builder

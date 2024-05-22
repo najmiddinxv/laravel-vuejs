@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\CategoryServiceContract;
 use App\Contracts\PostServiceContract;
+use App\Services\CategoryService;
 use App\Services\PostLocalService;
 use App\Services\PostService;
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +23,7 @@ class ServicesProvider extends ServiceProvider
         //     $this->app->bind(PostServiceContract::class, PostService::class);
         // }
         $this->app->bind(PostServiceContract::class, PostService::class);
-        // $this->app->bind(PostServiceContract::class, PostLocalService::class);
+        $this->app->bind(CategoryServiceContract::class, CategoryService::class);
 
 
 

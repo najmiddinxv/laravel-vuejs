@@ -9,9 +9,17 @@ class CategoryRequest extends BaseApiFormRequest
     public function authorize(): bool
     {
         return true;
-        // return false;// bu authentikatsiyadan o'tish kerakligini anglatadi
-        // return true;// bu authentikatsiyadan o'tsin hoh o'tmasin ishlata oladi degani
 
+    }
+
+    public function view()
+    {
+        return [
+            'name' => 'nullable|string|max:255',
+            'created_at' => 'nullable|in:asc,desc',
+            'per_page' => 'nullable|integer',
+            'page' => 'nullable|integer',
+        ];
     }
 
     public function store()

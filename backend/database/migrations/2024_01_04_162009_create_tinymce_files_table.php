@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tinymce_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('no action');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('set null');
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('path');

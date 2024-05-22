@@ -18,16 +18,6 @@ class PostController extends BaseApiController
     {
         $posts = new PostCollection($this->postService->index($filter));
         return sendResponse(message:'posts list', data:$posts);
-
-        // try {
-        //     $posts = PostResource::collection($this->postService->index($filter));
-        //     return $posts;
-        // } catch (Throwable $exception) {
-        //     return sendError(
-        //         message:'An error occurred while trying to create the user',
-        //         $exception
-        //     );
-        // }
     }
 
     public function show(int $id)

@@ -10,13 +10,13 @@ class CategoryResource extends JsonResource
 
     // public $preserveKeys = true;
 
-    
+
     public function toArray(Request $request): array
     {
         return [
             "id"=> $this->id,
             "parent_id"=> $this->parent_id,
-            "category_type"=> $this->category_type,
+            "categoryable_type"=> $this->categoryable_type,
             "name"=> $this->name,
             "icon"=> $this->icon,
             "image"=> $this->image,

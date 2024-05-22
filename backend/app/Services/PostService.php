@@ -24,7 +24,9 @@ class PostService implements PostServiceContract
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
 
+
         $post = Post::create($data);
+        // dd($post);
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }
@@ -59,8 +61,7 @@ class PostService implements PostServiceContract
     {
         $post = Post::find($id);
         $this->fileUploadService->resizedImageDelete($post->main_image);
-        $post->delete();
-        return back()->with('success', 'post ' . __('lang.successfully_deleted'));
+        return $post->delete();
     }
 
 }
