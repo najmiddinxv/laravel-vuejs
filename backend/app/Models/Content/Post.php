@@ -15,7 +15,11 @@ use Spatie\Translatable\HasTranslations;
 
 class Post extends BaseModel
 {
-    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson, Filterable;
+    use HasFactory,
+        TranslateMethods,
+        HasTranslations,
+        EscapeUniCodeJson,
+        Filterable;
     // use Searchable;
 
     protected $fillable = [

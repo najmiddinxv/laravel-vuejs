@@ -62,4 +62,30 @@ class PostFilter extends BaseApiFilter
         **/
     }
 
+
+    // public function createdStartAt(string $value): void
+    // {
+    //     $this->builder->where('created_at', '>=', $value);
+    // }
+
+    // public function createdEndAt(string $value): void
+    // {
+    //     $this->builder->where('created_at', '<=', $value);
+    // }
+
+    // public function updatedStartAt(string $value): void
+    // {
+    //     $this->builder->where('updated_at', '>=', $value);
+    // }
+
+    // public function updatedEndAt(string $value): void
+    // {
+    //     $this->builder->where('updated_at', '<=', $value);
+    // }
+
+    // public function status(int $value): void
+    // {
+    //     $this->builder->where('status', '=', $value);
+    // }
+
 }

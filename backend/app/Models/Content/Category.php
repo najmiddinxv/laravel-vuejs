@@ -15,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson, Filterable;
+    use HasFactory, TranslateMethods, HasTranslations, EscapeUniCodeJson;
 
     protected $fillable = [
         'parent_id',
