@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class SortByMacros
 {
 
+
     public static function sortBy()
     {
         Builder::macro('sortBy', function (string|array $orderBy, string $sortBy) {
@@ -20,6 +21,7 @@ class SortByMacros
             return $this;
         });
     }
+
 
     public static function sortByJson(){
 

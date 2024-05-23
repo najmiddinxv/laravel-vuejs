@@ -12,14 +12,15 @@ class CategoryService implements CategoryServiceContract
 
     public function index(array $queryParam)
     {
-        $perPage = $queryParam['per_page'] ?? 30;
+        $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
 
         $categories = Category::with(['parent', 'children'])
         ->withCount('posts')
         ->whenJsonColumnLikeForEachWord('name', $queryParam)
         // ->whenJsonColumnLike('name', $queryParam)
         ->whereNull('parent_id')
-        ->latest()
+        // ->latest()
+        ->sortBy('order',$queryParam)
         ->paginate($perPage);
 
         return $categories;

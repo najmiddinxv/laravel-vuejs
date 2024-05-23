@@ -10,7 +10,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menu = Menu::latest('id')->paginate(30);
+        $menu = Menu::latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.menu.index',[
 			'menu'=>$menu,
 		]);

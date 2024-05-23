@@ -14,7 +14,7 @@ class TinymceFileController extends Controller
 
     public function index()
     {
-        $tinymceFiles = TinymceFile::latest()->paginate(30);
+        $tinymceFiles = TinymceFile::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.tinymceFiles.index',[
 			'tinymceFiles'=>$tinymceFiles,
 		]);

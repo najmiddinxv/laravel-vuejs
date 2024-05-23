@@ -11,6 +11,18 @@ class PostRequest extends BaseApiFormRequest
         return true;
     }
 
+    public function view()
+    {
+        return [
+            'title' => 'nullable|string|max:255',
+            // 'sort_by_title' => 'nullable|string|max:255',
+            'view_count' => 'nullable|in:asc,desc',
+            // 'created_at' => 'nullable|in:asc,desc',
+            'per_page' => 'nullable|integer',
+            'page' => 'nullable|integer',
+        ];
+    }
+    
     public function store()
     {
         return [
@@ -42,19 +54,6 @@ class PostRequest extends BaseApiFormRequest
             'slider' => 'required|integer',
             'tags' => 'nullable|array',
             'tags.*' => 'integer',
-        ];
-    }
-
-
-    public function view()
-    {
-        return [
-            'title' => 'nullable|string|max:255',
-            // 'sort_by_title' => 'nullable|string|max:255',
-            'view_count' => 'nullable|in:asc,desc',
-            // 'created_at' => 'nullable|in:asc,desc',
-            'per_page' => 'nullable|integer',
-            'page' => 'nullable|integer',
         ];
     }
 

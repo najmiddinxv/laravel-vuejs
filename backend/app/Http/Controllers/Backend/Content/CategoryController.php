@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::with('parent')->latest('id')->paginate(30);
+        $categories = Category::with('parent')->latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.categories.index',[
 			'categories'=>$categories,
 		]);

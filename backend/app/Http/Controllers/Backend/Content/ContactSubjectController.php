@@ -11,7 +11,7 @@ class ContactSubjectController extends Controller
 {
     public function index()
     {
-        $contactSubjects = ContactSubject::latest('id')->paginate(30);
+        $contactSubjects = ContactSubject::latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.contactSubjects.index',[
 			'contactSubjects'=>$contactSubjects,
 		]);

@@ -14,7 +14,7 @@ class PageController extends Controller
 
     public function index()
     {
-        $pages = Page::latest()->paginate(30);
+        $pages = Page::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.pages.index',[
 			'pages'=>$pages,
 		]);

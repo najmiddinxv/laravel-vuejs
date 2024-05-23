@@ -15,7 +15,7 @@ class VideoController extends Controller
 
     public function index()
     {
-        $videos = Video::latest()->paginate(30);
+        $videos = Video::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.videos.index',[
 			'videos'=>$videos,
 		]);

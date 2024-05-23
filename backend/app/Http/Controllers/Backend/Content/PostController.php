@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->paginate(30);
+        $posts = Post::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.posts.index',[
 			'posts'=>$posts,
 		]);

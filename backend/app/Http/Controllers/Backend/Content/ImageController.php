@@ -17,7 +17,7 @@ class ImageController extends Controller
     public function index()
     {
         $categories = Category::byModel(News::class)->latest('id')->get();
-        $images = Image::latest()->paginate(30);
+        $images = Image::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.images.index',[
 			'categories'=>$categories,
 			'images'=>$images,

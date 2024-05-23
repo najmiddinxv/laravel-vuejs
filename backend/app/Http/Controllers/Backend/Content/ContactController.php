@@ -10,7 +10,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::latest('id')->paginate(30);
+        $contacts = Contact::latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.contacts.index',[
 			'contacts' => $contacts,
 		]);

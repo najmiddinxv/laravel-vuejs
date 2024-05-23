@@ -17,7 +17,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::latest('id')->paginate(30);
+        $news = News::latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.news.index',[
 			'news'=>$news,
 		]);

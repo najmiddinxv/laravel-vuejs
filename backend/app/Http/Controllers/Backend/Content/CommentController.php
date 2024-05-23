@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::latest('id')->paginate(30);
+        $comments = Comment::latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.comments.index',[
 			'comments'=>$comments,
 		]);

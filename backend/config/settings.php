@@ -1,10 +1,14 @@
 <?php
 
 return [
+
+    'jsonplaceholder_url' => env('JSONPLACEHOLDER', 'https://jsonplaceholder.typicode.com'),
+    //yoki
+    'jsonplaceholder_url' => 'https://jsonplaceholder.typicode.com',
+
     'main_locale'       => 'ru',
     'available_locales' => ['ru', 'uz', 'en'],
-    'default'           =>//request default value
-    [
+    'default'           => [
         "list_type"   => 'paginate',//paginate,collection
         "limit"       => 30,
         "per_page"    => 30,
@@ -14,7 +18,10 @@ return [
     ],
 
     'frontend' => 'http://127.0.0.1:8000',
+
+    'paginate_per_page' => 5,
     'paginate' => 20,
+
     'large_image' => [
         'width' => 1900,
         'height' => 1080

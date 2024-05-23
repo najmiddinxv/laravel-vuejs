@@ -11,7 +11,7 @@ class WordController extends Controller
 {
     public function index()
     {
-        $words = Word::latest()->paginate(30);
+        $words = Word::latest()->paginate(config('settings.paginate_per_page'));
 		return view('backend.words.index',[
 			'words'=>$words,
 		]);

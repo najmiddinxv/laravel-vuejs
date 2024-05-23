@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\TagRequest;
 use App\Http\Resources\V1\TagCollection;
 use App\Http\Resources\V1\TagResource;
@@ -15,10 +14,10 @@ class TagController extends BaseApiController
     public function index(TagRequest $request)
     {
         $queryParam = $request->validated();
-        $perPage = $queryParam['per_page'] ?? 30;
+        $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
         $tags = Tag::query()
             ->whenJsonColumnLike('name', $queryParam)
-            ->latest()
+            // ->latest()
             ->paginate($perPage);
 
         $tagCollection = new TagCollection($tags);

@@ -12,7 +12,7 @@ class PostLocalService implements PostServiceContract
 
     public function index(PostFilter $filter)
     {
-        $posts = Post::latest('id')->paginate(50);
+        $posts = Post::latest('id')->paginate(config('settings.paginate_per_page'));
         return $posts;
     }
 
