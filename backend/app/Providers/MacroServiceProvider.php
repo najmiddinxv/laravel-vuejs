@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Macros\ColumnSearchMacros;
+use App\Macros\HelperMethodsMacros;
 use App\Macros\SortByMacros;
 
 class MacroServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class MacroServiceProvider extends ServiceProvider
         ColumnSearchMacros::whenJsonColumnLike();
         ColumnSearchMacros::whenJsonColumnLikeForEachWord();
         SortByMacros::example();
+        HelperMethodsMacros::sendResponse();
     }
 
     /**

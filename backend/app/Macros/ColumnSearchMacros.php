@@ -14,6 +14,7 @@ class ColumnSearchMacros
             return $this->when($words, function($query) use ($column, $lang, $words) {
                 $query->where("$column->$lang", 'ILIKE', '%'.$words.'%');
             });
+
         });
     }
 
@@ -21,7 +22,7 @@ class ColumnSearchMacros
     {
         Builder::macro('whenJsonColumnLikeForEachWord', function($column, $words) {
             $lang = app()->getLocale();
-            
+
             return $this->when($words, function($query) use ($column, $lang, $words) {
                 $wordsArr = array_filter(explode(' ', $words));
 
@@ -33,23 +34,5 @@ class ColumnSearchMacros
             });
         });
     }
-
-    // public static function whenJsonColumnLikeForEachWord()
-    // {
-    //     Builder::macro('whenJsonColumnLikeForEachWord', function($column, $queryParam) {
-    //         $lang = app()->getLocale();
-    //         return $this->when(isset($queryParam[$column]), function($query) use ($column, $lang, $queryParam) {
-    //                 // $query->where("$column->$lang", 'ILIKE', '%' . $queryParam[$column] . '%');
-
-    //                 $words = array_filter(explode(' ', $queryParam[$column]));
-    //                 $query->where(function (Builder $query) use ($column, $lang, $words) {
-    //                     foreach ($words as $word) {
-    //                         $query->orWhere("$column->$lang", 'ILIKE', "%$word%");
-    //                     }
-    //                 });
-    //             });
-    //     });
-    // }
-
 
 }

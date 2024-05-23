@@ -16,8 +16,40 @@ class SortByMacros
         });
     }
 
-    public static function sortBy()
-    {
+
+
+    // What about default values?
+        // Author::query()
+        // ->when(request('filter_by') == 'likes',
+        // function ($q) {
+        //     return $q->where('likes', '>', request('likes_amount', 0));
+        // },
+        // function ($q) {
+        //     return $q->orderBy('created_at', request('ordering_rule', 'desc'));
+        // })
+        // ->get();
+
+    // public static function whenJsonColumnLikeForEachWord()
+    // {
+    //     Builder::macro('whenJsonColumnLikeForEachWord', function($column, $queryParam) {
+    //         $lang = app()->getLocale();
+    //         return $this->when(isset($queryParam[$column]), function($query) use ($column, $lang, $queryParam) {
+    //                 // $query->where("$column->$lang", 'ILIKE', '%' . $queryParam[$column] . '%');
+
+    //                 $words = array_filter(explode(' ', $queryParam[$column]));
+    //                 $query->where(function (Builder $query) use ($column, $lang, $words) {
+    //                     foreach ($words as $word) {
+    //                         $query->orWhere("$column->$lang", 'ILIKE', "%$word%");
+    //                     }
+    //                 });
+    //             });
+    //     });
+    // }
+
+
+
+    // public static function sortBy()
+    // {
 
         // EloquentBuilder::macro('sortBy', function (string|array $orderBy, string $sortBy) {
         //     $orderBy = Arr::wrap($orderBy);
@@ -130,6 +162,6 @@ class SortByMacros
         // });
 
         // QueryBuilder::macro('listType', $func);
-    }
+    // }
 
 }
