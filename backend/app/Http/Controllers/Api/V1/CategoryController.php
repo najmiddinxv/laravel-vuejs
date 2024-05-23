@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Filters\V1\CategoryFilter;
-use App\Http\Requests\Web\Content\CategoryRequest;
+use App\Http\Requests\V1\CategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
 use App\Services\CategoryService;
@@ -14,10 +14,11 @@ class CategoryController extends BaseApiController
 {
     public function __construct(protected CategoryService $categoryService){}
 
-    public function index(CategoryFilter $filter)
+    public function index(CategoryRequest $request)
     {
+        $queryParam = $request->validated();
         try {
-            $posts = new CategoryCollection($this->categoryService->index($filter));
+            $posts = new CategoryCollection($this->categoryService->index($queryParam));
             return sendResponse(message:'categories list', data:$posts);
         } catch (Throwable $exception) {
             return sendError(data:$exception->getMessage());

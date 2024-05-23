@@ -10,9 +10,14 @@ class CategoryService implements CategoryServiceContract
 {
     public function __construct(protected FileUploadService $fileUploadService){}
 
-    public function index(CategoryFilter $filter)
+    public function index(array $queryParam)
     {
-        $categories = Category::with(['posts', 'parent', 'children'])->whereNull('parent_id')->getByFilter($filter);
+        $categories = Category::with(['posts', 'parent', 'children'])
+        ->whenJsonColumnLikeForEachWord('name', $queryParam['name'])
+        ->whereNull('parent_id')
+        ->latest()
+        ->paginate($queryParam['per_page'] ?? 30);
+
         return $categories;
     }
 

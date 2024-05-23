@@ -15,17 +15,14 @@ class TagController extends BaseApiController
     public function index(TagRequest $request)
     {
         $queryParam = $request->validated();
-        $lang = app()->getLocale();
 
-        // $tags = Tag::when(isset($queryParam['name']),function($query) use ($lang, $queryParam){
-        //     $query->where("name->$lang", 'ILIKE', '%'.$queryParam['name'].'%');
-        // })
         $tags = Tag::query()
-            ->whenNameLike($queryParam, $lang)
+            ->whenJsonColumnLike('name', $queryParam['name'])
             ->latest()
             ->paginate($queryParam['per_page'] ?? 30);
 
         $tagCollection = new TagCollection($tags);
+
 		return sendResponse(message:'tags list',data:$tagCollection);
     }
 

@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Builder;
-use App\Macros\BuilderMacros;
+use App\Macros\ColumnSearchMacros;
+use App\Macros\SortByMacros;
+
 class MacroServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +13,9 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        BuilderMacros::whenNameLike();
+        ColumnSearchMacros::whenJsonColumnLike();
+        ColumnSearchMacros::whenJsonColumnLikeForEachWord();
+        SortByMacros::example();
     }
 
     /**

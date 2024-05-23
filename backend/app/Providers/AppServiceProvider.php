@@ -23,7 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-        StringMacros::register();
         // JsonResource::withoutWrapping();
         // Model::preventLazyLoading(app()->isLocal());
     }
