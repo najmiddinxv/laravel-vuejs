@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserEnum;
+use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -15,7 +18,8 @@ class BackendMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()){
-            if (auth()->user()->status === User::STATUS_ACTIVE && auth()->user()->user_type === User::USER_TYPE_BACKEND) {
+            // if (auth()->user()->status === User::STATUS_ACTIVE && auth()->user()->user_type === User::USER_TYPE_BACKEND) {
+            if (auth()->user()->status ===UserStatus::STATUS_ACTIVE->value && auth()->user()->user_type === UserType::USER_TYPE_BACKEND->value) {
                 return $next($request);
             }else{
                 Session::flush();

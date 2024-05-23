@@ -19,10 +19,10 @@ class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    public const STATUS_INCTIVE = 0;
-    public const STATUS_ACTIVE = 1;
-    public const USER_TYPE_BACKEND = 1;
-    public const USER_TYPE_USERPROFILE = 2;
+    // public const STATUS_INACTIVE = 0;
+    // public const STATUS_ACTIVE = 1;
+    // public const USER_TYPE_BACKEND = 1;
+    // public const USER_TYPE_USERPROFILE = 2;
 
     protected $fillable = [
         'last_name', //familya

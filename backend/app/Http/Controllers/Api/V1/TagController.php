@@ -8,13 +8,15 @@ use App\Http\Resources\V1\TagCollection;
 use App\Http\Resources\V1\TagResource;
 use App\Models\Content\Tag;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Config;
 
 class TagController extends BaseApiController
 {
     public function index(TagRequest $request)
     {
         $queryParam = $request->validated();
-        $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
+        $perPage = $queryParam['per_page'] ?? Config::get('settings.paginate_per_page');
+        // Config::set('settings.per_page', 20);
         $tags = Tag::query()
             ->whenJsonColumnLike('name', $queryParam)
             // ->latest()
