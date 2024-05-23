@@ -3,12 +3,16 @@
 namespace App\Services;
 
 use App\Contracts\PostServiceContract;
+use App\DTO\JsonplaceholderPostDTO;
 use App\Http\Filters\V1\PostFilter;
 use App\Models\Content\Post;
 
 class PostService implements PostServiceContract
 {
-    public function __construct(protected FileUploadService $fileUploadService){}
+    public function __construct(
+        protected FileUploadService $fileUploadService,
+        protected JsonplaceholderApiService $jsonplaceholderApiService,
+    ){}
 
     public function index(PostFilter $filter)
     {
@@ -27,13 +31,27 @@ class PostService implements PostServiceContract
             $post->tags()->sync($data['tags']);
         }
 
+
+        $jsonPlaceHolderPost = JsonplaceholderPostDTO::from([
+            'userId' => $post->created_by,
+            'title' => $post->title,
+            'body' => $post->body,
+        ]);
+
+        $this->jsonplaceholderApiService->storePost($jsonPlaceHolderPost);
+
         return $post;
     }
 
     public function show(int $id):Post
     {
         $post = Post::find($id);
-        return $post;
+        $comments = $this->jsonplaceholderApiService->getComments($id);
+
+        return [
+            $post,
+            $comments
+        ];
     }
 
     public function update(array $data, $id)

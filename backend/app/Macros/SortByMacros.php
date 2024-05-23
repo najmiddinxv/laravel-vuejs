@@ -201,4 +201,39 @@ class SortByMacros
         // QueryBuilder::macro('listType', $func);
     // }
 
+
+
+    /**
+        ---You can define Macros on any class that uses the Macroable trait. Here’s a list of classes and facades that are Macroable:
+        Facades
+        Cache
+        File
+        Lang
+        Request
+        Response
+        Route
+        URL
+
+        ---Illuminate Classes
+
+        Illuminate\Cache\Repository
+        Illuminate\Console\Scheduling\Event
+        Illuminate\Database\Eloquent\Builder
+        Illuminate\Database\Eloquent\Relation
+        Illuminate\Database\Query\Builder
+        Illuminate\Filesystem\Filesystem
+        Illuminate\Foundation\Testing\TestResponse
+        Illuminate\Http\RedirectResponse
+        Illuminate\Http\Request
+        Illuminate\Http\UploadedFile
+        Illuminate\Routing\ResponseFactory
+        Illuminate\Routing\Router
+        Illuminate\Routing\UrlGenerator
+        Illuminate\Support\Arr
+        Illuminate\Support\Collection
+        Illuminate\Support\Str
+        Illuminate\Translation\Translator
+        Illuminate\Validation\Rule
+    **/
+
 }
