@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Content\Category;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Filters\V1\CategoryFilter;
 use App\Http\Requests\Web\Content\CategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
 use App\Services\CategoryService;
-use App\Services\FileUploadService;
-use Illuminate\Http\Response;
 use Throwable;
 
-class CategoryController extends Controller
+class CategoryController extends BaseApiController
 {
     public function __construct(protected CategoryService $categoryService){}
 
@@ -51,6 +48,5 @@ class CategoryController extends Controller
     {
         $this->categoryService->destroy($id);
         return sendResponse(message:'category '.__('lang.successfully_deleted'));
-
     }
 }

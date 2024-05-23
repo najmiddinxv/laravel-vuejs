@@ -25,6 +25,4 @@ class CategoryFilter extends BaseApiFilter
         $this->builder->where("name->$this->lang", 'ILIKE', '%'.$value.'%');
     }
 
-
-
 }

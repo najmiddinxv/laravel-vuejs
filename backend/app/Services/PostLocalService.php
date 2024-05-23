@@ -16,7 +16,6 @@ class PostLocalService implements PostServiceContract
         return $posts;
     }
 
-
     public function store(array $data)
     {
         if (isset($data['image'])) {

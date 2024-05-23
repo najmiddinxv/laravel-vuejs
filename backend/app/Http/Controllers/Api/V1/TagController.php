@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\TagRequest;
 use App\Http\Resources\V1\TagCollection;
@@ -9,11 +10,21 @@ use App\Http\Resources\V1\TagResource;
 use App\Models\Content\Tag;
 use Illuminate\Http\Response;
 
-class TagController extends Controller
+class TagController extends BaseApiController
 {
-    public function index()
+    public function index(TagRequest $request)
     {
-        $tags = Tag::latest()->paginate(30);
+        $queryParam = $request->validated();
+        $lang = app()->getLocale();
+
+        // $tags = Tag::when(isset($queryParam['name']),function($query) use ($lang, $queryParam){
+        //     $query->where("name->$lang", 'ILIKE', '%'.$queryParam['name'].'%');
+        // })
+        $tags = Tag::query()
+            ->whenNameLike($queryParam, $lang)
+            ->latest()
+            ->paginate($queryParam['per_page'] ?? 30);
+
         $tagCollection = new TagCollection($tags);
 		return sendResponse(message:'tags list',data:$tagCollection);
     }

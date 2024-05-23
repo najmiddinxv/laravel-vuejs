@@ -7,7 +7,6 @@ use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
-use App\Models\Content\Post;
 use App\Services\PostService;
 
 class PostController extends BaseApiController

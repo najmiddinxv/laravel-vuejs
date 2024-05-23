@@ -10,5 +10,5 @@ class BaseApiController extends Controller
     {
         return 'index';
     }
-    
+
 }

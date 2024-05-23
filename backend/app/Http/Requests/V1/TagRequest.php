@@ -11,6 +11,14 @@ class TagRequest extends BaseApiFormRequest
         return true;
     }
 
+    public function view()
+    {
+        return [
+            'name' => 'nullable|string|max:255',
+            'per_page' => 'nullable|integer',
+        ];
+    }
+
     public function store()
     {
         return [
