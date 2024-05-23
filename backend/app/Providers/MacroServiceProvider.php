@@ -9,9 +9,6 @@ use App\Macros\SortByMacros;
 
 class MacroServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
     public function register(): void
     {
         ColumnSearchMacros::whenJsonColumnLike();
@@ -19,11 +16,9 @@ class MacroServiceProvider extends ServiceProvider
         SortByMacros::sortBy();
         SortByMacros::sortByJson();
         HelperMethodsMacros::sendResponse();
+        HelperMethodsMacros::sendError();
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         //

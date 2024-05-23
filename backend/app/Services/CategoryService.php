@@ -16,8 +16,8 @@ class CategoryService implements CategoryServiceContract
 
         $categories = Category::with(['parent', 'children'])
         ->withCount('posts')
-        // ->whenJsonColumnLikeForEachWord('name', $queryParam)
-        ->whenJsonColumnLike('name', $queryParam)
+        ->whenJsonColumnLikeForEachWord('name', $queryParam)
+        // ->whenJsonColumnLike('name', $queryParam)
         ->whereNull('parent_id')
         ->latest()
         ->paginate($perPage);

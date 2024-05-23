@@ -15,11 +15,11 @@ class TagController extends BaseApiController
     public function index(TagRequest $request)
     {
         $queryParam = $request->validated();
-
+        $perPage = $queryParam['per_page'] ?? 30;
         $tags = Tag::query()
-            ->whenJsonColumnLike('name', $queryParam['name'])
+            ->whenJsonColumnLike('name', $queryParam)
             ->latest()
-            ->paginate($queryParam['per_page'] ?? 30);
+            ->paginate($perPage);
 
         $tagCollection = new TagCollection($tags);
 
