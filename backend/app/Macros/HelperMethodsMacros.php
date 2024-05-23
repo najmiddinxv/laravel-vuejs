@@ -2,11 +2,11 @@
 
 namespace App\Macros;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 
 class HelperMethodsMacros
 {
-
     public static function sendResponse()
     {
         Response::macro('sendResponse', function (int $code = 200, string $message = null, mixed $data = null) {
@@ -18,9 +18,7 @@ class HelperMethodsMacros
             ], $code);
         });
     }
-    //controllerda shu tartibda ishlatiladi
-    //return response()->sendResponse(201, 'created', $data);
-    //return response()->sendError(201, 'created', $data);
+
     public static function sendError()
     {
         Response::macro('sendError', function (int $code = 404, string $message = null, mixed $data = null) {
@@ -36,5 +34,26 @@ class HelperMethodsMacros
             return Response::json($response, $code);
         });
     }
+    //controllerda shu tartibda ishlatiladi
+    //return response()->sendResponse(201, 'created', $data);
+    //return response()->sendError(401, 'unauthorized', $data);
+
+    // public static function example()
+    // {
+    //     Str::macro('customUpperCase', function ($value) {
+    //         return strtoupper($value);
+    //     });
+    // }
+
+    // What about default values?
+    // Author::query()
+    // ->when(request('filter_by') == 'likes',
+    // function ($q) {
+    //     return $q->where('likes', '>', request('likes_amount', 0));
+    // },
+    // function ($q) {
+    //     return $q->orderBy('created_at', request('ordering_rule', 'desc'));
+    // })
+    // ->get();
 
 }

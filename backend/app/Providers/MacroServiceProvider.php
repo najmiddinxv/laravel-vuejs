@@ -16,7 +16,8 @@ class MacroServiceProvider extends ServiceProvider
     {
         ColumnSearchMacros::whenJsonColumnLike();
         ColumnSearchMacros::whenJsonColumnLikeForEachWord();
-        SortByMacros::example();
+        SortByMacros::sortBy();
+        SortByMacros::sortByJson();
         HelperMethodsMacros::sendResponse();
     }
 

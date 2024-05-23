@@ -8,6 +8,7 @@ use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
 use App\Services\PostService;
+use Throwable;
 
 class PostController extends BaseApiController
 {
@@ -15,8 +16,12 @@ class PostController extends BaseApiController
 
     public function index(PostFilter $filter)
     {
-        $posts = new PostCollection($this->postService->index($filter));
-        return sendResponse(message:'posts list', data:$posts);
+        try {
+            $posts = new PostCollection($this->postService->index($filter));
+            return sendResponse(message:'posts list', data:$posts);
+        } catch (Throwable $exception) {
+            return sendError(data:$exception->getMessage());
+        }
     }
 
     public function show(int $id)

@@ -17,12 +17,8 @@ class CategoryController extends BaseApiController
     public function index(CategoryRequest $request)
     {
         $queryParam = $request->validated();
-        try {
-            $posts = new CategoryCollection($this->categoryService->index($queryParam));
-            return sendResponse(message:'categories list', data:$posts);
-        } catch (Throwable $exception) {
-            return sendError(data:$exception->getMessage());
-        }
+        $posts = new CategoryCollection($this->categoryService->index($queryParam));
+        return sendResponse(message:'categories list', data:$posts);
     }
 
     public function show(int $id)
