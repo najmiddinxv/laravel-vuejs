@@ -19,7 +19,7 @@ class BackendMiddleware
     {
         if (auth()->check()){
             // if (auth()->user()->status === User::STATUS_ACTIVE && auth()->user()->user_type === User::USER_TYPE_BACKEND) {
-            if (auth()->user()->status ===UserStatus::STATUS_ACTIVE->value && auth()->user()->user_type === UserType::USER_TYPE_BACKEND->value) {
+            if (auth()->user()->status === UserStatus::STATUS_ACTIVE->value && auth()->user()->user_type === UserType::USER_TYPE_BACKEND->value) {
                 return $next($request);
             }else{
                 Session::flush();

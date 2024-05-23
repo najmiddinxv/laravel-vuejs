@@ -7,12 +7,16 @@ use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
+use App\Services\JsonplaceholderApiService;
 use App\Services\PostService;
 use Throwable;
 
 class PostController extends BaseApiController
 {
-    public function __construct(protected PostService $postService){}
+    public function __construct(
+        protected PostService $postService,
+        protected JsonplaceholderApiService $jsonplaceholderApiService,
+    ){}
 
     public function index(PostFilter $filter)
     {
@@ -26,8 +30,18 @@ class PostController extends BaseApiController
 
     public function show(int $id)
     {
-        $post = new PostResource($this->postService->show($id));
-        return sendResponse(message:'post item', data: $post);
+        // $post = new PostResource($this->postService->show($id));
+        // $comments = $this->jsonplaceholderApiService->getComments($id);
+        // return sendResponse(message:'post item', data: $post);
+
+        $post = $this->postService->show($id);
+
+        $comments = $this->jsonplaceholderApiService->getComments($id);
+        $post->jsonplaceholderComments = $comments;
+
+        $postResource = new PostResource($post);
+
+        return sendResponse(message:'post item', data: $postResource);
     }
 
     public function store(PostRequest $request)

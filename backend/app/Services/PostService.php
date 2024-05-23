@@ -31,14 +31,16 @@ class PostService implements PostServiceContract
             $post->tags()->sync($data['tags']);
         }
 
+        // $jsonPlaceHolderPost = JsonplaceholderPostDTO::from([
+        //     'userId' => $post->created_by,
+        //     'title' => $post->title,
+        //     'body' => $post->body,
+        // ]);
 
-        $jsonPlaceHolderPost = JsonplaceholderPostDTO::from([
-            'userId' => $post->created_by,
-            'title' => $post->title,
-            'body' => $post->body,
-        ]);
 
-        $this->jsonplaceholderApiService->storePost($jsonPlaceHolderPost);
+        // dd($jsonPlaceHolderPost);
+
+        // $this->jsonplaceholderApiService->storePost($jsonPlaceHolderPost);
 
         return $post;
     }
@@ -46,12 +48,7 @@ class PostService implements PostServiceContract
     public function show(int $id):Post
     {
         $post = Post::find($id);
-        $comments = $this->jsonplaceholderApiService->getComments($id);
-
-        return [
-            $post,
-            $comments
-        ];
+        return $post;
     }
 
     public function update(array $data, $id)

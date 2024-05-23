@@ -8,7 +8,7 @@ use App\Models\Content\Post;
 interface PostServiceContract
 {
     public function index(PostFilter $filter);
-    public function show(int $id):Post;
+    public function show(int $id);
     public function store(array $data);
     public function update(array $data, int $id);
     public function destroy(int $id);

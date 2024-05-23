@@ -33,6 +33,7 @@ class PostResource extends JsonResource
             // 'meta' => [
             //     'key' => 'value',
             // ],
+            'jsonplaceholderComments' => $this->jsonplaceholderComments,
         ];
     }
 
