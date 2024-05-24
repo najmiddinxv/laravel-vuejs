@@ -11,7 +11,6 @@ class PostService implements PostServiceContract
 {
     public function __construct(
         protected FileUploadService $fileUploadService,
-        protected JsonplaceholderApiService $jsonplaceholderApiService,
     ){}
 
     public function index(PostFilter $filter)
@@ -30,17 +29,6 @@ class PostService implements PostServiceContract
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }
-
-        // $jsonPlaceHolderPost = JsonplaceholderPostDTO::from([
-        //     'userId' => $post->created_by,
-        //     'title' => $post->title,
-        //     'body' => $post->body,
-        // ]);
-
-
-        // dd($jsonPlaceHolderPost);
-
-        // $this->jsonplaceholderApiService->storePost($jsonPlaceHolderPost);
 
         return $post;
     }

@@ -20,17 +20,17 @@ class JsonplaceholderApiService
 
     public function storePost(JsonplaceholderPostDTO $jsonplaceholderPostDTO)
     {
-        $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO);
-        return $response;
+        $response = Http::withHeaders([
+            'Content-type' => 'application/json',
+            'Content-type' => ' charset=UTF-8'
+        ])->post(config('settings.jsonplaceholder_url').'/posts', [$jsonplaceholderPostDTO]);
 
-        // $response = Http::withHeaders([
-        //     'X-First' => 'foo',
-        //     'X-Second' => 'bar'
-        // ])->post('http://example.com/users', [
-        //     'name' => 'Taylor',
-        // ]);
+        // $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO);
+
         // Basic authentication...
         // $response = Http::withBasicAuth('taylor@laravel.com', 'secret')->post(/* ... */);
         // $response = Http::withToken('bearertoken')->post(/* ... */);
+
+        return $response->json();
     }
 }

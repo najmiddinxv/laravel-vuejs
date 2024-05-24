@@ -14,4 +14,3 @@ class JsonplaceholderPostDTO extends Data
     }
 
 }
-
