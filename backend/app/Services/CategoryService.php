@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use App\Contracts\CategoryServiceContract;
-use App\Http\Filters\V1\CategoryFilter;
+use App\DTO\PostDTO;
 use App\Models\Content\Category;
 
 class CategoryService implements CategoryServiceContract
 {
-    public function __construct(protected FileUploadService $fileUploadService){}
+    public function __construct(
+        protected FileUploadService $fileUploadService,
+        protected JsonplaceholderApiService $jsonplaceholderApiService,
+    ){}
 
     public function index(array $queryParam)
     {
@@ -38,6 +41,15 @@ class CategoryService implements CategoryServiceContract
             $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories/'.now()->format('Y/m/d'));
         }
         $category = Category::create($data);
+
+
+        $jsonplaceholderPost = $this->jsonplaceholderApiService->getPost(random_int(1,100));
+        $postDTO = PostDTO::from([
+            'titleUz' => $jsonplaceholderPost->title
+        ]);
+
+        $category->posts()->create($postDTO->toArray());
+
         return $category;
     }
 

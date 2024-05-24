@@ -17,6 +17,7 @@ class TagController extends BaseApiController
         $queryParam = $request->validated();
         $perPage = $queryParam['per_page'] ?? Config::get('settings.paginate_per_page');
         // Config::set('settings.per_page', 20);
+
         $tags = Tag::query()
             ->whenJsonColumnLike('name', $queryParam)
             // ->latest()

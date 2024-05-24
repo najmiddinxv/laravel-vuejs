@@ -7,15 +7,19 @@ use Illuminate\Support\Facades\Http;
 
 class JsonplaceholderApiService
 {
-
-    public function getComments(int $postId)
+    public function getPosts()
     {
-        $response = Http::get(config('settings.jsonplaceholder_url')."/comments",[
+        $response = Http::get(config('settings.jsonplaceholder_url')."/posts");
+        return $response->json();
+    }
+
+    public function getPost(int $postId)
+    {
+        $response = Http::get(config('settings.jsonplaceholder_url')."/posts",[
             'postId' => $postId,
         ]);
 
         return $response->json();
-        // return json_decode($response->getBody()->getContents(), true);
     }
 
     public function storePost(JsonplaceholderPostDTO $jsonplaceholderPostDTO)
@@ -33,4 +37,15 @@ class JsonplaceholderApiService
 
         return $response->json();
     }
+
+    public function getComments(int $postId)
+    {
+        $response = Http::get(config('settings.jsonplaceholder_url')."/comments",[
+            'postId' => $postId,
+        ]);
+
+        return $response->json();
+        // return json_decode($response->getBody()->getContents(), true);
+    }
+
 }

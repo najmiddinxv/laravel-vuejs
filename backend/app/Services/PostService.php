@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Contracts\PostServiceContract;
-use App\DTO\JsonplaceholderPostDTO;
 use App\Http\Filters\V1\PostFilter;
 use App\Models\Content\Post;
 

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
-use App\Http\Filters\V1\CategoryFilter;
 use App\Http\Requests\V1\CategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
 use App\Services\CategoryService;
-use Throwable;
 
 class CategoryController extends BaseApiController
 {
