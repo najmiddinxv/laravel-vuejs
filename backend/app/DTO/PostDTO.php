@@ -20,18 +20,11 @@ class PostDTO extends Data
         #[Required, IntegerType]
         public int $categoryId,
 
-        #[Required, StringType, Max(1000)]
-        public string $titleUz,
-
         #[ArrayType, Nullable, StringType, Max(1000)]
         public ?array $title = null,
 
         #[ArrayType, Nullable, StringType, Max(1000)]
         public ?array $description = null,
-
-        // #[Required, StringType, Max(65000), MapInputName('body.uz')]
-        #[Required, StringType, Max(65000)]
-        public string $bodyUz,
 
         #[ArrayType, Nullable, StringType, Max(65000)]
         public ?array $body = null,
@@ -39,11 +32,11 @@ class PostDTO extends Data
         #[Nullable, Image, MimeTypes(['jpeg', 'png', 'jpg', 'gif']), Max(4096)]
         public ?string $image = null,
 
-        #[Required, IntegerType]
-        public int $status,
+        #[Nullable, IntegerType]
+        public ?int $status,
 
-        #[Required, IntegerType]
-        public int $slider,
+        #[Nullable, IntegerType]
+        public ?int $slider,
 
         #[ArrayType, Nullable, IntegerType]
         public ?array $tags = null

@@ -16,9 +16,11 @@ class CategoryRequest extends BaseApiFormRequest
     {
         return [
             'name' => 'nullable|string|max:255',
-            'order' => 'nullable|in:asc,desc',
             'per_page' => 'nullable|integer',
             'page' => 'nullable|integer',
+            
+            'id' => 'nullable|in:asc,desc',
+            'created_at' => 'nullable|in:asc,desc',
         ];
     }
 

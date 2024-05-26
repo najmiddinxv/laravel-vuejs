@@ -12,10 +12,25 @@ class SortByMacros
 
     public static function sortBy()
     {
-        Builder::macro('sortBy', function (string|array $orderBy, string $sortBy) {
-            $orderBy = Arr::wrap($orderBy);
-            foreach ($orderBy as $field) {
-                $this->orderBy($field, $sortBy);
+        Builder::macro('sortBy', function ($column, $queryParam) {
+            return $this->when(isset($queryParam[$column]), function($query) use ($column, $queryParam) {
+                return $query->orderBy($column, $queryParam[$column]);
+            });
+        });
+    }
+
+    public static function sortByArr()
+    {
+         Builder::macro('sortByArr', function ($sortParams) {
+            foreach ($sortParams as $column => $direction) {
+                // $direction = strtolower($direction);
+                // if (!in_array($direction, ['asc', 'desc'])) {
+                //     $direction = 'asc'; // Default to 'asc' if direction is invalid
+                // }
+
+                $this->when(!is_null($column), function ($query) use ($column, $direction) {
+                    return $query->orderBy($column, $direction);
+                });
             }
 
             return $this;
@@ -25,7 +40,7 @@ class SortByMacros
 
     public static function sortByJson(){
 
-        Builder::macro('sortBy', function (string|array $orderBy, string $sortBy) {
+        Builder::macro('sortByJson', function (string|array $orderBy, string $sortBy) {
             $orderBy = Arr::wrap($orderBy);
             foreach ($orderBy as $field) {
                 $this->orderBy($this->jsonTranslate($field), $sortBy);

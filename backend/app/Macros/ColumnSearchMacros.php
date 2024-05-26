@@ -13,7 +13,7 @@ class ColumnSearchMacros
             $lang = app()->getLocale();
 
             return $this->when(isset($queryParam[$column]), function($query) use ($column, $lang, $queryParam) {
-                  $query->where("$column->$lang", 'ILIKE', '%' . $queryParam[$column] . '%');
+                $query->where("$column->$lang", 'ILIKE', '%' . $queryParam[$column] . '%');
             });
 
         });
@@ -25,14 +25,13 @@ class ColumnSearchMacros
             $lang = app()->getLocale();
             return $this->when(isset($queryParam[$column]), function($query) use ($column, $lang, $queryParam) {
 
-                    $words = array_filter(explode(' ', $queryParam[$column]));
-                    $query->where(function (Builder $query) use ($column, $lang, $words) {
-                        foreach ($words as $word) {
-                            $query->orWhere("$column->$lang", 'ILIKE', "%$word%");
-                        }
-                    });
+                $words = array_filter(explode(' ', $queryParam[$column]));
+                $query->where(function (Builder $query) use ($column, $lang, $words) {
+                    foreach ($words as $word) {
+                        $query->orWhere("$column->$lang", 'ILIKE', "%$word%");
+                    }
                 });
+            });
         });
     }
-    
 }

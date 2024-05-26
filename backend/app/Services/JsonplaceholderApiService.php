@@ -15,9 +15,7 @@ class JsonplaceholderApiService
 
     public function getPost(int $postId)
     {
-        $response = Http::get(config('settings.jsonplaceholder_url')."/posts",[
-            'postId' => $postId,
-        ]);
+        $response = Http::get(config('settings.jsonplaceholder_url')."/posts/{$postId}");
 
         return $response->json();
     }
@@ -27,7 +25,13 @@ class JsonplaceholderApiService
         $response = Http::withHeaders([
             'Content-type' => 'application/json',
             'Content-type' => ' charset=UTF-8'
-        ])->post(config('settings.jsonplaceholder_url').'/posts', [$jsonplaceholderPostDTO]);
+        ])->post(config('settings.jsonplaceholder_url').'/posts', [
+            // $jsonplaceholderPostDTO->toArray(),
+            //yoki shunaqa qilib yuborsak bo'ladi
+            'userID' => $jsonplaceholderPostDTO->userId,
+            'title' => $jsonplaceholderPostDTO->title,
+            'body' => $jsonplaceholderPostDTO->body,
+        ]);
 
         // $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO);
 
