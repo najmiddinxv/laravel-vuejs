@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             // $table->integer('category_id')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('set null');
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onUpdate('set null')
+            ->onDelete('set null');
             $table->jsonb('title');
             $table->jsonb('slug');
             $table->jsonb('description')->nullable();

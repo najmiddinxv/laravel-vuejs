@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('set null');
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('categories')
+                ->onUpdate('set null')
+                ->onDelete('set null');
             $table->jsonb('title');
             $table->jsonb('slug');
             $table->jsonb('description')->nullable();

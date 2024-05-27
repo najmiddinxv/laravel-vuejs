@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('set null'); //default restirict action bo'ladi
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onUpdate('set null')
+            ->onDelete('set null'); //default restirict action bo'ladi
             // $table->foreignId('category_id')->nullable()->constrained(); // nullable shunaqa yoziladi
 
             //category jadvalidagi birorta categoryni o'chirmoqchi bo'lsak error beradi yani o'chirishni cheklaydi. qachonki shu
