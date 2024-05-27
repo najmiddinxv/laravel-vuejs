@@ -22,23 +22,38 @@ class PostService implements PostServiceContract
 
     public function store(array $data)
     {
+        // if (isset($data['image'])) {
+        //     $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
+        // }
+        // $post = Post::create($data);
+        // if(isset($data['tags'])){
+        //     $post->tags()->sync($data['tags']);
+        // }
+        // return $post;
+
+
+        //jsonplaceholderApisiga post store qilish xolati
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
 
         $post = Post::create($data);
+
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }
 
-        // $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
-        //     'userId' => $post->created_by,
-        //     'title' => $post->title,
-        //     'body' => $post->body,
-        // ]);
-        // $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
-        
-        return $post;
+        $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
+            'title' => $post->title,
+            'body' => $post->body,
+        ]);
+
+        $jsonplaceholderResponse = $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
+
+        return [
+            'post' => $post,
+            'jsonplaceholderResponse' => $jsonplaceholderResponse
+        ];
     }
 
     public function show(int $id):Post

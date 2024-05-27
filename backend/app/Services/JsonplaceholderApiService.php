@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class JsonplaceholderApiService
 {
-    public function getPosts()
-    {
-        $response = Http::get(config('settings.jsonplaceholder_url')."/posts");
-        return $response->json();
-    }
-
     public function getPost(int $postId)
     {
         $response = Http::get(config('settings.jsonplaceholder_url')."/posts/{$postId}");
@@ -28,7 +22,7 @@ class JsonplaceholderApiService
         ])->post(config('settings.jsonplaceholder_url').'/posts', [
             // $jsonplaceholderPostDTO->toArray(),
             //yoki shunaqa qilib yuborsak bo'ladi
-            'userID' => $jsonplaceholderPostDTO->userId,
+            'userId' => 1,
             'title' => $jsonplaceholderPostDTO->title,
             'body' => $jsonplaceholderPostDTO->body,
         ]);

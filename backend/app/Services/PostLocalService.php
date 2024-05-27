@@ -60,5 +60,4 @@ class PostLocalService implements PostServiceContract
         $post->delete();
         return back()->with('success', 'post ' . __('lang.successfully_deleted'));
     }
-
 }

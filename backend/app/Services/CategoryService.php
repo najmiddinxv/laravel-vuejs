@@ -27,13 +27,8 @@ class CategoryService implements CategoryServiceContract
         ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
             return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
         })
-        ->whenJsonColumnLikeForEachWord('name', $queryParam) //macros bu
-        // ->whenJsonColumnLike('name', $queryParam) //macros bu
-        // ->sortBy('id',$queryParam) //macros bu
-        // ->sortBy('created_at',$queryParam) //macros bu
-        //yoki
-        ->sortByArr($sortParams) // Apply sorting for multiple fields
-        // ->latest()
+        ->whenJsonColumnLikeForEachWord('name', $queryParam)
+        ->sortByArr($sortParams)
         ->paginate($perPage);
 
         return $categories;
@@ -47,6 +42,16 @@ class CategoryService implements CategoryServiceContract
 
     public function store(array $data)
     {
+        // if (isset($data['image'])) {
+        //     $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories/'.now()->format('Y/m/d'));
+        // }
+        // $category = Category::create($data);
+        // return $category;
+
+
+
+
+        //jsonplaceholderApiga yaratilgan kategory idsi bo'yicha post yaratish
         if (isset($data['image'])) {
             $data['image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/categories/'.now()->format('Y/m/d'));
         }

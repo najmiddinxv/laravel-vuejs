@@ -29,6 +29,7 @@ class PostController extends BaseApiController
         // $post = new PostResource($this->postService->show($id));
         // return sendResponse(message:'post item', data: $post);
 
+        //jsonplaceholderApisidan bizning bazamizdagi postni id ge teng bo'lgan commentlarni olish xolati
         $post = $this->postService->show($id);
         $comments = $this->jsonplaceholderApiService->getComments($id);
         $post->jsonplaceholderComments = $comments;
@@ -38,9 +39,19 @@ class PostController extends BaseApiController
 
     public function store(PostRequest $request)
     {
+        // $data = $request->validated();
+        // $post = new PostResource($this->postService->store($data));
+        // return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$post);
+
+        //jsonplaceholder apisiga post store qilish varianti
         $data = $request->validated();
-        $post = new PostResource($this->postService->store($data));
-        return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$post);
+        $postStored = $this->postService->store($data);
+        $postResource = new PostResource($postStored['post']);
+        $postAndJsonPlaseholderStoredResponse = [
+            'post' => $postResource,
+            'jsonplaceholderResponse' => $postStored['jsonplaceholderResponse']
+        ];
+        return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$postAndJsonPlaseholderStoredResponse);
     }
 
     public function update(PostRequest $request, int $id)

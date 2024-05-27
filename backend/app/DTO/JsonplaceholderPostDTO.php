@@ -13,15 +13,11 @@ use Spatie\LaravelData\Attributes\Validation\ArrayType;
 class JsonplaceholderPostDTO extends Data
 {
     public function __construct(
-        #[Required, IntegerType]
-        public int $userId,
-
         #[Required, StringType, Max(1000)]
         public string $title,
-
+        
         #[Nullable, StringType, Max(65000)]
         public ?string $body,
-
     ) {
     }
 
