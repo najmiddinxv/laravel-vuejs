@@ -62,7 +62,6 @@ class Post extends BaseModel
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
-
     public function scopeActiveBanner($q)
     {
         return $q->where('slider',true);

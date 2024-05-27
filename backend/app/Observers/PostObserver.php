@@ -10,7 +10,7 @@ class PostObserver
 {
     public function creating(Post $post)
     {
-        $post->created_by = auth()->user()->id ?? auth('api')->user()->id;
+        $post->created_by = auth()->user()->id ?? auth('api')->user()->id ?? 1;
 
         $titleTranslations = $post->getTranslations('title');
         $slugs = [];

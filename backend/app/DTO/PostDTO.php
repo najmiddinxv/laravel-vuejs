@@ -17,8 +17,9 @@ use Spatie\LaravelData\Attributes\Validation\MimeTypes;
 class PostDTO extends Data
 {
     public function __construct(
-        #[Required, IntegerType]
-        public int $categoryId,
+        // #[Required, IntegerType]
+        #[Nullable, IntegerType]
+        public int $category_id,
 
         #[ArrayType, Nullable, StringType, Max(1000)]
         public ?array $title = null,
@@ -30,13 +31,13 @@ class PostDTO extends Data
         public ?array $body = null,
 
         #[Nullable, Image, MimeTypes(['jpeg', 'png', 'jpg', 'gif']), Max(4096)]
-        public ?string $image = null,
+        public ?string $main_image = null,
 
         #[Nullable, IntegerType]
-        public ?int $status,
+        public ?int $status = 1,
 
         #[Nullable, IntegerType]
-        public ?int $slider,
+        public ?int $slider = 1,
 
         #[ArrayType, Nullable, IntegerType]
         public ?array $tags = null

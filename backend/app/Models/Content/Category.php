@@ -45,17 +45,17 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class,'id','parent_id');
+        return $this->hasMany(Post::class);
     }
 
     public function news()
     {
-        return $this->hasMany(News::class,'id','parent_id');
+        return $this->hasMany(News::class);
     }
 
     public function pages()
     {
-        return $this->hasMany(Page::class,'id','parent_id');
+        return $this->hasMany(Page::class);
     }
 
 

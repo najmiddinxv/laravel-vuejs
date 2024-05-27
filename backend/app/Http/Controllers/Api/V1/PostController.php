@@ -20,12 +20,8 @@ class PostController extends BaseApiController
 
     public function index(PostFilter $filter)
     {
-        try {
-            $posts = new PostCollection($this->postService->index($filter));
-            return sendResponse(message:'posts list', data:$posts);
-        } catch (Throwable $exception) {
-            return sendError(data:$exception->getMessage());
-        }
+        $posts = new PostCollection($this->postService->index($filter));
+        return sendResponse(message:'posts list', data:$posts);
     }
 
     public function show(int $id)
@@ -60,4 +56,15 @@ class PostController extends BaseApiController
         return sendResponse(code:204, message:'post '.__('lang.successfully_deleted'));
     }
 
+    //try catchni ishlatish. lekin men handler/exception.php ga yozib qo'yibman shuning uchun hamma joyga buni yozish shart emas
+    // public function index(PostFilter $filter)
+    // {
+        // use Throwable;
+    //     try {
+    //         $posts = new PostCollection($this->postService->index($filter));
+    //         return sendResponse(message:'posts list', data:$posts);
+    //     } catch (Throwable $exception) {
+    //         return sendError(data:$exception->getMessage());
+    //     }
+    // }
 }

@@ -31,12 +31,13 @@ class PostService implements PostServiceContract
             $post->tags()->sync($data['tags']);
         }
 
-        $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
-            'userId' => $post->created_by,
-            'title' => $post->title,
-            'body' => $post->body,
-        ]);
-        $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
+        // $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
+        //     'userId' => $post->created_by,
+        //     'title' => $post->title,
+        //     'body' => $post->body,
+        // ]);
+        // $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
+        
         return $post;
     }
 

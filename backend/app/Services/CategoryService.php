@@ -13,19 +13,20 @@ class CategoryService implements CategoryServiceContract
 {
     public function __construct(
         protected FileUploadService $fileUploadService,
-        protected JsonplaceholderApiService $jsonplaceholderApiService,
+        protected JsonplaceholderApiService $jsonplaceholderApiService
     ){}
 
     public function index(array $queryParam)
     {
         $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
-        $sortParams = Arr::only($queryParam, ['id', 'created_at']); // Adjust as needed
-        // dd($sortParams);
+        $sortParams = Arr::only($queryParam, ['id', 'created_at']);
 
         $categories = Category::with(['parent', 'children'])
         ->withCount('posts')
         ->whereNull('parent_id')
-
+        ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
+            return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
+        })
         ->whenJsonColumnLikeForEachWord('name', $queryParam) //macros bu
         // ->whenJsonColumnLike('name', $queryParam) //macros bu
         // ->sortBy('id',$queryParam) //macros bu
@@ -33,7 +34,6 @@ class CategoryService implements CategoryServiceContract
         //yoki
         ->sortByArr($sortParams) // Apply sorting for multiple fields
         // ->latest()
-        // ->orderBy('created_at',$queryParam['created_at'])
         ->paginate($perPage);
 
         return $categories;
@@ -53,22 +53,16 @@ class CategoryService implements CategoryServiceContract
 
         $category = Category::create($data);
 
-
-
         //apidan 1 dona post olinib yuoqirda yaratilgan category uchun bitta yangi post yaratilayapti
         // $jsonplaceholderPost = $this->jsonplaceholderApiService->getPost(random_int(1,100));
-
-
         try {
             $jsonplaceholderPost = $this->jsonplaceholderApiService->getPost(random_int(1, 100));
         } catch (\Exception $e) {
-            // \Log::error('Error fetching post: ' . $e->getMessage());
-            // return response()->json(['success' => false, 'code' => 500, 'message' => 'Error fetching post']);
             sendError(500, $e->getMessage());
         }
 
         $postDTO = PostDTO::from([
-            'categoryId' => $category->id,
+            'category_id' => $category->id,
             'title' => [
                 'uz' => 'uz title '.$jsonplaceholderPost['title'],
                 'ru' => 'ru title '.$jsonplaceholderPost['title'],
@@ -85,10 +79,13 @@ class CategoryService implements CategoryServiceContract
                 'en' => 'en title '.$jsonplaceholderPost['body'],
             ],
             'tags' => Tag::select('id')->inRandomOrder()->limit(3)->pluck('id')->toArray()
-
         ]);
 
-        // dd($postDTO->toArray());
+        //agar category_id ni PostDTO ning ichida nullable qilsak
+        //$postDTO->toArray() category_id=nullable bop qolayapti bu error beradi chunki databaseda null emas shuni remove qilsak keyin bazaga yozadi
+        // $postArr = $postDTO->toArray();
+        // $post = data_forget($postArr, 'category_id');
+
         $category->posts()->create($postDTO->toArray());
 
         return $category;
@@ -113,5 +110,35 @@ class CategoryService implements CategoryServiceContract
         }
         $category->delete();
     }
+
+    // public function index(array $queryParam)
+    // {
+    //     $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
+    //     $sortParams = Arr::only($queryParam, ['id', 'created_at']); //quey paramsdan sortirovka uchun mo'ljallanga columnlar alohida olinayapti
+    //     // dd($sortParams);
+
+    //     $categories = Category::with(['parent', 'children'])
+    //     ->withCount('posts')
+    //     ->whereNull('parent_id')
+
+    //     //yoki umumiy bo'lmagan filterlarni shu yerga yozsak bo'ladi
+    //     ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
+    //         return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
+    //     })
+
+    //     //tablelar uchun umumiy bo'lgan columnlarni filter qilish uchun macros yozsak bo'ladi
+    //     // patdagi tartibda
+    //     ->whenJsonColumnLikeForEachWord('name', $queryParam) //macros bu
+    //     // ->whenJsonColumnLike('name', $queryParam) //macros bu
+    //     // ->sortBy('id',$queryParam) //macros bu
+    //     // ->sortBy('created_at',$queryParam) //macros bu
+    //     //yoki bir qancha columnlar bo'yicha birdan sortirovka qilsak bo'ladi
+    //     ->sortByArr($sortParams) // bu macros. Apply sorting for multiple fields
+    //     // ->latest()
+    //     ->paginate($perPage);
+
+    //     return $categories;
+    // }
+
 
 }
