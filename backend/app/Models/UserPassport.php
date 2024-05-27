@@ -17,12 +17,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;
-
-    // public const STATUS_INACTIVE = 0;
-    // public const STATUS_ACTIVE = 1;
-    // public const USER_TYPE_BACKEND = 1;
-    // public const USER_TYPE_USERPROFILE = 2;
-
     protected $fillable = [
         'last_name', //familya
         'first_name', //ism
@@ -33,10 +27,6 @@ class User extends Authenticatable
         'status',
         'avatar',
         'password',
-        // 'telegram_full_name',
-        // 'telegram_phone_number',
-        // 'telegram_chat_id',
-        // 'telegram_username',
     ];
 
     protected $hidden = [
@@ -50,8 +40,6 @@ class User extends Authenticatable
         'password' => 'hashed',
         'avatar' => 'array',
     ];
-
-    // protected $appends = ['full_name'];
 
     public function getFullNameAttribute() {
         return "{$this->last_name} {$this->first_name} {$this->middle_name}";

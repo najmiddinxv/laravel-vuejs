@@ -46,8 +46,9 @@ return [
     |
     */
 
-    'expiration' => null,
-
+    // 'expiration' => null,
+    // 'expiration' => 24*60, //24 soat degani bu. minutda hisoblanayapti bu yerda 60 minut. va 24 soat
+    'expiration' => 2,
     /*
     |--------------------------------------------------------------------------
     | Sanctum Middleware

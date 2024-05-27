@@ -1,0 +1,41 @@
+<?php
+
+
+namespace App\Models\User;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\Sanctum;
+
+class PersonalAccessToken extends Model
+{
+    use HasApiTokens;
+
+    protected $fillable = [
+        'name',
+        'token',
+        'abilities',
+        'user_device_number',
+        
+        'user_device_name',
+        'user_ip',
+        'user_location_info',
+
+        'expires_at', // Add this field to the fillable array
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(Sanctum::$personalAccessTokenModel, 'tokenable_id');
+    // }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'tokenable_id');
+    }
+}

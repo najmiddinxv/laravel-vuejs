@@ -3,24 +3,34 @@
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Controllers\Api\V1\{
     AuthApiController,
+    AuthApiSanctumController,
     CategoryController,
     PostController,
     TagController,
 };
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('register', [AuthApiController::class, 'register'])->name('api.auth.register');
-Route::post('login', [AuthApiController::class, 'login'])->name('api.auth.login');
+//=============================sanctum uchun===========================
+// {{localhost}}/api/v1/login
+// Route::post('register', [AuthApiSanctumController::class, 'register'])->name('api.auth.register');
+Route::post('login', [AuthApiSanctumController::class, 'login'])->name('api.auth.login');
+Route::post('refresh', [AuthApiSanctumController::class, 'refresh'])->name('api.auth.refresh');
+Route::post('logout', [AuthApiSanctumController::class, 'logout'])->name('api.auth.logout')->middleware('auth:sanctum');
+Route::post('logout-from-all-devices', [AuthApiSanctumController::class,'logoutFromAllDevices'])->name('api.auth.logoutFromAllDevices')->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-// Route::as('api')->name('api.')->middleware(['addRequestHeader','auth:api'])->group(function () {
+
+
+
+
+
+
 Route::as('api')->name('api.')->middleware(['addRequestHeader'])->group(function () {
-    Route::controller(AuthApiController::class)->group(function () {
-        Route::post('logout', 'logout')->name('auth.logout');
-        Route::post('logout-all', 'logout_all_devices')->name('auth.logout-all');
-        Route::post('refresh', 'refresh')->name('auth.refresh');
-        Route::post('me', 'me')->name('auth.me');
-    });
+
     Route::controller(BaseApiController::class)->group(function () {
         Route::get('/', 'baseApiIndex')->name('baseApiIndex')->middleware('role:admin|manager'); //spatie permission ishlayapti
     });

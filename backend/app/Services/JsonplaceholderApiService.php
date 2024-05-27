@@ -11,6 +11,13 @@ class JsonplaceholderApiService
     {
         $response = Http::get(config('settings.jsonplaceholder_url')."/posts/{$postId}");
         return $response->json();
+
+        // $response = Http::get('http://example.com/users', [
+        //     'name' => 'Bek',
+        //     'page' => 1,
+        // ]);
+        
+        // return Http::get('http://example.com/users/1')['name'];
     }
 
     public function storePost(JsonplaceholderPostDTO $jsonplaceholderPostDTO)
@@ -29,6 +36,8 @@ class JsonplaceholderApiService
         // $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO->toArray());
         // $response = Http::withBasicAuth('taylor@laravel.com', 'secret')->post(/* ... */);
         // $response = Http::withToken('bearertoken')->post(/* ... */);
+
+
     }
 
     public function getComments(int $postId)

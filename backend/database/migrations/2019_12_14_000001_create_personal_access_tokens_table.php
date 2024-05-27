@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('token', 64)->unique();
             $table->text('abilities')->nullable();
+            $table->integer('user_device_number')->nullable();
+
+            $table->string('user_device_name',1000)->nullable();
+            $table->string('user_ip')->nullable();
+            $table->jsonb('user_location_info')->nullable();
+
             $table->timestamp('last_used_at')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
