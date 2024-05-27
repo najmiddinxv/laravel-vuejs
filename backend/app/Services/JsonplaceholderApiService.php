@@ -10,7 +10,6 @@ class JsonplaceholderApiService
     public function getPost(int $postId)
     {
         $response = Http::get(config('settings.jsonplaceholder_url')."/posts/{$postId}");
-
         return $response->json();
     }
 
@@ -20,20 +19,16 @@ class JsonplaceholderApiService
             'Content-type' => 'application/json',
             'Content-type' => ' charset=UTF-8'
         ])->post(config('settings.jsonplaceholder_url').'/posts', [
-            // $jsonplaceholderPostDTO->toArray(),
-            //yoki shunaqa qilib yuborsak bo'ladi
             'userId' => 1,
             'title' => $jsonplaceholderPostDTO->title,
             'body' => $jsonplaceholderPostDTO->body,
         ]);
 
-        // $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO);
+        return $response->json();
 
-        // Basic authentication...
+        // $response = Http::post(config('settings.jsonplaceholder_url').'/posts', $jsonplaceholderPostDTO->toArray());
         // $response = Http::withBasicAuth('taylor@laravel.com', 'secret')->post(/* ... */);
         // $response = Http::withToken('bearertoken')->post(/* ... */);
-
-        return $response->json();
     }
 
     public function getComments(int $postId)
@@ -41,7 +36,6 @@ class JsonplaceholderApiService
         $response = Http::get(config('settings.jsonplaceholder_url')."/comments",[
             'postId' => $postId,
         ]);
-
         return $response->json();
         // return json_decode($response->getBody()->getContents(), true);
     }

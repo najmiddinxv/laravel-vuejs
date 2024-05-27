@@ -64,7 +64,7 @@ class PostController extends BaseApiController
     public function destroy(int $id)
     {
         $this->postService->destroy($id);
-        return sendResponse(code:204, message:'post '.__('lang.successfully_deleted'));
+        return sendResponse(code:200, message:'post '.__('lang.successfully_deleted'));
     }
 
     //try catchni ishlatish. lekin men handler/exception.php ga yozib qo'yibman shuning uchun hamma joyga buni yozish shart emas

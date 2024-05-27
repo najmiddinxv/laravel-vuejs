@@ -3,36 +3,52 @@
 namespace App\Services;
 
 use App\Contracts\PostServiceContract;
+use App\DTO\JsonplaceholderPostDTO;
 use App\Http\Filters\V1\PostFilter;
 use App\Models\Content\Post;
 
-class PostLocalService implements PostServiceContract
+class PostServiceWorkApi implements PostServiceContract
 {
-    public function __construct(protected FileUploadService $fileUploadService){}
+    public function __construct(
+        protected FileUploadService $fileUploadService,
+        protected JsonplaceholderApiService $jsonplaceholderApiService,
+    ){}
 
     public function index(PostFilter $filter)
     {
-        $posts = Post::latest('id')->paginate(config('settings.paginate_per_page'));
+        $posts = Post::with('category', 'tags')->getByFilter($filter);
         return $posts;
     }
 
     public function store(array $data)
     {
+        //jsonplaceholderApisiga post store qilish xolati
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
 
         $post = Post::create($data);
+
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }
 
-        return $post;
+        $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
+            'title' => $post->title,
+            'body' => $post->body,
+        ]);
+
+        $jsonplaceholderResponse = $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
+
+        return [
+            'post' => $post,
+            'jsonplaceholderResponse' => $jsonplaceholderResponse
+        ];
     }
 
     public function show(int $id):Post
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return $post;
     }
 
@@ -57,7 +73,7 @@ class PostLocalService implements PostServiceContract
     {
         $post = Post::find($id);
         $this->fileUploadService->resizedImageDelete($post->main_image);
-        $post->delete();
-        return back()->with('success', 'post ' . __('lang.successfully_deleted'));
+        return $post->delete();
     }
+
 }

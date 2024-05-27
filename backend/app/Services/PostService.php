@@ -3,15 +3,13 @@
 namespace App\Services;
 
 use App\Contracts\PostServiceContract;
-use App\DTO\JsonplaceholderPostDTO;
 use App\Http\Filters\V1\PostFilter;
 use App\Models\Content\Post;
 
 class PostService implements PostServiceContract
 {
     public function __construct(
-        protected FileUploadService $fileUploadService,
-        protected JsonplaceholderApiService $jsonplaceholderApiService,
+        protected FileUploadService $fileUploadService
     ){}
 
     public function index(PostFilter $filter)
@@ -22,44 +20,19 @@ class PostService implements PostServiceContract
 
     public function store(array $data)
     {
-        // if (isset($data['image'])) {
-        //     $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
-        // }
-        // $post = Post::create($data);
-        // if(isset($data['tags'])){
-        //     $post->tags()->sync($data['tags']);
-        // }
-        // return $post;
-
-
-        //jsonplaceholderApisiga post store qilish xolati
         if (isset($data['image'])) {
             $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/posts/'.now()->format('Y/m/d'));
         }
-
         $post = Post::create($data);
-
         if(isset($data['tags'])){
             $post->tags()->sync($data['tags']);
         }
-
-        $jsonplaceholderPostDTO = JsonplaceholderPostDTO::from([
-            'title' => $post->title,
-            'body' => $post->body,
-        ]);
-
-        $jsonplaceholderResponse = $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
-
-        return [
-            'post' => $post,
-            'jsonplaceholderResponse' => $jsonplaceholderResponse
-        ];
+        return $post;
     }
 
     public function show(int $id):Post
     {
-        $post = Post::findOrFail($id);
-        return $post;
+        return Post::findOrFail($id);
     }
 
     public function update(array $data, $id)
@@ -85,5 +58,4 @@ class PostService implements PostServiceContract
         $this->fileUploadService->resizedImageDelete($post->main_image);
         return $post->delete();
     }
-
 }

@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Contracts\CategoryServiceContract;
 use App\Contracts\PostServiceContract;
 use App\Services\CategoryService;
+use App\Services\CategoryServiceWorkApi;
 use App\Services\PostLocalService;
 use App\Services\PostService;
+use App\Services\PostServiceWorkApi;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,19 +19,21 @@ class ServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(PostServiceContract::class, PostServiceWorkApi::class);
+        // $this->app->bind(PostServiceContract::class, PostService::class);
+        $this->app->bind(CategoryServiceContract::class, CategoryServiceWorkApi::class);
+        // $this->app->bind(CategoryServiceContract::class, CategoryService::class);
+
+
         // $appEnv = config('app.env');
         // if($appEnv == 'local'){
-        //     $this->app->bind(PostServiceContract::class, PostLocalService::class);
-        // }elseif($appEnv == 'production'){
         //     $this->app->bind(PostServiceContract::class, PostService::class);
+        //     $this->app->bind(CategoryServiceContract::class, CategoryService::class);
+        // }elseif($appEnv == 'production'){
+        //     $this->app->bind(PostServiceContract::class, PostServiceWorkApi::class);
+        //     $this->app->bind(CategoryServiceContract::class, CategoryServiceWorkApi::class);
         // }
-        $this->app->bind(PostServiceContract::class, PostService::class);
-        $this->app->bind(CategoryServiceContract::class, CategoryService::class);
-
-
-
-
-
+        //----------------------------------------------------------------
         /***
         Do not get data from the .env file directly
         Pass the data to config files instead and then use the config() helper function to use the data in an application.
@@ -45,7 +49,6 @@ class ServicesProvider extends ServiceProvider
         // use Illuminate\Support\Facades\Config;
         // $perPage = Config::get('settings.per_page'); /// 'paginatoin_per_page' => env('PAGINATION_PER_PAGE', 10),
         // Config::set('settings.per_page', 20);
-
     }
 
     /**

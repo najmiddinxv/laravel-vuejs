@@ -45,15 +45,4 @@ class HelperMethodsMacros
     //     });
     // }
 
-    // What about default values?
-    // Author::query()
-    // ->when(request('filter_by') == 'likes',
-    // function ($q) {
-    //     return $q->where('likes', '>', request('likes_amount', 0));
-    // },
-    // function ($q) {
-    //     return $q->orderBy('created_at', request('ordering_rule', 'desc'));
-    // })
-    // ->get();
-
 }

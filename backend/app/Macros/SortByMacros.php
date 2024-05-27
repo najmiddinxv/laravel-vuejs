@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 
 class SortByMacros
 {
-
-
     public static function sortBy()
     {
         Builder::macro('sortBy', function ($column, $queryParam) {
@@ -27,16 +25,13 @@ class SortByMacros
                 // if (!in_array($direction, ['asc', 'desc'])) {
                 //     $direction = 'asc'; // Default to 'asc' if direction is invalid
                 // }
-
                 $this->when(!is_null($column), function ($query) use ($column, $direction) {
                     return $query->orderBy($column, $direction);
                 });
             }
-
             return $this;
         });
     }
-
 
     public static function sortByJson(){
 
