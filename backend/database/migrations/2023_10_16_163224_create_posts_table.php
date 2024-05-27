@@ -29,7 +29,7 @@ return new class extends Migration
              * $table->foreignId('category_id')->constrained('categories')->onUpdate('restrict')->onDelete('restrict');
             **/
 
-            //category jadvalidagi birorta categoryni o'chirsak shu categoryga bog'langan postlar ham o'chib ketadi
+            //cascade bu degani category jadvalidagi birorta categoryni o'chirsak shu categoryga bog'langan postlar ham o'chib ketadi
             /**
              * cascade: havola qilingan yozuv yangilangan yoki o'chirilganda, tegishli jadvaldagi tegishli yozuvlar ham yangilanadi yoki o'chiriladi.
              * Bu shuni anglatadiki, agar siz havola qilingan jadvaldagi (categories) yozuvni yangilasangiz yoki o'chirsangiz,
@@ -37,7 +37,7 @@ return new class extends Migration
              * $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             **/
 
-            //category jadvalidagi birorta categoryni o'chirsak shu categoryga bog'langan postlarga ya'ni category_id ga null yozib qo'yadi
+            //set null bu degani category jadvalidagi birorta categoryni o'chirsak shu categoryga bog'langan postlarga ya'ni category_id ga null yozib qo'yadi
             /**
              * set null: havola qilingan yozuv yangilangan yoki o'chirilganda, tegishli jadvaldagi tashqi kalit ustuni NULL ga o'rnatiladi.
              * Bu shuni anglatadiki, agar siz havola qilingan jadvaldagi (categories) yozuvni yangilasangiz yoki o'chirsangiz,
@@ -45,9 +45,35 @@ return new class extends Migration
              * $table->foreignId('category_id')->constrained('categories')->onUpdate('set null')->onDelete('set null');
             **/
 
-            //category jadvalidagi birorta categoryni o'chirsak shu categoryga bog'langan postlarga ya'ni
-            //category_id o'z xolida qoladi nechi id yozilgan bo'lsa o'sha id turadi
+            //no action bu ham restrict bilan bir xil
             /**
+             *
+             * Xulq-atvor nuqtai nazaridan, ON DELETE NO ACTION va ON DELETE RESRICT asosan bir xil.
+             * Har ikkisi ham ota-jadvaldagi satrni o'chirishga yo'l qo'ymaydi,
+             * agar bola jadvalida unga havola qiluvchi tegishli qatorlar mavjud bo'lsa. Shunday qilib,
+             * agar jadvalingizda bog'langan yozuvlar mavjud bo'lsa, toifani o'chirishni oldini olishni istasangiz,
+             * HARAKAT YO'Q yoki RESTRICT dan foydalanishingiz mumkin.
+             * NO ACTION dan foydalanish uchun migratsiya kodingizni qanday o‘zgartirishingiz mumkin:
+             * $table->foreignId('category_id')
+                    ->nullable()
+                    ->constrained('categories')
+                    ->onUpdate('cascade')
+                    ->onDelete('no action');
+
+                ON DELETE NO ACTION va ON DELETE RESTRICT ikkalasi ham bir xil maqsadga xizmat qiladi:
+                ular ota-jadvaldagi satrni o'chirishni oldini oladi, agar unga havola qiluvchi bolalar
+                jadvalida tegishli qatorlar mavjud bo'lsa. Ularning orasidagi tanlov sizning xohishingizga
+                va arizangizning o'ziga xos talablariga bog'liq. Ammo shuni ta'kidlash joizki,
+                ON DELETE NO ACTION o'chirilgandan so'ng hech qanday harakatni avtomatik ravishda bajarmaslik
+                niyati haqida aniqroq, ON DELETE RESTRICT esa o'chirish cheklanganligini aniq aytadi. Amalda,
+                ba'zi ishlab chiquvchilar ON DELETE RESTRICT dan foydalanishni afzal ko'radilar,
+                chunki u o'chirishni cheklash niyatini aniqroq bildiradi,
+                boshqalari esa aniqligi uchun ON DELETE NO HARAKATni afzal ko'radi. Oxir-oqibat,
+                ikkalasi ham bir xil natijaga erishadilar, shuning uchun qaror ko'pincha shaxsiy yoki
+                jamoaviy imtiyozlarga asoslanadi.
+             *
+             *
+             *
              * no action: havola qilingan yozuv yangilangan yoki o'chirilganda hech narsa qilmaydi.
              * Siz barcha kerakli harakatlarni qo'lda bajarish uchun javobgarsiz. Bu shuni anglatadiki,
              * agar siz havola qilingan jadvaldagi (categories) yozuvni yangilasangiz yoki o'chirsangiz,
