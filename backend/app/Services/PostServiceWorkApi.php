@@ -37,7 +37,6 @@ class PostServiceWorkApi implements PostServiceContract
             'title' => $post->title,
             'body' => $post->body,
         ]);
-
         $jsonplaceholderResponse = $this->jsonplaceholderApiService->storePost($jsonplaceholderPostDTO);
 
         return [

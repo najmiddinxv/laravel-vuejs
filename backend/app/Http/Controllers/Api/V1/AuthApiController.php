@@ -8,7 +8,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthApiController extends BaseApiController
 {
-
     public function login(AuthLoginRequest $request)
     {
         $data = $request->validated();
@@ -20,12 +19,10 @@ class AuthApiController extends BaseApiController
         return sendResponse(message:'the user is logged in ',data:$this->respondWithToken($token)); # If all credentials are correct - we are going to generate a new access token and send it back on response
     }
 
-
     public function me()
     {
         return response()->json(auth('api')->user());
     }
-
 
     public function logout()
     {
@@ -53,5 +50,4 @@ class AuthApiController extends BaseApiController
             'user' => $this->me(),
         ]);
     }
-
 }

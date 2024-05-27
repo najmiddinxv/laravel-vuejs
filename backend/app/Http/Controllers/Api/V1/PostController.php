@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Contracts\PostServiceContract;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
 use App\Services\JsonplaceholderApiService;
-use App\Services\PostService;
 use Throwable;
 
 class PostController extends BaseApiController
 {
     public function __construct(
-        protected PostService $postService,
+        protected PostServiceContract $postService,
         protected JsonplaceholderApiService $jsonplaceholderApiService,
     ){}
 
@@ -28,6 +28,8 @@ class PostController extends BaseApiController
     {
         // $post = new PostResource($this->postService->show($id));
         // return sendResponse(message:'post item', data: $post);
+
+
 
         //jsonplaceholderApisidan bizning bazamizdagi postni id ge teng bo'lgan commentlarni olish xolati
         $post = $this->postService->show($id);
@@ -43,6 +45,8 @@ class PostController extends BaseApiController
         // $post = new PostResource($this->postService->store($data));
         // return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$post);
 
+
+        
         //jsonplaceholder apisiga post store qilish varianti
         $data = $request->validated();
         $postStored = $this->postService->store($data);
@@ -70,7 +74,7 @@ class PostController extends BaseApiController
     //try catchni ishlatish. lekin men handler/exception.php ga yozib qo'yibman shuning uchun hamma joyga buni yozish shart emas
     // public function index(PostFilter $filter)
     // {
-        // use Throwable;
+    // use Throwable;
     //     try {
     //         $posts = new PostCollection($this->postService->index($filter));
     //         return sendResponse(message:'posts list', data:$posts);
