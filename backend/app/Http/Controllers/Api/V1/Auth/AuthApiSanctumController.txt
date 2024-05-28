@@ -16,7 +16,7 @@ class AuthApiSanctumController extends BaseApiController
 {
 
     //===================================================================================
-    //auth va refresh tokenni alohida qatorlaga saqlash uchun yozilgan kodning optimal varianti
+    //auth va refresh tokenni alohida qatorlaga(2 ta qatorga) saqlash uchun yozilgan kodning optimal varianti
     //===================================================================================
 
     private const ACCESS_TOKEN_EXPIRATION_MINUTES = 24*60;
@@ -188,11 +188,8 @@ class AuthApiSanctumController extends BaseApiController
     //==========================================================================================
 
 
-
-
-
     //===================================================================================
-    //auth va refresh tokenni alohida(2 ta qatorga) qatorlaga saqlash uchun yozilgan kod pastgi qatordagi kodlar
+    //auth va refresh tokenni alohida(2 ta qatorga) qatorlaga saqlash uchun yozilgan kod
     //===================================================================================
 
     // public function login(Request $request)
