@@ -1,0 +1,312 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1\Auth;
+
+use App\Http\Controllers\Api\BaseApiController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\User\PersonalAccessToken;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+
+class AuthApiSanctumController extends BaseApiController
+{
+    //===================================================================================
+    //auth va refresh tokenni alohida(2 ta qatorga) qatorlaga saqlash uchun yozilgan kod pastgi qatordagi kodlar
+    //===================================================================================
+
+    private const ACCESS_TOKEN_EXPIRATION_MINUTES = 24*60;
+    private const REFRESH_TOKEN_EXPIRATION_DAYS = 7;
+    private const AUTH_TOKEN_NAME = 'authToken';
+    private const REFRESH_TOKEN_NAME = 'refreshToken';
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        // Create access token with short expiration
+        $accessToken = $user->createToken(
+            self::AUTH_TOKEN_NAME, ['*'],
+            Carbon::now()->addMinutes(self::ACCESS_TOKEN_EXPIRATION_MINUTES)
+        )->plainTextToken;
+
+        // Get user's device name (if available)
+        $userDeviceName = $request->header('User-Agent');
+
+        // Get user's IP address
+        $userIp = $request->ip();
+
+        // Get user's location (if available)
+        $userLocation = Http::get("https://ipinfo.io/{$userIp}/json")->json();
+        $refreshToken = Str::random(64);
+
+        $tokenId = explode('|', $accessToken)[0];
+
+        $user->tokens()->where('id', $tokenId)
+        ->update([
+            'user_device_name' => $userDeviceName,
+            'user_ip' => $userIp,
+            'user_location_info' => $userLocation,
+            'refresh_token' => hash('sha256', $refreshToken),
+            'expires_at_refresh_token' => Carbon::now()->addDays(self::REFRESH_TOKEN_EXPIRATION_DAYS),
+        ]);
+
+        $user->tokens()->where('expires_at_refresh_token', '<', Carbon::now())->delete();
+
+        return response()->json([
+            'access_token' => $accessToken,
+            'refresh_token' => $refreshToken,
+        ]);
+    }
+
+    public function refresh(Request $request)
+    {
+        $request->validate([
+            'refresh_token' => 'required',
+        ]);
+
+        $hashedToken = hash('sha256', $request->refresh_token);
+        $refreshToken = PersonalAccessToken::where('token', $hashedToken)
+                                            ->where('name', 'refreshToken')
+                                            ->where('expires_at', '>', Carbon::now())
+                                            ->first();
+
+        if (!$refreshToken) {
+            return response()->json(['message' => 'Invalid or expired refresh token'], 401);
+        }
+
+        $user = $refreshToken->user;
+
+        // Revoke old refresh token
+        $refreshToken->delete();
+        $user->tokens()
+            ->where('user_device_number', '=', $refreshToken->user_device_number)
+            ->where('name', 'authToken')
+            ->delete();
+
+        // Create new access token
+        $newAccessToken = $user->createToken('authToken', ['*'], Carbon::now()->addMinutes(config('sanctum.expiration')))->plainTextToken;
+
+        // Create new refresh token
+        $newRefreshToken = Str::random(64);
+        $user->tokens()->create([
+            'name' => 'refreshToken',
+            'token' => hash('sha256', $newRefreshToken),
+            'abilities' => ['*'],
+            'expires_at' => Carbon::now()->addDays(7),
+        ]);
+
+        return response()->json([
+            'access_token' => $newAccessToken,
+            'refresh_token' => $newRefreshToken,
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    //ushbu qurilmadan boshqa barcha qurilmalarni chiqarib yuborish
+    public function logoutFromAllDevices(Request $request)
+    {
+
+        $user = $request->user();
+        $currentAccessTokenId = $user->currentAccessToken();
+        $user->tokens()->where('user_device_number', '!=', $currentAccessTokenId->user_device_number)->delete();
+
+        return response()->json(['message' => 'Logged out from other devices']);
+    }
+
+    //===================================================================================
+    //===================================================================================
+
+
+    //===================================================================================
+    //auth va refresh tokenni alohida qatorlaga saqlash uchun yozilgan kodning optimal varianti
+    //===================================================================================
+
+    // private const ACCESS_TOKEN_EXPIRATION_MINUTES = 24*60;
+    // private const REFRESH_TOKEN_EXPIRATION_DAYS = 7;
+    // private const AUTH_TOKEN_NAME = 'authToken';
+    // private const REFRESH_TOKEN_NAME = 'refreshToken';
+
+    // /**
+    //  * Handle user login and issue tokens.
+    //  */
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required|string|min:6',
+    //     ]);
+
+    //     $user = User::where('email', $request->email)->first();
+
+    //     if (!$user || !Hash::check($request->password, $user->password)) {
+    //         return response()->json(['message' => 'Unauthorized'], 401);
+    //     }
+
+    //     $userDeviceName = $request->header('User-Agent');
+    //     $userIp = $request->ip();
+    //     $userLocation = $this->getUserLocation($userIp);
+
+    //     $accessToken = $this->createAccessToken($user);
+    //     $tokenId = explode('|', $accessToken)[0];
+
+    //     $this->updateTokenDetails($user, $tokenId, $userDeviceName, $userIp, $userLocation);
+    //     $refreshToken = $this->createRefreshToken(user:$user, tokenId:$tokenId, deviceName:$userDeviceName, ip:$userIp, location:$userLocation);
+
+    //     $this->deleteExpiredTokens($user);
+
+    //     return response()->json([
+    //         'access_token' => $accessToken,
+    //         'refresh_token' => $refreshToken,
+    //     ]);
+    // }
+
+    // /**
+    //  * Refresh the access token using a refresh token.
+    //  */
+    // public function refresh(Request $request)
+    // {
+    //     $request->validate([
+    //         'refresh_token' => 'required',
+    //     ]);
+
+    //     $hashedToken = hash('sha256', $request->refresh_token);
+    //     $refreshToken = PersonalAccessToken::where('token', $hashedToken)
+    //                                         ->where('name', self::REFRESH_TOKEN_NAME)
+    //                                         ->where('expires_at', '>', Carbon::now())
+    //                                         ->first();
+
+    //     if (!$refreshToken) {
+    //         return response()->json(['message' => 'Invalid or expired refresh token'], 401);
+    //     }
+
+    //     $user = $refreshToken->user;
+
+    //     $this->revokeOldTokens($user, $refreshToken->user_device_number);
+
+    //     $newAccessToken = $this->createAccessToken($user);
+    //     $newRefreshToken = $this->createRefreshToken($user, $refreshToken->user_device_number, $refreshToken->user_device_name, $refreshToken->user_ip, $refreshToken->user_location_info);
+
+    //     return response()->json([
+    //         'access_token' => $newAccessToken,
+    //         'refresh_token' => $newRefreshToken,
+    //     ]);
+    // }
+
+    // /**
+    //  * Log out the user by revoking all tokens.
+    //  */
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->tokens()->delete();
+
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
+
+    // /**
+    //  * Log out from all devices except the current one.
+    //  */
+    // public function logoutFromAllDevices(Request $request)
+    // {
+    //     $user = $request->user();
+    //     $currentAccessTokenId = $user->currentAccessToken()->id;
+
+    //     $user->tokens()->where('id', '!=', $currentAccessTokenId)->delete();
+
+    //     return response()->json(['message' => 'Logged out from other devices']);
+    // }
+
+    // // ---------------------------Bu pstgi qatordagi methodlar yuqorida ishlatilayapti-------------------------------------
+    // /**
+    //  * Get user location using IP.
+    //  */
+    // private function getUserLocation(string $ip): array
+    // {
+    //     $response = Http::get("https://ipinfo.io/{$ip}/json");
+    //     return $response->json();
+    // }
+
+    // /**
+    //  * Create an access token for the user.
+    //  */
+    // private function createAccessToken(User $user): string
+    // {
+    //     return $user->createToken(self::AUTH_TOKEN_NAME, ['*'], Carbon::now()->addMinutes(self::ACCESS_TOKEN_EXPIRATION_MINUTES))->plainTextToken;
+    // }
+
+    // /**
+    //  * Create a refresh token for the user.
+    //  */
+    // private function createRefreshToken(User $user, int $tokenId, string $deviceName, string $ip, array|string $location): string
+    // {
+    //     $refreshToken = Str::random(64);
+    //     $refreshTokenModel = $user->tokens()->create([
+    //         'name' => self::REFRESH_TOKEN_NAME,
+    //         'token' => hash('sha256', $refreshToken),
+    //         'abilities' => ['*'],
+    //         'expires_at' => Carbon::now()->addDays(self::REFRESH_TOKEN_EXPIRATION_DAYS),
+    //     ]);
+
+    //     $refreshTokenModel->forceFill([
+    //         'user_device_number' => $tokenId,
+    //         'user_device_name' => $deviceName,
+    //         'user_ip' => $ip,
+    //         'user_location_info' => $location,
+    //     ])->save();
+
+    //     return $refreshToken;
+    // }
+
+    // /**
+    //  * Update token details.
+    //  */
+    // private function updateTokenDetails(User $user, string $tokenId, string $deviceName, string $ip, array|string $location): void
+    // {
+    //     $user->tokens()->where('id', $tokenId)->update([
+    //         'user_device_number' => $tokenId,
+    //         'user_device_name' => $deviceName,
+    //         'user_ip' => $ip,
+    //         'user_location_info' => $location,
+    //     ]);
+    // }
+
+    // /**
+    //  * Delete expired tokens.
+    //  */
+    // private function deleteExpiredTokens(User $user): void
+    // {
+    //     $user->tokens()->where('expires_at', '<', Carbon::now())->delete();
+    // }
+
+    // /**
+    //  * Revoke old tokens.
+    //  */
+    // private function revokeOldTokens(User $user, int $deviceNumber): void
+    // {
+    //     $user->tokens()
+    //         ->where('user_device_number', '=', $deviceNumber)
+    //         ->delete();
+    // }
+    //==========================================================================================
+    //==========================================================================================
+
+}

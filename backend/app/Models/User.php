@@ -16,6 +16,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    //===================================================================================
+    //Sanctum orqali authentikiatsiya qilish uchun User modeli
+    //===================================================================================
+
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     // public const STATUS_INACTIVE = 0;

@@ -82,5 +82,6 @@ class Kernel extends HttpKernel
         'addRequestHeader' => \App\Http\Middleware\AddRequestHeader::class,
         'backend' => \App\Http\Middleware\BackendMiddleware::class,
         'userProfile' => \App\Http\Middleware\UserProfileMiddleware::class,
+        'cache.token' => \App\Http\Middleware\CacheTokenMiddleware::class,
     ];
 }

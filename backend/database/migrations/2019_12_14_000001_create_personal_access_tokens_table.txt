@@ -17,12 +17,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('token', 64)->unique();
             $table->text('abilities')->nullable();
+            $table->integer('user_device_number')->nullable();
+
+            $table->string('user_device_name',1000)->nullable();
+            $table->string('user_ip')->nullable();
+            $table->jsonb('user_location_info')->nullable();
+
             $table->timestamp('last_used_at')->nullable();
-            $table->string('user_device_name',1000)->nullable();//added row
-            $table->string('user_ip')->nullable();//added row
-            $table->jsonb('user_location_info')->nullable();//added row
-            $table->string('refresh_token', 64)->unique(); //added row
-            $table->timestamp('expires_at_refresh_token')->nullable();//added row
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });

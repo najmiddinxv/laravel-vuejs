@@ -17,6 +17,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    //===================================================================================
+    //jwt orqali authentikiatsiya qilish uchun User modeli
+    //===================================================================================
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     protected $fillable = [
