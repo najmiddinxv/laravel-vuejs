@@ -17,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     //===================================================================================
-    //Passport orqali authentikiatsiya qilish uchun User modeli
+    //laravel Passport orqali authentikiatsiya qilish uchun User modeli
     //===================================================================================
 
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;

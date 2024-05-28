@@ -13,14 +13,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     //===================================================================================
-    //jwt orqali authentikiatsiya qilish uchun User modeli
+    //Sanctum orqali authentikiatsiya qilish uchun User modeli
     //===================================================================================
+
     use SoftDeletes, HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    // public const STATUS_INACTIVE = 0;
+    // public const STATUS_ACTIVE = 1;
+    // public const USER_TYPE_BACKEND = 1;
+    // public const USER_TYPE_USERPROFILE = 2;
 
     protected $fillable = [
         'last_name', //familya
@@ -31,7 +36,11 @@ class User extends Authenticatable implements JWTSubject
         'user_type',
         'status',
         'avatar',
-        'password'
+        'password',
+        // 'telegram_full_name',
+        // 'telegram_phone_number',
+        // 'telegram_chat_id',
+        // 'telegram_username',
     ];
 
     protected $hidden = [
@@ -45,6 +54,8 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
         'avatar' => 'array',
     ];
+
+    // protected $appends = ['full_name'];
 
     public function getFullNameAttribute() {
         return "{$this->last_name} {$this->first_name} {$this->middle_name}";
@@ -60,23 +71,4 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Role::class, 'model_has_roles','model_id')->where('model_type', 'App\Models\User');
     }
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 }

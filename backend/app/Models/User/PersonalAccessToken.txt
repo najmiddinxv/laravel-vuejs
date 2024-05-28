@@ -10,6 +10,9 @@ use Laravel\Sanctum\Sanctum;
 
 class PersonalAccessToken extends Model
 {
+    //==========================================================================
+    //auth va refresh tokenlarni ikkita qatorga(alohida alohida qatorga) saqlash uchun yozilgan Model
+    //==========================================================================
     use HasApiTokens;
 
     protected $fillable = [

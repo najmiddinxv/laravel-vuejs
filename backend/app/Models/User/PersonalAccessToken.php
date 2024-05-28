@@ -10,29 +10,33 @@ use Laravel\Sanctum\Sanctum;
 
 class PersonalAccessToken extends Model
 {
+
+    //==========================================================================
+    //auth va refresh tokenlarni bitta qatorga saqlash uchun yozilgan Model
+    //==========================================================================
     use HasApiTokens;
 
     protected $fillable = [
         'name',
-        'token',
-        'abilities',
         'last_used_at',
-        'user_device_name',
-        'user_ip',
-        'user_location_info',
+        'token',
+        'expires_at',
         'refresh_token',
         'expires_at_refresh_token',
-        'expires_at',
+        'abilities',
+        'user_ip',
+        'user_location_info',
+        'user_device_name',
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
     ];
 
-    // protected $hidden = [
-    //     'refresh_token',
-    //     'expires_at_refresh_token',
-    // ];
+    protected $hidden = [
+        'refresh_token',
+        'expires_at_refresh_token',
+    ];
 
     public function user()
     {
