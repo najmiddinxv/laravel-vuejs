@@ -62,7 +62,6 @@ abstract class BaseApiFilter
             return $this->paginate();
         }
 
-        // return $this->builder;
         return $this->builder->get();
     }
 

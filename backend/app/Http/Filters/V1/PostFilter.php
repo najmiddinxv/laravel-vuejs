@@ -8,7 +8,7 @@ use App\Http\Requests\V1\PostRequest;
 class PostFilter extends BaseApiFilter
 {
     protected bool $pagination = true;
-    protected int $defaultSize = 20;
+    protected int $defaultSize = 10;
 
     public function __construct(PostRequest $request)
     {

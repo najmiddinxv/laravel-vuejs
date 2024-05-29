@@ -46,7 +46,7 @@ class PostController extends BaseApiController
         // return sendResponse(code:201, message:'post '.__('lang.successfully_created'), data:$post);
 
 
-        
+
         //jsonplaceholder apisiga post store qilish varianti
         $data = $request->validated();
         $postStored = $this->postService->store($data);

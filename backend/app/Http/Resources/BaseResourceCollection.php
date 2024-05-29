@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseResourceCollection extends ResourceCollection
 {
@@ -10,24 +12,28 @@ class BaseResourceCollection extends ResourceCollection
 
     public function __construct($resource)
     {
-        $this->pagination = [
-            'first_page_url' => $resource->url(1),
-            'last_page_url' => $resource->url($resource->lastPage()),
-            'prev_page_url' => $resource->previousPageUrl(),
-            'next_page_url' => $resource->nextPageUrl(),
-            'current_page' => $resource->currentPage(),
-            'from' => $resource->firstItem(),
-            'last_page' => $resource->lastPage(),
-            'path' => $resource->path(),
-            'per_page' => $resource->perPage(),
-            'to' => $resource->lastItem(),
-            'total' => $resource->total(),
-            // 'links' => $this->formatLinks($resource)
-            // // bu paginatsiyani soni bo'yicha link yaratib tashaydi
-            // // 'links' => $this->formatLinks($resource->linkCollection()->toArray())
-        ];
-
-        $resource = $resource->getCollection(); // Necessary to remove meta and links
+        if ($resource instanceof LengthAwarePaginator) {
+            $this->pagination = [
+                'first_page_url' => $resource->url(1),
+                'last_page_url' => $resource->url($resource->lastPage()),
+                'prev_page_url' => $resource->previousPageUrl(),
+                'next_page_url' => $resource->nextPageUrl(),
+                'current_page' => $resource->currentPage(),
+                'from' => $resource->firstItem(),
+                'last_page' => $resource->lastPage(),
+                'path' => $resource->path(),
+                'per_page' => $resource->perPage(),
+                'to' => $resource->lastItem(),
+                'total' => $resource->total(),
+                // 'links' => $this->formatLinks($resource)
+                // // bu paginatsiyani soni bo'yicha link yaratib tashaydi
+                // // 'links' => $this->formatLinks($resource->linkCollection()->toArray())
+            ];
+            $resource = $resource->getCollection(); // Necessary to remove meta and links
+        } else if (!($resource instanceof Collection)) {
+            // throw new \InvalidArgumentException('The resource must be an instance of LengthAwarePaginator or Collection.');
+            $resource = $resource->getCollection();
+        }
 
         parent::__construct($resource);
     }
