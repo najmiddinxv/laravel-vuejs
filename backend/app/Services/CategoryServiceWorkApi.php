@@ -30,7 +30,8 @@ class CategoryServiceWorkApi implements CategoryServiceContract
             ->whenJsonColumnLikeForEachWord('name', $queryParam)
             ->sortByJsonField('name', $queryParam)
             ->sortByArr($sortParams)
-            ->orderBy('id', 'ASC') // Default sorting by id
+            // ->orderBy('id', 'desc')
+            // ->latest('id')
             ->paginate($perPage);
 
         return $categories;
@@ -114,16 +115,13 @@ class CategoryServiceWorkApi implements CategoryServiceContract
     //     $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
     //     $sortParams = Arr::only($queryParam, ['id', 'created_at']); //quey paramsdan sortirovka uchun mo'ljallanga columnlar alohida olinayapti
     //     // dd($sortParams);
-
     //     $categories = Category::with(['parent', 'children'])
     //     ->withCount('posts')
     //     ->whereNull('parent_id')
-
     //     //yoki umumiy bo'lmagan filterlarni shu yerga yozsak bo'ladi
     //     ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
     //         return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
     //     })
-
 
     //mana shu xolatda ham ishlatsa bo'ladi ya'ni whenning else xolati agar requestda $queryParam['categoryable_type'] shu kelayotgan bo'lsa birinchi xolat ishlaydi
     //aks xolda keyingi qator ishlaydi
@@ -135,7 +133,6 @@ class CategoryServiceWorkApi implements CategoryServiceContract
     //     return $q->orderBy('categoryable_type', '=', 'App\Models\Content\Post');
     // })
     // ->get();
-
     //     //tablelar uchun umumiy bo'lgan columnlarni filter qilish uchun macros yozsak bo'ladi
     //     // patdagi tartibda
     //     ->whenJsonColumnLikeForEachWord('name', $queryParam) //macros bu
@@ -144,9 +141,10 @@ class CategoryServiceWorkApi implements CategoryServiceContract
     //     // ->sortBy('created_at',$queryParam) //macros bu
     //     //yoki bir qancha columnlar bo'yicha birdan sortirovka qilsak bo'ladi
     //     ->sortByArr($sortParams) // bu macros. Apply sorting for multiple fields
-    //     // ->latest()
+    //      ->sortByJsonField('name', $queryParam)
+    //// ->orderBy('id', 'desc')
+    //// ->latest('id')
     //     ->paginate($perPage);
-
     //     return $categories;
     // }
 
