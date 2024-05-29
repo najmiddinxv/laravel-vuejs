@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Contracts\CategoryServiceContract;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\V1\CategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
-use App\Services\CategoryService;
 
 class CategoryController extends BaseApiController
 {
-    public function __construct(protected CategoryService $categoryService){}
+    public function __construct(protected CategoryServiceContract $categoryService){}
 
     public function index(CategoryRequest $request)
     {

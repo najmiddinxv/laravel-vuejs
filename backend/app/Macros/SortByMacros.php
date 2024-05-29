@@ -33,41 +33,53 @@ class SortByMacros
         });
     }
 
-    public static function sortByJson(){
-
-        Builder::macro('sortByJson', function (string|array $orderBy, string $sortBy) {
-            $orderBy = Arr::wrap($orderBy);
-            foreach ($orderBy as $field) {
-                $this->orderBy($this->jsonTranslate($field), $sortBy);
-            }
-            return $this;
-        });
-
-        Builder::macro('jsonTranslate', function (string $field): string {
+    public static function sortByJsonField()
+    {
+        Builder::macro('sortByJsonField', function ($column, $queryParam) {
             $lang = app()->getLocale();
-            return $this->isTranslatable($field) ? "$field->$lang" : $field;
+            $columnName = 'sort_by_'.$column;
+            $sortBy = isset($queryParam[$columnName]) ? strtoupper($queryParam[$columnName]) : 'ASC';
+            return $this->when(isset($queryParam[$columnName]), function($query) use ($column, $lang, $sortBy) {
+                return $query->orderByRaw("$column->>'$lang' $sortBy");
+            });
         });
+    }
 
-        Builder::macro('isTranslatable', function (string $field): bool {
-            $table = $this->getModel()->getTable();
-            $translatableFields = $this->getTranslatableFields($table);
+    // public static function sortByJson(){
 
-            // Ensure the field is fully qualified
-            $field = Str::contains($field, '.') ? $field : "$table.$field";
+        // Builder::macro('sortByJson', function (string|array $orderBy, string $sortBy) {
+        //     $orderBy = Arr::wrap($orderBy);
+        //     foreach ($orderBy as $field) {
+        //         $this->orderBy($this->jsonTranslate($field), $sortBy);
+        //     }
+        //     return $this;
+        // });
 
-            return in_array($field, $translatableFields);
-        });
+        // Builder::macro('jsonTranslate', function (string $field): string {
+        //     $lang = app()->getLocale();
+        //     return $this->isTranslatable($field) ? "$field->$lang" : $field;
+        // });
 
-        Builder::macro('getTranslatableFields', function (string $table): array {
-            // return Cache::remember("$table.isTranslatable", 86400, function () use ($table) {
-                $casts = $this->getModel()->getCasts();
-                $translatableKeys = collect($casts)->filter(function ($value) {
-                    return Str::contains($value, 'TranslatableJson');
-                });
+        // Builder::macro('isTranslatable', function (string $field): bool {
+        //     $table = $this->getModel()->getTable();
+        //     $translatableFields = $this->getTranslatableFields($table);
 
-                return $translatableKeys->keys()->map(fn($key) => "$table.$key")->toArray();
-            // });
-        });
+        //     // Ensure the field is fully qualified
+        //     $field = Str::contains($field, '.') ? $field : "$table.$field";
+
+        //     return in_array($field, $translatableFields);
+        // });
+
+        // Builder::macro('getTranslatableFields', function (string $table): array {
+        //     // return Cache::remember("$table.isTranslatable", 86400, function () use ($table) {
+        //         $casts = $this->getModel()->getCasts();
+        //         $translatableKeys = collect($casts)->filter(function ($value) {
+        //             return Str::contains($value, 'TranslatableJson');
+        //         });
+
+        //         return $translatableKeys->keys()->map(fn($key) => "$table.$key")->toArray();
+        //     // });
+        // });
 
     //     EloquentBuilder::macro('sortBy', function (string|array $orderBy, string $sortBy) {
     //         $orderBy = Arr::wrap($orderBy);
@@ -78,14 +90,10 @@ class SortByMacros
     //         return $this;
     //     });
 
-
-
     //     EloquentBuilder::macro('jsonTranslate', function (string $field): string {
     //         $lang = app()->getLocale();
     //         return $this->isTranslatable($field) ? "$field->$lang" : $field;
     //     });
-
-
 
     //     EloquentBuilder::macro('isTranslatable', function (string $field): bool {
     //         $table        = $this->getModel()->getTable();
@@ -107,9 +115,7 @@ class SortByMacros
     //         return in_array($field, $translatable);
     //     });
 
-
-    }
-
+    // }
 
     // Builder::macro('whenJsonColumnLikeForEachWord', function($column, $words) {
     //     $lang = app()->getLocale();
@@ -124,9 +130,6 @@ class SortByMacros
     //         });
     //     });
     // });
-
-
-
 
 
     // public static function whenJsonColumnLikeForEachWord()
@@ -145,12 +148,8 @@ class SortByMacros
     //     });
     // }
 
-
-
     // public static function sortBy()
     // {
-
-
 
         // EloquentBuilder::macro('whereLike', $whereLike =
         // function (
@@ -191,9 +190,6 @@ class SortByMacros
         // });
 
         // QueryBuilder::macro('orWhereLike', $orWhereLike);
-
-
-
 
         // EloquentBuilder::macro('listType', $func = function (
         //     #[ArrayShape(['paginate', 'collection'])]

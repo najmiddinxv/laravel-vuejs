@@ -20,6 +20,7 @@ class CategoryRequest extends BaseApiFormRequest
             'page' => 'nullable|integer',
 
             'id' => 'nullable|in:asc,desc',
+            'sort_by_name' => 'nullable|in:asc,desc',
             'created_at' => 'nullable|in:asc,desc',
             'categoryable_type' => 'nullable|string|max:255',
         ];

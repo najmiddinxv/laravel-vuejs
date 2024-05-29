@@ -22,14 +22,16 @@ class CategoryServiceWorkApi implements CategoryServiceContract
         $sortParams = Arr::only($queryParam, ['id', 'created_at']);
 
         $categories = Category::with(['parent', 'children'])
-        ->withCount('posts')
-        ->whereNull('parent_id')
-        ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
-            return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
-        })
-        ->whenJsonColumnLikeForEachWord('name', $queryParam)
-        ->sortByArr($sortParams)
-        ->paginate($perPage);
+            ->withCount('posts')
+            ->whereNull('parent_id')
+            ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
+                return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
+            })
+            ->whenJsonColumnLikeForEachWord('name', $queryParam)
+            ->sortByJsonField('name', $queryParam)
+            ->sortByArr($sortParams)
+            ->orderBy('id', 'ASC') // Default sorting by id
+            ->paginate($perPage);
 
         return $categories;
     }
