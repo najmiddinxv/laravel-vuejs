@@ -31,7 +31,7 @@ class CategoryServiceWorkApi implements CategoryServiceContract
             ->sortByJsonField('name', $queryParam)
             ->sortByArr($sortParams)
             // ->orderBy('id', 'desc')
-            // ->latest('id')
+            // ->latest('id') //latest default id bo'yicha teskari sort qilib oladi
             ->paginate($perPage);
 
         return $categories;
@@ -123,16 +123,16 @@ class CategoryServiceWorkApi implements CategoryServiceContract
     //         return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
     //     })
 
-    //mana shu xolatda ham ishlatsa bo'ladi ya'ni whenning else xolati agar requestda $queryParam['categoryable_type'] shu kelayotgan bo'lsa birinchi xolat ishlaydi
-    //aks xolda keyingi qator ishlaydi
-    // ->when(isset($queryParam['categoryable_type']),
-    // function ($q) {
-    //     return $q->where('categoryable_type', '=', $queryParam['categoryable_type']);
-    // },
-    // function ($q) {
-    //     return $q->orderBy('categoryable_type', '=', 'App\Models\Content\Post');
-    // })
-    // ->get();
+        // mana shu xolatda ham ishlatsa bo'ladi ya'ni whenning else xolati agar requestda $queryParam['categoryable_type'] shu kelayotgan bo'lsa birinchi xolat ishlaydi
+        // aks xolda keyingi qator ishlaydi
+        // ->when(isset($queryParam['categoryable_type']),
+        // function ($q) {
+        //     return $q->where('categoryable_type', '=', $queryParam['categoryable_type']);
+        // },
+        // function ($q) {
+        //     return $q->orderBy('categoryable_type', '=', 'App\Models\Content\Post');
+        // })
+        // ->get();
     //     //tablelar uchun umumiy bo'lgan columnlarni filter qilish uchun macros yozsak bo'ladi
     //     // patdagi tartibda
     //     ->whenJsonColumnLikeForEachWord('name', $queryParam) //macros bu

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Controllers\Api\V1\{
     CategoryController,
+    NewsController,
     PostController,
     TagController,
 };
@@ -50,6 +51,7 @@ Route::as('api')->name('api.')->middleware(['addRequestHeader'])->group(function
 
     Route::apiResources([
         'posts' => PostController::class,
+        'news' => NewsController::class,
         'categories' => CategoryController::class,
         'tags' => TagController::class,
     ]);

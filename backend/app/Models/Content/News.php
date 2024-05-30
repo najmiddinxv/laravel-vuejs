@@ -40,11 +40,11 @@ class News extends Model implements TranslatableContract
         parent::boot();
 
         static::saving(function ($model) {
-            $model->created_by = auth()->user()->id;
+            $model->created_by = auth()->user()?->id ?? auth('api')->user()?->id;
         });
 
         static::updating(function ($model) {
-            $model->created_by = auth()->user()->id;
+            $model->created_by = auth()->user()?->id ?? auth('api')->user()?->id;
         });
     }
 

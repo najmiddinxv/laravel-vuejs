@@ -2,11 +2,9 @@
 
 namespace App\Contracts;
 
-use App\Http\Filters\V1\PostFilter;
-
-interface PostServiceContract
+interface NewsServiceContract
 {
-    public function index(PostFilter $filter);
+    public function index(array $queryParam);
     public function show(int $id);
     public function store(array $data);
     public function update(array $data, int $id);

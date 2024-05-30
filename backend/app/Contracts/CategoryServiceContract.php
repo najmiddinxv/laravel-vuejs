@@ -2,8 +2,6 @@
 
 namespace App\Contracts;
 
-use App\Http\Filters\V1\CategoryFilter;
-
 interface CategoryServiceContract
 {
     public function index(array $queryParam);
