@@ -2,12 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\V1\CategoryResource;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-
 
 class NewsResource extends JsonResource
 {
@@ -19,11 +14,17 @@ class NewsResource extends JsonResource
             "id" => $this->id,
             "title" => $this->translate($lang)->title,
             "slug" => $this->translate($lang)->slug,
+            "description" => $this->translate($lang)->description,
+            "body" => $this->translate($lang)->description,
             'main_image' => $this->transformMainImage($lang),
             "category" => [
                 "id" => $this->category_id,
                 "name" => $this->category->name,
             ],
+            "tags" => TagResource::collection($this->whenLoaded('tags')),
+            "view_count" => $this->view_count,
+            "status" => $this->status,
+            "slider" => $this->slider,
         ];
     }
 

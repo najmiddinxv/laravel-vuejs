@@ -19,12 +19,14 @@ class NewsService implements NewsServiceContract
     {
         $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
         $sortParams = Arr::only($queryParam, ['view_count', 'created_at']);
+        $columns = ['id', 'category_id', 'title', 'slug', 'description', 'view_count', 'status', 'slider', 'main_image'];
+
         $news = News::query()
-            ->select('id', 'category_id') // Select only the necessary columns from the main model
-            ->with(['category','translation'])
-            // ->with(['category:id,name', 'translation:id,news_id,title']) // Eager load relationships with specific columns
-            // ->select('id','category_id','title','slug','description','view_count','status','slider','main_image')
-            // ->select('id','category_id')
+            // ->select('id')
+            ->with('translations')
+            // ->with(['translations' => function ($query) {
+            //     $query->select('news_id', 'title', 'slug', 'description', 'main_image'); // Ensure 'news_id' is included
+            // }])
             ->whenJsonColumnLikeForEachWord('title', $queryParam)
             ->sortByArr($sortParams)
             ->latest()
