@@ -19,11 +19,10 @@ class NewsService implements NewsServiceContract
     {
         $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
         $sortParams = Arr::only($queryParam, ['view_count', 'created_at']);
-        $columns = ['id', 'category_id', 'title', 'slug', 'description', 'view_count', 'status', 'slider', 'main_image'];
 
         $news = News::query()
             // ->select('id')
-            ->with('translations')
+            // ->with('translations:id,news_id,locale,title')
             // ->with(['translations' => function ($query) {
             //     $query->select('news_id', 'title', 'slug', 'description', 'main_image'); // Ensure 'news_id' is included
             // }])

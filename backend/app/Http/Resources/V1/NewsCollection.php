@@ -15,6 +15,7 @@ class NewsCollection extends BaseResourceCollection
     public function toArray($request)
     {
         $lang = app()->getLocale();
+
         return [
             'news' => $this->collection->transform(function($news) use ($lang) {
                 return [
