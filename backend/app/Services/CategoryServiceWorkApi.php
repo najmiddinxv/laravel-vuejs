@@ -21,8 +21,8 @@ class CategoryServiceWorkApi implements CategoryServiceContract
         $perPage = $queryParam['per_page'] ?? config('settings.paginate_per_page');
         $sortParams = Arr::only($queryParam, ['id', 'created_at']);
 
-        $categories = Category::with(['parent', 'children'])
-            ->withCount('posts')
+        $categories = Category::select('id','name','order')
+            ->with(['children'])
             ->whereNull('parent_id')
             ->when(isset($queryParam['categoryable_type']), function ($query) use ($queryParam) {
                 return $query->where('categoryable_type', '=', $queryParam['categoryable_type']);
@@ -30,7 +30,7 @@ class CategoryServiceWorkApi implements CategoryServiceContract
             ->whenJsonColumnLikeForEachWord('name', $queryParam)
             ->sortByJsonField('name', $queryParam)
             ->sortByArr($sortParams)
-            // ->orderBy('id', 'desc')
+            ->orderBy('id', 'asc')
             // ->latest('id') //latest default id bo'yicha teskari sort qilib oladi
             ->paginate($perPage);
 
@@ -39,7 +39,7 @@ class CategoryServiceWorkApi implements CategoryServiceContract
 
     public function show(int $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with(['parent', 'children'])->withCount('posts')->findOrFail($id);
         return $category;
     }
 

@@ -11,11 +11,54 @@ class CategoryCollection extends BaseResourceCollection
         parent::__construct($resource);
     }
 
+    // public function toArray($request)
+    // {
+    //     return [
+    //         'categories' => $this->collection,
+    //         'pagination' => $this->pagination,
+    //     ];
+    // }
+
     public function toArray($request)
     {
         return [
-            'categories' => $this->collection,
+            'categories' => $this->collection->transform(function($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'order' => $category->order,
+                    'children' => $category->relationLoaded('children') && $category->children->isNotEmpty() ? $this->transformCategories($category->children) : [],
+                ];
+            }),
             'pagination' => $this->pagination,
         ];
     }
+
+    protected function transformCategories($categories)
+    {
+        return $categories->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'name' => $category->name,
+                'order' => $category->order,
+                'children' => $this->transformCategories($category->children), // Recursively transform children
+            ];
+        });
+    }
+
+    // public function toArray($request)
+    // {
+    //     return [
+    //         'categories' => $this->collection->transform(function($category) {
+    //             return [
+    //                 "id" => $category->id,
+    //                 "name"=> $category->name,
+    //                 "order"=> $category->order,
+    //                 "children" => CategoryResource::collection($category->whenLoaded('children')),
+    //             ];
+    //         }),
+    //         'pagination' => $this->pagination
+    //     ];
+    // }
+
 }
