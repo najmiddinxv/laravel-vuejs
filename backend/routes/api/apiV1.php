@@ -28,8 +28,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
 });
-//=================================================================
-
+//=================================================================php
 //=============================jwt uchun===========================
 // {{localhost}}/api/v1/login
 //// Route::post('register', [AuthApiJwtController::class, 'register'])->name('api.auth.register');
@@ -38,9 +37,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // Route::post('logout', [AuthApiJwtController::class, 'logout'])->name('api.auth.logout')->middleware('auth:api');
 // Route::get('me', [AuthApiJwtController::class, 'me'])->name('api.auth.me')->middleware('auth:api');
 //=================================================================
-
-
-
 
 
 Route::as('api')->name('api.')->middleware(['addRequestHeader'])->group(function () {

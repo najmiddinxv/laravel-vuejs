@@ -21,11 +21,8 @@ class NewsService implements NewsServiceContract
         $sortParams = Arr::only($queryParam, ['view_count', 'created_at']);
 
         $news = News::query()
-            // ->select('id')
-            // ->with('translations:id,news_id,locale,title')
-            // ->with(['translations' => function ($query) {
-            //     $query->select('news_id', 'title', 'slug', 'description', 'main_image'); // Ensure 'news_id' is included
-            // }])
+            ->select('id','category_id')
+            ->with('translations:id,news_id,locale,title,slug,description,main_image')
             ->whenJsonColumnLikeForEachWord('title', $queryParam)
             ->sortByArr($sortParams)
             ->latest()
@@ -35,10 +32,6 @@ class NewsService implements NewsServiceContract
     }
     public function store(array $data)
     {
-        if (isset($data['image'])) {
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
-        }
-
         $news = new News();
         $news->category_id = $data['category_id'];
         $news->status = $data['status'];
@@ -50,7 +43,11 @@ class NewsService implements NewsServiceContract
             $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
             $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
-            $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+            if (isset($data['image'][$configLocale])) {
+                $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
+            } else {
+                $news->translateOrNew($configLocale)->main_image = null;
+            }
             $news->save();
         }
         if(isset($data['tags'])){

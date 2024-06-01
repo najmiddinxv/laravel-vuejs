@@ -73,6 +73,4 @@ class News extends Model implements TranslatableContract
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-
-
 }
