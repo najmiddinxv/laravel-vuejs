@@ -17,7 +17,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::latest('id')->paginate(config('settings.paginate_per_page'));
+        $news = News::with('translations','category','tags')->latest('id')->paginate(config('settings.paginate_per_page'));
 		return view('backend.news.index',[
 			'news'=>$news,
 		]);
@@ -112,6 +112,7 @@ class NewsController extends Controller
                 $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
             } else {
                 $news->translateOrNew($configLocale)->main_image = $news->translate($configLocale)->main_image;
+                // dd($news->translate($configLocale)->main_image);
             }
 
             $news->save();

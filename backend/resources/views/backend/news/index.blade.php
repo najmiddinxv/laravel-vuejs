@@ -45,7 +45,17 @@
 
                     {{-- yoki mana shunday qilib qo'ysak ham bo'ladi chunki mcamara yordamida avtomatik shu saytni tili bo'yicha tortayapti --}}
                     <td>{{ $newsItem->title }}</td>
-                    <td>{{ $newsItem->tags()->pluck('name')->implode(', ')}}</td>
+
+                    {{-- <td>{{ $newsItem->tags()->pluck('name')->implode(', ')}}</td> --}}
+                    <td>
+                        @foreach ($newsItem->tags as $tag)
+                            {{ $tag->name }},
+                        @endforeach
+                        @if($newsItem->tags->isEmpty())
+                            <span>No tags</span>
+                        @endif
+                    </td>
+
                     <td style="text-align: center">
                         @if (isset($newsItem->translate(app()->getLocale())->main_image))
                             <a href="{{ Storage::url($newsItem->translate(app()->getLocale())->main_image['large'] ?? '') }}">
