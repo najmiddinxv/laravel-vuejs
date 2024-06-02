@@ -45,8 +45,6 @@
 
                     {{-- yoki mana shunday qilib qo'ysak ham bo'ladi chunki mcamara yordamida avtomatik shu saytni tili bo'yicha tortayapti --}}
                     <td>{{ $newsItem->title }}</td>
-
-                    {{-- <td>{{ $newsItem->tags()->pluck('name')->implode(', ')}}</td> --}}
                     <td>
                         @foreach ($newsItem->tags as $tag)
                             {{ $tag->name }},
