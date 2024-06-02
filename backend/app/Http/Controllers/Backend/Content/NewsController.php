@@ -34,13 +34,9 @@ class NewsController extends Controller
 		]);
     }
 
-    // public function store(Request $request): RedirectResponse
     public function store(NewsRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        if (isset($data['image'])) {
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
-        }
 
         $news = new News();
         $news->category_id = $data['category_id'];
@@ -53,7 +49,12 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
             $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
-            $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+            // $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+            if (isset($data['image'][$configLocale])) {
+                $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
+            } else {
+                $news->translateOrNew($configLocale)->main_image = null;
+            }
             $news->save();
         }
         if(isset($data['tags'])){
@@ -61,32 +62,6 @@ class NewsController extends Controller
         }
         return redirect()->route('backend.news.index')->with('news ',__('lang.successfully_created'));
     }
-
-    // public function store(array $data)
-    // {
-    //     $news = new News();
-    //     $news->category_id = $data['category_id'];
-    //     $news->status = $data['status'];
-    //     $news->slider = $data['slider'];
-    //     $news->save();
-    //     $languages = config('app.locales');
-    //     foreach($languages as $key => $configLocale){
-    //         $news->translateOrNew($configLocale)->title = $data['title'][$configLocale] ?? $data['title']['uz'];
-    //         $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
-    //         $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
-    //         $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
-    //         if (isset($data['image'][$configLocale])) {
-    //             $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
-    //         } else {
-    //             $news->translateOrNew($configLocale)->main_image = null;
-    //         }
-    //         $news->save();
-    //     }
-    //     if(isset($data['tags'])){
-    //         $news->tags()->sync($data['tags']);
-    //     }
-    //     return $news;
-    // }
 
     public function show(News $news)
     {
@@ -113,12 +88,12 @@ class NewsController extends Controller
 
         $data = $request->validated();
 
-        if (isset($data['image'])) {
-            $this->fileUploadService->resizedImageDelete($news->main_image);
-            $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
-        }else{
-            $data['main_image'] = $news->main_image;
-        }
+        // if (isset($data['image'])) {
+        //     $this->fileUploadService->resizedImageDelete($news->main_image);
+        //     $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
+        // }else{
+        //     $data['main_image'] = $news->main_image;
+        // }
 
         $news->category_id = $data['category_id'];
         $news->status = $data['status'];
@@ -131,6 +106,14 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+
+            if (isset($data['image'][$configLocale])) {
+                $this->fileUploadService->resizedImageDelete($news->translate($configLocale)->main_image);
+                $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
+            } else {
+                $news->translateOrNew($configLocale)->main_image = $news->translate($configLocale)->main_image;
+            }
+
             $news->save();
         }
 

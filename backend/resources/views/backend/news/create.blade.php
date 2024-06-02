@@ -3,7 +3,6 @@
     - {{ __('lang.edit') }}
 @endsection
 @section('content')
-
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">
@@ -20,7 +19,6 @@
             <div class="col-md-8">
                 <div class="card card-primary">
                     <div class="card-body">
-
                         <div>
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -64,6 +62,17 @@
                                             @enderror
                                         </span>
                                     </div>
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image uz</label>
+                                        <input type="file" name="image[uz]" id="imageuz"
+                                            class="form-control @error('image.uz') error-data-input @enderror">
+                                        <img id="previewImageuz" src="" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.uz')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-ru" role="tabpanel" aria-labelledby="ru-tab">
                                     <div class="form-group">
@@ -91,6 +100,17 @@
                                         <textarea class="tinymce-editor @error('body.ru') error-data-input @enderror" name="body[ru]" id="body_ru"  style="height: 130px;" >{{ old('body.ru') }}</textarea>
                                         <span class="error-data">
                                             @error('body.ru')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image ru</label>
+                                        <input type="file" name="image[ru]" id="imageru"
+                                            class="form-control @error('image.ru') error-data-input @enderror">
+                                        <img id="previewImageru" src="" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.ru')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -126,18 +146,26 @@
                                             @enderror
                                         </span>
                                     </div>
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image en</label>
+                                        <input type="file" name="image[en]" id="imageen"
+                                            class="form-control @error('image.en') error-data-input @enderror">
+                                        <img id="previewImageen" src="" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.en')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
                                 </div>
                               </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card card-primary">
                     <div class="card-body">
-
                         <div class="form-group mt-1">
                             <label for="category_id" class="form-label">Category</label>
                             <select class="form-select" aria-label="Default select example" name="category_id" id="category_id" required>
@@ -147,7 +175,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="form-group mt-3">
                             <label for="status" class="form-label">Status</label>
                             <select class="form-select" aria-label="Default select example" name="status" id="status">
@@ -155,7 +182,6 @@
                                 <option value="0">no active</option>
                             </select>
                         </div>
-
                         <div class="form-group mt-3">
                             <label for="slider" class="form-label">Slider</label>
                             <select class="form-select" aria-label="Default select example" name="slider" id="slider">
@@ -163,7 +189,6 @@
                                 <option value="1">active</option>
                             </select>
                         </div>
-
                         <div class="form-group mt-3">
                             <label for="tags" class="form-label">Tags</label>
                             <select class="form-select tags" name="tags[]" id="tags" multiple="multiple">
@@ -174,24 +199,10 @@
                                 @endforelse
                             </select>
                         </div>
-
-                        <div class="form-group mt-3">
-                            <label for="image" class="form-label">image</label>
-                            <input type="file" name="image" id="image"
-                                class="form-control @error('image') error-data-input @enderror">
-                            <img id="previewImage" src="" alt="Img" style="max-width: 100%;">
-
-                            <span class="error-data">
-                                @error('image')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         {{-- @foreach(config('.locales') as $locale)
             <fieldset class="border-2 w-full p-4 rounded-lg mb-4">
                 <label>Text for {{ $locale }}</label>
@@ -522,11 +533,27 @@
 @section('scripts')
     <script>
         $(document).ready(function(e) {
-            $('#image').on('change',function(){
+            $('#imageuz').on('change',function(){
                 let reader = new FileReader();
                 reader.onload = (e) => {
-                    $('#previewImage').attr('src', e.target.result);
-                    $('#previewImage').css({'display':'block'});
+                    $('#previewImageuz').attr('src', e.target.result);
+                    $('#previewImageuz').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $('#imageru').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImageru').attr('src', e.target.result);
+                    $('#previewImageru').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $('#imageen').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImageen').attr('src', e.target.result);
+                    $('#previewImageen').css({'display':'block'});
                 }
                 reader.readAsDataURL(this.files[0]);
             });

@@ -46,7 +46,17 @@
                     {{-- yoki mana shunday qilib qo'ysak ham bo'ladi chunki mcamara yordamida avtomatik shu saytni tili bo'yicha tortayapti --}}
                     <td>{{ $newsItem->title }}</td>
                     <td>{{ $newsItem->tags()->pluck('name')->implode(', ')}}</td>
-                    <td style="text-align: center"><a href="{{ Storage::url($newsItem->main_image['large'] ?? '') }}"><img src="{{ Storage::url($newsItem->main_image['medium'] ?? '') }}" alt="img" width="20%"></a></td>
+                    <td style="text-align: center">
+                        @if (isset($newsItem->translate(app()->getLocale())->main_image))
+                            <a href="{{ Storage::url($newsItem->translate(app()->getLocale())->main_image['large'] ?? '') }}">
+                                <img src="{{ Storage::url($newsItem->translate(app()->getLocale())->main_image['medium'] ?? '') }}" alt="img" width="20%">
+                            </a>
+                        @else
+                            <a href="{{ Storage::url($newsItem->translate('uz')->main_image['large'] ?? '') }}">
+                                <img src="{{ Storage::url($newsItem->translate('uz')->main_image['medium'] ?? '') }}" alt="img" width="20%">
+                            </a>
+                        @endif
+                    </td>
                     <td>{!! $newsItem->status == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{!! $newsItem->slider == 1 ? '<span class="badge badge-pill bg-success">active</span>' : '<span class="badge badge-pill bg-danger">not active</span>' !!}</td>
                     <td>{{ $newsItem->view_count }}</td>

@@ -66,6 +66,24 @@
                                             @enderror
                                         </span>
                                     </div>
+                                    {{-- <div class="form-group">
+                                        <label for="image" class="col-form-label">image</label>
+                                        <input type="file" class="form-control" name="image[uz]" id="imageuz" accept=".jpg,.jpeg,.png">
+                                        <img id="previewImageuz" src="{{ Storage::url($news->translate('uz')->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 40%;">
+                                        <div class="valid-feedback">
+                                        </div>
+                                    </div> --}}
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image uz</label>
+                                        <input type="file" name="image[uz]" id="imageuz"
+                                            class="form-control @error('image.uz') error-data-input @enderror">
+                                        <img id="previewImageuz" src="{{ Storage::url($news->translate('uz')->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.uz')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-ru" role="tabpanel" aria-labelledby="ru-tab">
                                     <div class="form-group mt-3">
@@ -97,6 +115,17 @@
                                             @enderror
                                         </span>
                                     </div>
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image ru</label>
+                                        <input type="file" name="image[ru]" id="imageru"
+                                            class="form-control @error('image.ru') error-data-input @enderror">
+                                        <img id="previewImageru" src="{{ Storage::url($news->translate('ru')->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.ru')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-en" role="tabpanel" aria-labelledby="en-tab">
                                     <div class="form-group mt-3">
@@ -120,7 +149,7 @@
                                         </span>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <label for="body_en" class="form-label">Body ru</label>
+                                        <label for="body_en" class="form-label">Body en</label>
                                         <textarea class="tinymce-editor @error('body.en') error-data-input @enderror" name="body[en]" id="body_en"  style="height: 130px;" >{{ $news->translate('en')->body, old('body.en') }}</textarea>
                                         <span class="error-data">
                                             @error('body.en')
@@ -128,6 +157,19 @@
                                             @enderror
                                         </span>
                                     </div>
+
+                                    <div class="form-group mt-3">
+                                        <label for="image" class="form-label">image en</label>
+                                        <input type="file" name="image[en]" id="imageen"
+                                            class="form-control @error('image.ru') error-data-input @enderror">
+                                        <img id="previewImageen" src="{{ Storage::url($news->translate('en')->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 40%;">
+                                        <span class="error-data">
+                                            @error('image.en')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+
                                 </div>
                               </div>
                         </div>
@@ -171,16 +213,6 @@
                                     <option value="">no tags</option>
                                 @endforelse
                             </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="image" class="col-form-label">image</label>
-                            <input type="file" class="form-control" name="image" id="image" accept=".jpg,.jpeg,.png">
-                            <img id="previewImage" src="{{ Storage::url($news->main_image['large'] ?? '-') }}" alt="Img" style="max-width: 100%;">
-
-                            <div class="valid-feedback">
-                            </div>
                         </div>
 
                     </div>
@@ -487,11 +519,36 @@
 @section('scripts')
     <script>
        $(document).ready(function(e) {
-            $('#image').on('change',function(){
+            // $('#image').on('change',function(){
+            //     let reader = new FileReader();
+            //     reader.onload = (e) => {
+            //         $('#previewImage').attr('src', e.target.result);
+            //         $('#previewImage').css({'display':'block'});
+            //     }
+            //     reader.readAsDataURL(this.files[0]);
+            // });
+
+            $('#imageuz').on('change',function(){
                 let reader = new FileReader();
                 reader.onload = (e) => {
-                    $('#previewImage').attr('src', e.target.result);
-                    $('#previewImage').css({'display':'block'});
+                    $('#previewImageuz').attr('src', e.target.result);
+                    $('#previewImageuz').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $('#imageru').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImageru').attr('src', e.target.result);
+                    $('#previewImageru').css({'display':'block'});
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $('#imageen').on('change',function(){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#previewImageen').attr('src', e.target.result);
+                    $('#previewImageen').css({'display':'block'});
                 }
                 reader.readAsDataURL(this.files[0]);
             });
