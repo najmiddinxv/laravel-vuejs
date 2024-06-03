@@ -21,10 +21,19 @@ class NewsService implements NewsServiceContract
         $sortParams = Arr::only($queryParam, ['view_count', 'created_at']);
 
         $news = News::query()
-            ->select('id','category_id')
-            ->with('translations:id,news_id,locale,title,slug,description,main_image')
-            // ->with('translations:id,news_id,locale,title,slug,description,main_image','translations','category','tags')
-            ->whenJsonColumnLikeForEachWord('title', $queryParam)
+            ->select('news.id', 'news.category_id')
+            ->with('category', 'tags', 'translations:id,news_id,locale,title,slug,description,main_image')
+            ->leftJoin('news_translations', function ($join) {
+                $join->on('news.id', '=', 'news_translations.news_id')->where('news_translations.locale', '=', app()->getLocale());
+            })
+            ->when(isset($queryParam['title']), function ($query) use ($queryParam) {
+                // $query->whereHas('translations', function ($query) use ($queryParam) { //yuqorida left join ishlatilayotgani uchun bu kerak emas
+                    $query->where('title', 'ILIKE', '%' . $queryParam['title'] . '%');
+                // });
+            })
+            ->when(isset($queryParam['sort_by_title']), function ($query) use ($queryParam) {
+                $query->orderBy('news_translations.title', $queryParam['sort_by_title']);
+            })
             ->sortByArr($sortParams)
             ->latest()
             ->paginate($perPage);
@@ -83,7 +92,7 @@ class NewsService implements NewsServiceContract
             } else {
                 $news->translateOrNew($configLocale)->main_image = $news->translate($configLocale)->main_image;
             }
-            
+
             $news->save();
         }
 

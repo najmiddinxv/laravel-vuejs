@@ -23,6 +23,10 @@ class NewsCollection extends BaseResourceCollection
                     "slug" => $news->translate($lang)->slug,
                     "description" => $news->translate($lang)->description,
                     'main_image' => $this->transformMainImage($news, $lang),
+                    "category" => [
+                        "id" => $news->category_id,
+                        "name" => $news->category->name,
+                    ],
                 ];
             }),
             'pagination' => $this->pagination,
