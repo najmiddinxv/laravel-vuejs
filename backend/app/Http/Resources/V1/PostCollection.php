@@ -6,7 +6,6 @@ use App\Http\Resources\BaseResourceCollection;
 
 class PostCollection extends BaseResourceCollection
 {
-
     public function __construct($resource)
     {
         parent::__construct($resource);
@@ -19,5 +18,4 @@ class PostCollection extends BaseResourceCollection
             'pagination' => $this->pagination,
         ];
     }
-
 }

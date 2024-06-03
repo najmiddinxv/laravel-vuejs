@@ -6,7 +6,6 @@ use App\Http\Resources\BaseResourceCollection;
 
 class TagCollection extends BaseResourceCollection
 {
-
     public function __construct($resource)
     {
         parent::__construct($resource);

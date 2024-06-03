@@ -19,6 +19,7 @@ class PageService implements PageServiceContract
         $sortParams = Arr::only($queryParam, ['view_count', 'created_at']);
 
         $categories = Page::query()
+            // ->with('category')
             ->select('id','title','slug','description','main_image','view_count','created_at')
             ->whenJsonColumnLikeForEachWord('title', $queryParam)
             ->sortByJsonField('title', $queryParam)

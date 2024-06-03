@@ -20,6 +20,7 @@ class PageCollection extends BaseResourceCollection
                     'slug' => $page->slug,
                     'description' => $page->description,
                     'main_image' => $this->formatImageUrls($page->main_image),
+                    // 'category' => $this->category,
                 ];
             }),
             'pagination' => $this->pagination,

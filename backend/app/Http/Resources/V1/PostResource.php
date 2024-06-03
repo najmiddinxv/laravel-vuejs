@@ -8,7 +8,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
@@ -24,9 +23,9 @@ class PostResource extends JsonResource
                 'id' => $this->category_id,
                 'name' => $this->category->name,
             ],
-            // 'category_id' => new CategoryResource($this->whenLoaded('category')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'jsonplaceholderComments' => $this->jsonplaceholderComments,
+            // 'category_id' => new CategoryResource($this->whenLoaded('category')),
             // 'meta' => [
             //     'key' => 'value',
             // ],
