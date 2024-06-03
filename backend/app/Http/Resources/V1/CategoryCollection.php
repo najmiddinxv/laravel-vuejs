@@ -20,6 +20,7 @@ class CategoryCollection extends BaseResourceCollection
                     'name' => $category->name,
                     'order' => $category->order,
                     'children' => $category->relationLoaded('children') && $category->children->isNotEmpty() ? $this->transformCategories($category->children) : [],
+                    //$category->relationLoaded('children') bu true yoki false qaytaradi. agar Category::with('children') qilib chaqirilgan bo'lsa true aks holda false qaytaradi
                 ];
             }),
             'pagination' => $this->pagination,
