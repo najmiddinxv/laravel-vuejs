@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\V1\PageRequest;
 use App\Http\Resources\V1\PageCollection;
 use App\Http\Resources\V1\PageResource;
+use Exception;
 
 class PageController extends BaseApiController
 {
@@ -42,6 +43,7 @@ class PageController extends BaseApiController
     public function destroy(int $id)
     {
         $this->pageService->destroy($id);
+        // return response()->noContent(); // This sets the status code to 204
         return sendResponse(message:'page '.__('lang.successfully_deleted'));
     }
 }

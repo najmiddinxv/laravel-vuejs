@@ -15,7 +15,7 @@ class PageResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'body' => $this->description,
-            'image' => $this->formatImageUrls($this->main_image),
+            'main_image' => $this->formatImageUrls($this->main_image),
             'category' => [
                 'id' => $this->category_id,
                 'name' => $this->category->name,
