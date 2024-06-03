@@ -20,7 +20,7 @@ class PageCollection extends BaseResourceCollection
                     'slug' => $page->slug,
                     'description' => $page->description,
                     'main_image' => $this->formatImageUrls($page->main_image),
-                    'category' => new CategoryResource($page->whenLoaded('category')), // qisqasi mana shunday chaqiramiz
+                    // 'category' => new CategoryResource($page->whenLoaded('category')), // qisqasi mana shunday chaqiramiz
                     // 'category' => new CategoryResource($page->category),
                     // 'category' => $page->category, // bu ham categoryni qaytaradi faqat n+1 qilib
                     // 'category' => $page->whenLoaded('category'), //bu ham categoryni qaytaradi lekin new CategoryResource($page->whenLoaded('category')) mana shunday qaytarsak bu cateforyni resoursga solib biz hohlaganday chiqaradi
