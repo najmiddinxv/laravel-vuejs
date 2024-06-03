@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Contracts\CategoryServiceContract;
 use App\Contracts\NewsServiceContract;
+use App\Contracts\PageServiceContract;
 use App\Contracts\PostServiceContract;
 use App\Services\CategoryService;
 use App\Services\CategoryServiceWorkApi;
 use App\Services\NewsService;
+use App\Services\PageService;
 use App\Services\PostLocalService;
 use App\Services\PostService;
 use App\Services\PostServiceWorkApi;
@@ -26,6 +28,7 @@ class ServicesProvider extends ServiceProvider
         $this->app->bind(CategoryServiceContract::class, CategoryServiceWorkApi::class);
         // $this->app->bind(CategoryServiceContract::class, CategoryService::class);
         $this->app->bind(NewsServiceContract::class, NewsService::class);
+        $this->app->bind(PageServiceContract::class, PageService::class);
 
 
         // $appEnv = config('app.env');

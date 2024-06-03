@@ -2,34 +2,27 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\V1\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class PageResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
-            'id'=> $this->id,
-            'title'=> $this->title,
-            'slug'=> $this->slug,
-            'description'=> $this->description,
-            'view_count'=> $this->view_count,
-            'status'=> $this->status,
-            'slider'=> $this->slider,
-            'main_image' => $this->formatImageUrls($this->main_image),
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'description' => $this->description,
+            'body' => $this->description,
+            'image' => $this->formatImageUrls($this->main_image),
             'category' => [
                 'id' => $this->category_id,
                 'name' => $this->category->name,
             ],
-            // 'category_id' => new CategoryResource($this->whenLoaded('category')),
-            'tags' => TagResource::collection($this->whenLoaded('tags')),
-            'jsonplaceholderComments' => $this->jsonplaceholderComments,
-            // 'meta' => [
-            //     'key' => 'value',
-            // ],
+            'status' => $this->status,
+            'view_count' => $this->view_count,
+            'slider' => $this->slider,
         ];
     }
 

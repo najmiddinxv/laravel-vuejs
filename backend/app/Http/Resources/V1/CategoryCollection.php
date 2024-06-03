@@ -11,14 +11,6 @@ class CategoryCollection extends BaseResourceCollection
         parent::__construct($resource);
     }
 
-    // public function toArray($request)
-    // {
-    //     return [
-    //         'categories' => $this->collection,
-    //         'pagination' => $this->pagination,
-    //     ];
-    // }
-
     public function toArray($request)
     {
         return [
@@ -46,6 +38,17 @@ class CategoryCollection extends BaseResourceCollection
         });
     }
 
+
+    //yoki shunaqa chiqarish mumkin
+    // public function toArray($request)
+    // {
+    //     return [
+    //         'categories' => $this->collection,
+    //         'pagination' => $this->pagination,
+    //     ];
+    // }
+
+     //yoki mana shunaqa chiqarish mumkin
     // public function toArray($request)
     // {
     //     return [
