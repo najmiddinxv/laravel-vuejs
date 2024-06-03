@@ -49,7 +49,7 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
             $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
-            // $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
+
             if (isset($data['image'][$configLocale])) {
                 $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
             } else {
@@ -88,13 +88,6 @@ class NewsController extends Controller
 
         $data = $request->validated();
 
-        // if (isset($data['image'])) {
-        //     $this->fileUploadService->resizedImageDelete($news->main_image);
-        //     $data['main_image'] = $this->fileUploadService->resizeImageUpload($data['image'], '/uploads/news/'.now()->format('Y/m/d'));
-        // }else{
-        //     $data['main_image'] = $news->main_image;
-        // }
-
         $news->category_id = $data['category_id'];
         $news->status = $data['status'];
         $news->slider = $data['slider'];
@@ -105,14 +98,12 @@ class NewsController extends Controller
             $news->translateOrNew($configLocale)->slug = Str::slug($data['title'][$configLocale] ?? $data['title']['uz']);
             $news->translateOrNew($configLocale)->description = $data['description'][$configLocale] ?? $data['description']['uz'];
             $news->translateOrNew($configLocale)->body = $data['body'][$configLocale] ?? $data['description']['uz'];
-            $news->translateOrNew($configLocale)->main_image = $data['main_image'] ?? null;
 
             if (isset($data['image'][$configLocale])) {
                 $this->fileUploadService->resizedImageDelete($news->translate($configLocale)->main_image);
                 $news->translateOrNew($configLocale)->main_image = $this->fileUploadService->resizeImageUpload($data['image'][$configLocale], '/uploads/news/' . now()->format('Y/m/d'));
             } else {
                 $news->translateOrNew($configLocale)->main_image = $news->translate($configLocale)->main_image;
-                // dd($news->translate($configLocale)->main_image);
             }
 
             $news->save();
