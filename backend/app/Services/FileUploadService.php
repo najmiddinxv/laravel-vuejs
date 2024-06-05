@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Helpers\ImageResize;
+use DOMDocument;
+use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -153,6 +155,73 @@ class FileUploadService
     {
         Storage::delete($file ?? '');
     }
+
+
+
+
+    //text editorlardan yuklangan rasmlar(base64_encode) ni uploads papkasiga saqlab bazaga img tagining srx ga url ko'rsatib beradi
+    public function processBodyImages(&$data, $locales, $path)
+    {
+        foreach ($locales as $configLocale) {
+            if (isset($data['body'][$configLocale])) {
+                $content = $data['body'][$configLocale];
+
+                $dom = new DOMDocument();
+                libxml_use_internal_errors(true);
+                $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                libxml_clear_errors();
+
+                $imageFiles = $dom->getElementsByTagName('img');
+                // $path = 'uploads/posts/' . now()->format('Y/m/d');
+                $storagePath = Storage::path($path);
+
+                if (!file_exists($storagePath)) {
+                    mkdir($storagePath, 0775, true);
+                }
+
+                foreach ($imageFiles as $item => $image) {
+                    $dataSrc = $image->getAttribute('src');
+
+                    if (strpos($dataSrc, 'data:image') === 0) {
+                        list($type, $dataSrc) = explode(';', $dataSrc);
+                        list(, $dataSrc) = explode(',', $dataSrc);
+                        $imageData = base64_decode($dataSrc);
+
+                        $imageName = sha1(microtime(true) . $item) . '.png'; // generate a unique filename for the image
+                        $imageFullPath = $storagePath . '/' . $imageName;
+                        $imageWebPath = "/storage/{$path}/" . $imageName;
+
+                        if (file_put_contents($imageFullPath, $imageData) === false) {
+                            throw new Exception("Failed to write file to {$imageFullPath}");
+                        }
+
+                        $image->removeAttribute('src');
+                        $image->setAttribute('src', $imageWebPath);
+                    }
+                }
+
+                $data['body'][$configLocale] = $dom->saveHTML();
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // https://laravel.com/docs/11.x/filesystem
     // $path = $request->file('avatar')->storeAs(
