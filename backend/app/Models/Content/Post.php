@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Model;
 
 class Post extends BaseModel
 {

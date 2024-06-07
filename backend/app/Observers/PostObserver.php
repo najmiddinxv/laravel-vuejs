@@ -22,6 +22,12 @@ class PostObserver
         $post->slug = $slugs;
     }
 
+    // $data['slug'] = [
+    //     'uz' => Str::slug($data['title']['uz']),
+    //     'ru' => Str::slug($data['title']['ru']),
+    //     'en' => Str::slug($data['title']['en']),
+    // ];
+
     /**
      * Handle the Post "created" event.
      */

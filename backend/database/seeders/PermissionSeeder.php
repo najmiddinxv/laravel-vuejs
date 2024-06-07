@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\ModelHasPermission;
 use App\Models\ModelHasRole;
-use App\Models\Permission;
-use App\Models\Role;
+use App\Models\User\Permission;
+use App\Models\User\Role;
 use App\Models\RoleHasPermission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

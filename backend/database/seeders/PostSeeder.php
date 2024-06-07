@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
+use App\Models\Content\Post;
+use App\Models\Content\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,23 +16,22 @@ class PostSeeder extends Seeder
     {
         Post::truncate();
 
-        //you can also use the method
-        // PropertyGroup::factory(random_int(5, 10))
-        //     ->has(
-        //           Property::factory()
-        //               ->hasValues(random_int(5, 10))->count(random_int(5, 10))
-        //         , 'properties'
-        //     )
-        //     ->create();
-        // dump('create property group');
-
-        // $posts = Post::factory()->count(20000)->make();
+        // $posts = Post::factory()->count(20000)->make();// 11,809.66 ms DONE
 
         // $posts->chunk(2000)->each(function ($chunk) {
         //     Post::insert($chunk->toArray());
         // });//5,200.84 ms DONE
 
-        Post::factory(20)->create(); // 11,809.66 ms DONE
+        // Post::factory(20)->create();
+
+        // PostFactory::new()->count(1)->create();
+
+        $tags = Tag::factory(10)->create();
+        Post::factory(20)->create()->each(function ($post) use ($tags) {
+            $post->tags()->attach(
+                $tags->random(rand(1, 3))->pluck('id')->toArray()
+            );
+        });
         dump('post seeder done');
     }
 

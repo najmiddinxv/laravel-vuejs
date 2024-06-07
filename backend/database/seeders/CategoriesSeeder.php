@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;;
+use App\Models\Content\Category;
 use Illuminate\Database\Seeder;
 
 class CategoriesSeeder extends Seeder
@@ -12,11 +12,7 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Category::truncate();
-        // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-
         $data = [
             [
                 'name' =>'{"uz":"Sport yangiliklari","ru":"Спортивные новости","en":"Sports news"}'
@@ -28,9 +24,7 @@ class CategoriesSeeder extends Seeder
                 'name' =>'{"uz":"Xorij yangiliklari","ru":"Зарубежные новости","en":"Foreign news"}'
             ],
         ];
-
         Category::insert($data);
-
         dump('Category seeder done');
     }
 }
