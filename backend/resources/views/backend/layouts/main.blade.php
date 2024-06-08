@@ -63,7 +63,9 @@
       </form>
     </div> --}}
         <!-- End Search Bar -->
-
+        <div>
+            <a href="{{ route('frontend.index') }}" target="_blank" style="margin-left: 15px">go to site</a>
+        </div>
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 

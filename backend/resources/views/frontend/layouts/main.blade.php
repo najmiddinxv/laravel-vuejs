@@ -107,14 +107,14 @@
                                     <span class="fas fa-angle-down"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                            <li>
-                                                <a rel="alternate" hreflang="{{ $localeCode }}"
-                                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                    {{ $properties['native'] }}
-                                                </a>
-                                            </li>
-                                        @endforeach
+                                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <li>
+                                            {{-- <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"> --}}
+                                            <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, route('frontend.index'), [], true) }}">
+                                                {{ $properties['native'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

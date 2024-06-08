@@ -11,6 +11,7 @@ use App\Models\Content\Tag;
 use DOMDocument;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class PostController extends Controller
 {
@@ -37,7 +38,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $data = $request->validated();
-
+        LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
         $this->fileUploadService->processBodyImages(data:$data, locales:config('app.locales'),path:'uploads/posts/' . now()->format('Y/m/d'));
 
         if (isset($data['image'])) {
