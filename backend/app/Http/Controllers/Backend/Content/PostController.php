@@ -38,7 +38,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $data = $request->validated();
-        LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
+        
         $this->fileUploadService->processBodyImages(data:$data, locales:config('app.locales'),path:'uploads/posts/' . now()->format('Y/m/d'));
 
         if (isset($data['image'])) {
