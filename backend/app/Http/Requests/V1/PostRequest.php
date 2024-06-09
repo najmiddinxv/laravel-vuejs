@@ -22,7 +22,7 @@ class PostRequest extends BaseApiFormRequest
             'page' => 'nullable|integer',
         ];
     }
-    
+
     public function store()
     {
         return [

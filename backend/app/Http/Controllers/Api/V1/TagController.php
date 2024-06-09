@@ -57,6 +57,6 @@ class TagController extends BaseApiController
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
-        return sendResponse(code:Response::HTTP_NO_CONTENT, message:'tag '.__('lang.successfully_deleted'));
+        return sendResponse(code:200, message:'tag '.__('lang.successfully_deleted'));
     }
 }

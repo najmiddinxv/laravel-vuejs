@@ -38,7 +38,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $data = $request->validated();
-        
+
         $this->fileUploadService->processBodyImages(data:$data, locales:config('app.locales'),path:'uploads/posts/' . now()->format('Y/m/d'));
 
         if (isset($data['image'])) {
@@ -92,7 +92,6 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-
         $this->fileUploadService->resizedImageDelete($post->main_image);
         $post->delete();
         return back()->with('success', 'post ' . __('lang.successfully_deleted'));

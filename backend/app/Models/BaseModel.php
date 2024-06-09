@@ -14,7 +14,7 @@ class BaseModel extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new ActiveScope);
+        // static::addGlobalScope(new ActiveScope);
 
         //yoki shu yerga ham yozsak bo'ladi
         // static::addGlobalScope('status', function (Builder $builder) {

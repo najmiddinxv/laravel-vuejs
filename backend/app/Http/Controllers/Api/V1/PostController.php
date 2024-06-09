@@ -8,6 +8,7 @@ use App\Http\Filters\V1\PostFilter;
 use App\Http\Requests\V1\PostRequest;
 use App\Http\Resources\V1\PostCollection;
 use App\Http\Resources\V1\PostResource;
+use App\Models\Content\Post;
 use App\Services\JsonplaceholderApiService;
 use Throwable;
 
@@ -28,8 +29,6 @@ class PostController extends BaseApiController
     {
         // $post = new PostResource($this->postService->show($id));
         // return sendResponse(message:'post item', data: $post);
-
-
 
         //jsonplaceholderApisidan bizning bazamizdagi postni id ge teng bo'lgan commentlarni olish xolati
         $post = $this->postService->show($id);
