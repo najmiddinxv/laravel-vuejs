@@ -16,4 +16,24 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+
+    // public function setUp(): void
+    // {
+    //     parent::setUp();
+
+    //     // Artisan::call("migrate:reset");
+    //     // Artisan::call("migrate");
+    //     // Artisan::call("db:seed");
+    //     // Artisan::call("db:seed --class=CategoriesSeeder");
+    //     // Artisan::call("db:seed --class=PostSeeder");
+
+    // }
+
+    // public function tearDown(): void
+    // {
+    //     parent::tearDown();
+
+    // }
+
 }

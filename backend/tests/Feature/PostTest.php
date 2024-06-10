@@ -11,25 +11,6 @@ class PostTest extends TestCase
 {
     use WithoutMiddleware;
 
-    // public function setUp(): void
-    // {
-    //     parent::setUp();
-
-    //     // Artisan::call("migrate:reset");
-    //     // Artisan::call("migrate");
-    //     // Artisan::call("db:seed");
-    //     // Artisan::call("db:seed --class=CategoriesSeeder");
-    //     // Artisan::call("db:seed --class=PostSeeder");
-
-    // }
-
-    // public function tearDown(): void
-    // {
-    //     parent::tearDown();
-
-    // }
-
-
     public function test_create_posts(): void
     {
         $title_uz = fake()->sentence();

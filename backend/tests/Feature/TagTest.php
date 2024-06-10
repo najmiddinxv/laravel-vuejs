@@ -11,7 +11,6 @@ class TagTest extends TestCase
 {
     use WithoutMiddleware;
 
-
     public function test_show_create():void
     {
         $data = [
@@ -27,13 +26,11 @@ class TagTest extends TestCase
         $this->assertDatabaseHas('tags', ['name->uz' => 'Universitet']); // Check specific JSON key
     }
 
-
     public function test_tag_list(): void
     {
         $response = $this->get(route('api.tags.index'));
         $response->assertStatus(200);
     }
-
 
     public function test_show_tag():void
     {
