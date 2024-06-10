@@ -28,7 +28,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3.0'
+        php-version: '8.3'
 
     - name: Cache Composer dependencies
       uses: actions/cache@v2
@@ -51,6 +51,7 @@ jobs:
         sudo apt-get install -y postgresql-client
         php artisan config:cache --working-dir=backend
         php artisan migrate --force --working-dir=backend
+        php artisan db:seed --force --working-dir=backend
       env:
         DB_CONNECTION: pgsql
         DB_HOST: 127.0.0.1
@@ -59,8 +60,6 @@ jobs:
         DB_USERNAME: root
         DB_PASSWORD: password
 
-    - name: Run seeder
-      run: php artisan db:seed --working-dir=backend
     - name: Run tests
       run: php artisan test --working-dir=backend
       env:
