@@ -37,12 +37,12 @@ jobs:
         key: ${{ runner.os }}-composer-${{ hashFiles('**/backend/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
-    - name: Generate JWT Secret
-      run: php artisan jwt:secret
-      working-directory: backend
-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
+      working-directory: backend
+
+    - name: Generate JWT Secret
+      run: php artisan jwt:secret
       working-directory: backend
 
     - name: Copy .env.example to .env
