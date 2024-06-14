@@ -2,10 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TagsIndex from '../views/tags/TagsIndex.vue'
 import TagsShow from '../views/tags/TagsShow.vue'
-import TagsCreate from '../views/tags/TagsCreate.vue'
-import TagsEdit from '../views/tags/TagsEdit.vue'
-// import CategoriesView from '../views/CategoriesView.vue'
-// import TagsView from '../views/TagsView.vue'
 
 const routes = [
   {
@@ -30,17 +26,8 @@ const routes = [
     path: '/tags/show/:id',
     name: 'tagsShow',
     component: TagsShow
-  },
-  {
-    path: '/tags/create',
-    name: 'tagsCreate',
-    component: TagsCreate
-  },
-  {
-    path: '/tags/edit/:id',
-    name: 'tagsEdit',
-    component: TagsEdit
-  },
+  }, 
+  
 
 ]
 

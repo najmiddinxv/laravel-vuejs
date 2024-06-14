@@ -6,12 +6,6 @@
             </router-link> |
             <router-link :to="{ name: 'tagsShow', params: { id: 1 } }">
                 Show
-            </router-link> |
-            <router-link :to="{ name: 'tagsCreate' }">
-                Create
-            </router-link> |
-            <router-link :to="{ name: 'tagsEdit', params: { id: 1 } }">
-                Edit
             </router-link>
         </nav>
     </div>

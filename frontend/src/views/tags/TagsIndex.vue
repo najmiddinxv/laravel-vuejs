@@ -4,49 +4,40 @@ import TagService from '@/services/TagService';
 import TagsMenuComponent from '@/components/TagsMenuComponent.vue';
 import TagsListComponent from '@/components/Tags/TagsListComponent.vue';
 
+
+
+//============crud functions========================================
 const tags = ref([]);
 
 const loadTags = async () => {
-  try {
-    const response = await TagService.getTags();
-    tags.value = response.data.tags;
-  } catch (error) {
-    console.error('Error fetching tags:', error);
-  }
+  const response = await TagService.getTags();
+  tags.value = response.data.tags;
 };
 
 const handleDeleteTag = (id) => {
   console.log(`Delete tag with ID: ${id}`);
-  // Add your delete logic here if needed
+  
 };
-
-const onLanguageChange = () => {
-  loadTags();
-};
-
+//================================================================
 onMounted(() => {
   loadTags();
-  document.addEventListener('language-changed', onLanguageChange);
+  document.addEventListener('language-changed', function() {
+    loadTags()
+  });
 });
 
 onUnmounted(() => {
-  document.removeEventListener('language-changed', onLanguageChange);
+  document.addEventListener('language-changed', function() {
+    loadTags()
+  });
 });
-
 </script>
-
 <template>
   <div class="tags-index">
     <tags-menu-component></tags-menu-component>
     <h1>Tags List</h1>
-   
-    <TagsListComponent
-      :tags="tags"
-      @deleteDataItem="handleDeleteTag"
-    />
+    <TagsListComponent :tags="tags" @deleteDataItem="handleDeleteTag" />
   </div>
 </template>
-
 <style scoped>
-/* Add your styles here */
 </style>
