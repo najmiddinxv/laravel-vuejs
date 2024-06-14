@@ -10,6 +10,6 @@ import TagsMenuComponent from "@/components/TagsMenuComponent.vue"
     </div>
 </template>
 
-<style>
+<style scoped>
 
 </style>

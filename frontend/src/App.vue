@@ -6,7 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 <template>
   <div class="container">
-    <main-view></main-view>
+    <MainView/>
     <router-view/>
   </div>
 </template>

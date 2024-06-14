@@ -1,17 +1,11 @@
 <script setup>
-
-import languageStore from '@/store/language';
-const changeLanguage = (lang) => {
-  languageStore.setLanguage(lang);
-};
-
+import LanguageSelector from '@/components/LanguageSelector.vue';
 </script>
 
 <template>
   <div class="main-view">
-    <div>
-      <button @click="changeLanguage('en')">English</button>
-      <button @click="changeLanguage('uz')">Uzbek</button>
+    <div class="language-component">
+      <LanguageSelector />
     </div>
     <nav class="default-routers">
       <router-link to="/">Home</router-link> |
@@ -53,5 +47,10 @@ nav a.router-link-exact-active {
 
 .main-view {
   text-align: center;
+}
+.main-view .language-component {
+  display: flex;
+  justify-content: end;
+
 }
 </style>

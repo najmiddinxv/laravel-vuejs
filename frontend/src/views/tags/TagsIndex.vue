@@ -1,21 +1,15 @@
 <script setup>
-import { ref, onMounted,watch } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import TagService from '@/services/TagService';
 import TagsMenuComponent from '@/components/TagsMenuComponent.vue';
 import TagsListComponent from '@/components/Tags/TagsListComponent.vue';
-import languageStore from '@/store/language';
 
 const tags = ref([]);
 
-const getTags = async () => {
+const loadTags = async () => {
   try {
     const response = await TagService.getTags();
-    if (response.success && response.code === 200) {
-      tags.value = response.data.tags;
-      console.log([...tags.value]);
-    } else {
-      console.error('Failed to fetch tags:', response.message);
-    }
+    tags.value = response.data.tags;
   } catch (error) {
     console.error('Error fetching tags:', error);
   }
@@ -26,13 +20,18 @@ const handleDeleteTag = (id) => {
   // Add your delete logic here if needed
 };
 
+const onLanguageChange = () => {
+  loadTags();
+};
+
 onMounted(() => {
-  getTags();
-});
-watch(() => languageStore.currentLanguage, () => {
-  getTags();
+  loadTags();
+  document.addEventListener('language-changed', onLanguageChange);
 });
 
+onUnmounted(() => {
+  document.removeEventListener('language-changed', onLanguageChange);
+});
 
 </script>
 
