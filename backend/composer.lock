@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca1efae3413d293db471bdc1739fd7d7",
+    "content-hash": "8533dfa8a7576025f1431c293068b0e8",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1337,16 +1337,16 @@
         },
         {
             "name": "defstudio/telegraph",
-            "version": "v1.44.4",
+            "version": "v1.48.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/defstudio/telegraph.git",
-                "reference": "e298fbf430b69853faa1c290d472c8f7093c30f7"
+                "reference": "fd1aba5357a86e4233a53a3fd1188090dad6c297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/defstudio/telegraph/zipball/e298fbf430b69853faa1c290d472c8f7093c30f7",
-                "reference": "e298fbf430b69853faa1c290d472c8f7093c30f7",
+                "url": "https://api.github.com/repos/defstudio/telegraph/zipball/fd1aba5357a86e4233a53a3fd1188090dad6c297",
+                "reference": "fd1aba5357a86e4233a53a3fd1188090dad6c297",
                 "shasum": ""
             },
             "require": {
@@ -1412,7 +1412,7 @@
             ],
             "support": {
                 "issues": "https://github.com/defstudio/telegraph/issues",
-                "source": "https://github.com/defstudio/telegraph/tree/v1.44.4"
+                "source": "https://github.com/defstudio/telegraph/tree/v1.48.1"
             },
             "funding": [
                 {
@@ -1428,7 +1428,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-26T11:44:23+00:00"
+            "time": "2024-06-28T15:57:01+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -13196,5 +13196,5 @@
     "platform-overrides": {
         "php": "8.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
