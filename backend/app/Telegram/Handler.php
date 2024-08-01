@@ -14,9 +14,9 @@ use DefStudio\Telegraph\Models\TelegraphBot;
 use Illuminate\Support\Stringable;
 
 
-// use App\Models\UserRegistration;
+use App\Models\TelegraphUser;
 use Illuminate\Support\Facades\Redis;
-
+use Illuminate\Support\Facades\Storage;
 
 class Handler extends WebhookHandler
 {
@@ -36,6 +36,9 @@ class Handler extends WebhookHandler
             ReplyKeyboard::make()->row([
                 ReplyButton::make('ℹ️ Biz haqimizda'),
                 ReplyButton::make("Ro'yxatdan o'tish"),
+            ])->row([
+                ReplyButton::make("Rasm"),
+                ReplyButton::make("Fayl"),
             ])->buttons(
                 [
                     ReplyButton::make('inline keyboard'),
@@ -45,57 +48,6 @@ class Handler extends WebhookHandler
             )->resize()
         )->send();
     }
-
-    // public function handleChatMessage(Stringable $text):void
-    // {
-
-    //     switch ($text->value()) {
-    //         case "ℹ️ Biz haqimizda":
-    //             $txt = "<strong>Bot bo'yicha qo'llanma:</strong>\n1. /start tugmasini bosing\n2. so'ngra har bir ko'rsatmaga qat'iy amal qilgan holda davom eting";
-    //             $this->reply($txt);
-    //             break;
-    //         case "Asosiy menyu":
-    //             Telegraph::message("Asosiy menyu! Pastdagi menyulardan birini tanlang")
-    //             ->replyKeyboard(
-    //                 ReplyKeyboard::make()->row([
-    //                     ReplyButton::make('ℹ️ Biz haqimizda'),
-    //                     ReplyButton::make("Ro'yxatdan o'tish"),
-    //                 ])->buttons(
-    //                     [
-    //                         ReplyButton::make('inline keyboard'),
-    //                         ReplyButton::make('📍 Manzil'),
-    //                         ReplyButton::make('Asosiy menyu'),
-    //                     ],
-    //                 )->resize()
-    //             )->send();
-    //             break;
-    //         case "📍 Manzil":
-    //             Telegraph::location(41.311409765335064, 69.27943348440989)->send();
-    //             break;
-    //         case "inline keyboard":
-    //             Telegraph::message('Выбери какое-то действие')
-    //                 ->keyboard(
-    //                     Keyboard::make()->buttons([
-    //                         Button::make('Перейти на сайт')->url('https://areaweb.su'),
-    //                         Button::make('Поставить лайк')->action('help'),
-    //                         Button::make('Подписаться')
-    //                             ->action('subscribe')
-    //                             ->param('channel_name', '@areaweb'),
-    //                     ])
-    //                 )->send();
-    //             break;
-    //         case "Ro'yxatdan o'tish":
-    //             Telegraph::message("Ism familyangizni yozing")
-    //             ->replyKeyboard(
-    //                 ReplyKeyboard::make()->buttons([ReplyButton::make('Asosiy menyu')])->resize()
-    //             )->send();
-    //             break;
-
-    //         default:
-    //         $this->reply($text);
-    //             break;
-    //     }
-    // }
 
 
     public function handleChatMessage(Stringable $text): void
@@ -108,7 +60,7 @@ class Handler extends WebhookHandler
         $userRegistration = Redis::get($registrationKey);
         $userRegistration = $userRegistration ? json_decode($userRegistration, true) : ['step' => 0, 'data' => []];
 
-        \Log::info("Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
+        // \Log::info("Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
 
         if ($textValue === "ℹ️ Biz haqimizda") {
             $this->sendAboutInfo();
@@ -118,13 +70,17 @@ class Handler extends WebhookHandler
             $this->sendLocation();
         } elseif ($textValue === "inline keyboard") {
             $this->sendInlineKeyboard();
+        } elseif ($textValue === "Rasm") {
+            Telegraph::photo(Storage::path('uploads/categories/2024/04/18/l_e8cccffbbddc99a042fdc2bdeb168ae2.jpg'))->html('<b>Mana rasm</b>')->send();
+        } elseif ($textValue === "Fayl") {
+            $this->sendInlineKeyboard();
         } elseif ($textValue === "Ro'yxatdan o'tish") {
             // Start the registration process
             $userRegistration['step'] = 1;
             $userRegistration['data'] = [];
             Redis::set($registrationKey, json_encode($userRegistration));
 
-            \Log::info("After Registration Start Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
+            // \Log::info("After Registration Start Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
 
             Telegraph::message("Ism familyangizni yozing")
                 ->replyKeyboard(
@@ -139,27 +95,39 @@ class Handler extends WebhookHandler
                 $userRegistration['data']['age'] = $textValue;
                 $userRegistration['step'] = 3;
             } elseif ($userRegistration['step'] === 3) {
+
+                $userRegistration['data']['phone_number'] = $text;
+                $userRegistration['step'] = 4;
+
+            } elseif ($userRegistration['step'] === 4) {
                 $userRegistration['data']['email'] = $textValue;
-                $userRegistration['step'] = 4; // Indicating registration is complete
+                $userRegistration['step'] = 5; // Indicating registration is complete
 
                 // Save data to the database
-                // UserRegistration::create([
-                //     'chat_id' => $chatId,
-                //     'name' => $userRegistration['data']['name'],
-                //     'age' => $userRegistration['data']['age'],
-                //     'email' => $userRegistration['data']['email'],
-                //     'step' => $userRegistration['step'],
-                // ]);
+                TelegraphUser::create([
+                    'chat_id' => $chatId,
+                    'name' => $userRegistration['data']['name'],
+                    'age' => $userRegistration['data']['age'],
+                    'email' => $userRegistration['data']['email'],
+                    'phone_number' => $userRegistration['data']['phone_number'],
+                    'step' => $userRegistration['step'],
+                ]);
 
                 Redis::del($registrationKey); // Clear temporary data
 
-                $this->reply("Registration complete! Here is your data: " . json_encode($userRegistration['data']));
+                // $this->reply("Registration complete! Here is your data: " . json_encode($userRegistration['data']));
+                Telegraph::message("Tabriklaymiz siz muvaffaqiyatli ro'yxatdan o'tdingiz. Siz kiritgan ma'lumotlar ".json_encode($userRegistration['data']))
+                    ->keyboard(
+                        Keyboard::make()->buttons([
+                            Button::make('Asosiy menyuga qaytish')->action('sendMainMenu'),
+                        ])
+                    )->send();
                 return;
             }
 
             Redis::set($registrationKey, json_encode($userRegistration));
 
-            \Log::info("During Registration Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
+            // \Log::info("During Registration Step: {$userRegistration['step']}, Data: " . json_encode($userRegistration['data']));
 
             $this->sendNextRegistrationStep($userRegistration['step']);
         }
@@ -175,6 +143,16 @@ class Handler extends WebhookHandler
                     )->send();
                 break;
             case 3:
+                Telegraph::message("telefon raqamingizni yozing")
+                    ->replyKeyboard(
+                        ReplyKeyboard::make()->buttons([
+                            ReplyButton::make('Telefon raqamni yuborish')->requestContact(),
+                            ReplyButton::make('Asosiy menyu')
+                        ])->resize()
+                    )->send();
+
+                break;
+            case 4:
                 Telegraph::message("Elektron pochtangizni yozing")
                     ->replyKeyboard(
                         ReplyKeyboard::make()->buttons([ReplyButton::make('Asosiy menyu')])->resize()
@@ -189,7 +167,7 @@ class Handler extends WebhookHandler
         $this->reply($txt);
     }
 
-    private function sendMainMenu(): void
+    public function sendMainMenu(): void
     {
         Telegraph::message("Asosiy menyu! Pastdagi menyulardan birini tanlang")
             ->replyKeyboard(
