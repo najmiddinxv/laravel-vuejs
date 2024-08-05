@@ -5,7 +5,7 @@ defineProps({
   tags: {
     type: Array,
     required: true
-  }
+  },
 });
 
 defineEmits(['deleteDataItem']);
@@ -13,9 +13,10 @@ defineEmits(['deleteDataItem']);
 
 <template>
   <div class="tags-list-component">
-    <ul class="list-group">
-      <li v-for="(tag, index) in tags" :key="tag.id" class="list-group-item">
-        <span>{{ index + 1 }}. 
+   <ul class="list-group">
+      <li v-for="(tag) in tags" :key="tag.id" class="list-group-item">
+        <!-- <span>{{ index + 1 }}. -->
+        <span>{{ tag.id }}.
           <!-- <router-link :to="{ name: 'tagsShow', params: { id: tag.id } }">
             {{ tag.name }}
           </router-link> -->
@@ -27,6 +28,14 @@ defineEmits(['deleteDataItem']);
         </div>
       </li>
     </ul>
+
+    <!-- <ul class="list-group">
+      <li v-for="(tag, index) in tags" :key="tag.id" class="list-group-item">
+        <span>{{ index + 1 + (currentPage.value - 1) * pagination.value.per_page }}. {{ tag.name }} </span>
+        <button @click="$emit('deleteDataItem', tag.id)" class="btn btn-danger">Delete</button>
+      </li>
+    </ul> -->
+    
   </div>
 </template>
 
