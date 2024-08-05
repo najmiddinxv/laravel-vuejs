@@ -4,13 +4,16 @@
             <router-link :to="{ name: 'tagsIndex' }">
                 Index
             </router-link> |
-            <router-link :to="{ name: 'tagsShow', params: { id: 1 } }">
-                Show
+            <router-link :to="{ name: 'tagsCreate'}">
+                Create
             </router-link>
         </nav>
     </div>
 </template>
 <style>
+.tags-routes{
+    text-align: center;
+}
 .tags-routes nav{
     padding: 0;
 }

@@ -10,8 +10,7 @@ import LanguageSelector from '@/components/LanguageSelector.vue';
     <nav class="default-routers">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/tags">Tags</router-link> |
-      <router-link to="/categories">Categoris</router-link>
+      <router-link to="/tags">Tags</router-link>
     </nav>
 
   </div>
@@ -22,7 +21,7 @@ import LanguageSelector from '@/components/LanguageSelector.vue';
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
 
