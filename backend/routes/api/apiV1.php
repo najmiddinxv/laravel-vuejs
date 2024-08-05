@@ -46,6 +46,8 @@ Route::as('api')->name('api.')->middleware(['addRequestHeader'])->group(function
         Route::get('/', 'baseApiIndex')->name('baseApiIndex')->middleware('role:admin|manager'); //spatie permission ishlayapti
     });
 
+    Route::get('tags/edit/{id}',[TagController::class, 'edit'])->name('tags.edit');
+
     Route::apiResources([
         'posts' => PostController::class,
         'news' => NewsController::class,

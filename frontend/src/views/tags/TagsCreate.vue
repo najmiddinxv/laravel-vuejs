@@ -50,15 +50,15 @@ const createTag = async () => {
     <form @submit.prevent="createTag" class="form-group">
         <div class="form-group">
             <label for="name_uz">Name (uz)</label>
-            <input type="text" name="name" id="name_uz" class="form-control" v-model="tagNames.uz" placeholder="Tag name uz" required />
+            <input type="text" name="name" id="name_uz" class="form-control" v-model="tagNames.uz" placeholder="" required />
         </div>
         <div class="form-group">
             <label for="name_ru">Name (ru)</label>
-            <input type="text" name="name" id="name_ru" class="form-control" v-model="tagNames.ru" placeholder="Tag name ru" required />
+            <input type="text" name="name" id="name_ru" class="form-control" v-model="tagNames.ru" placeholder="" />
         </div>
         <div class="form-group">
             <label for="name_en">Name (en)</label>
-            <input type="text" name="name" id="name_en" class="form-control" v-model="tagNames.en" placeholder="Tag name en" required />
+            <input type="text" name="name" id="name_en" class="form-control" v-model="tagNames.en" placeholder="" />
         </div>
        <div>
         <div class="mt-2"> 

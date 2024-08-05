@@ -31,6 +31,29 @@ const createTag = async (tag) => {
   }
 };
 
+
+const editTag = async (id) => {
+  try {
+    const response = await apiV1.get(`/tags/edit/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    throw error;
+  }
+};
+
+
+const updateTag = async (id, tag) => {
+  try {
+    const response = await apiV1.put(`/tags/${id}`, tag);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating tag:', error);
+    throw error;
+  }
+};
+
+
 const deleteTag = async (id) => {
   try {
     const response = await apiV1.delete(`/tags/${id}`);
@@ -45,5 +68,7 @@ export default {
   getTags,
   getTagsItem,
   createTag,
+  editTag,
+  updateTag,
   deleteTag
 };

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\V1\TagRequest;
 use App\Http\Resources\V1\TagCollection;
+use App\Http\Resources\V1\TagEditResource;
 use App\Http\Resources\V1\TagResource;
 use App\Models\Content\Tag;
 use Illuminate\Http\Response;
@@ -41,6 +42,13 @@ class TagController extends BaseApiController
         $tag = Tag::create($data);
         $tagResource = TagResource::make($tag);
         return sendResponse(code:Response::HTTP_CREATED, message:'tag '.__('lang.successfully_created'), data:$tagResource);
+    }
+
+    public function edit(int $id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tagEditResource = new TagEditResource($tag);
+		return sendResponse(message:'tags item', data:$tagEditResource);
     }
 
     public function update(TagRequest $request, int $id)

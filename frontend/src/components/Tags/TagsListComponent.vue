@@ -21,7 +21,10 @@ defineEmits(['deleteDataItem']);
           </router-link> -->
           <router-link :to="`/tags/${tag.id}`">{{ tag.name }}</router-link>
         </span>
-        <button @click="$emit('deleteDataItem', tag.id)" class="btn btn-danger">Delete</button>
+        <div class="actions">
+          <router-link :to="`/tags/${tag.id}/edit`" class="btn btn-success actions-item">edit</router-link>
+          <button @click="$emit('deleteDataItem', tag.id)" class="btn btn-danger actions-item">Delete</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -31,5 +34,11 @@ defineEmits(['deleteDataItem']);
 .list-group-item{
   display: flex;
   justify-content: space-between;
+}
+.actions{
+  display: flex;
+}
+.actions .actions-item{
+  margin-left: 10px;
 }
 </style>
