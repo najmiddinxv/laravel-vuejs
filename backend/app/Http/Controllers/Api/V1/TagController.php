@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Config;
 
 class TagController extends BaseApiController
 {
+    use MyCustomService;
+
     public function index(TagRequest $request)
     {
+        //ishlatib ko'r keyin o'chirib tashaysan
+        $result = MyService::someMethod();
+        echo $result; die; // Output: This is my method!
+
+        
         $queryParam = $request->validated();
         // $perPage = $queryParam['per_page'] ?? Config::get('settings.paginate_per_page'); // Config::set('settings.per_page', 20);
         $perPage = $queryParam['per_page'] ?? 5; // Config::set('settings.per_page', 20);
