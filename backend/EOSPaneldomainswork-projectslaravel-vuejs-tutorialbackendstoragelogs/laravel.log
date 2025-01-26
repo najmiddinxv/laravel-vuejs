@@ -1,0 +1,17 @@
+[2025-01-26 22:32:21] local.ERROR: include(/mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/../../app/Providers/RepositoriesProvider.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/../../app/Providers/RepositoriesProvider.php): Failed to open stream: No such file or directory at /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/ClassLoader.php:576)
+[stacktrace]
+#0 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#1 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/ClassLoader.php(576): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}()
+#2 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/ClassLoader.php(576): include('...')
+#3 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/composer/ClassLoader.php(427): Composer\\Autoload\\{closure}()
+#4 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(851): Composer\\Autoload\\ClassLoader->loadClass()
+#5 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(785): Illuminate\\Foundation\\Application->resolveProvider()
+#6 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\\Foundation\\Application->register()
+#7 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(765): Illuminate\\Foundation\\ProviderRepository->load()
+#8 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#9 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(263): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap()
+#10 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(447): Illuminate\\Foundation\\Application->bootstrapWith()
+#11 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#12 /mnt/e/OSPanel/domains/tutorial-projects/laravel-vuejs-tutorial/backend/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
+#13 {main}
+"} 
