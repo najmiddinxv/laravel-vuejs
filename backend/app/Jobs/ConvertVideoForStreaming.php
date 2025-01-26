@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\DTOs\VideoData;
 use App\Models\Video;
 use FFMpeg\Format\Video\X264;
 use Illuminate\Bus\Queueable;
@@ -10,50 +11,45 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
-
-// use FFMpeg;
-
 
 class ConvertVideoForStreaming implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
-    public $video;
-
-    public function __construct(Video $video)
-    {
-        $this->video = $video;
-    }
+    public function __construct(private string $original_path){}
 
     public function handle()
     {
-        // create some video formats...
-        // $lowBitrateFormat  = (new X264)->setKiloBitrate(500);
-        // $midBitrateFormat  = (new X264)->setKiloBitrate(1500);
-        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
+        $hlsPath = substr($this->original_path, 0, -4);
 
-        // open the uploaded video from the right disk...
-        FFMpeg::fromDisk($this->video->disk)
-            ->open($this->video->path)
-
-        // call the 'exportForHLS' method and specify the disk to which we want to export...
+        $lowBitrate = (new X264)->setKiloBitrate(250);
+        $midBitrate = (new X264)->setKiloBitrate(500);
+        $highBitrate = (new X264)->setKiloBitrate(1000);
+        FFMpeg::fromDisk('public')
+            ->open("{$this->original_path}")
             ->exportForHLS()
-            ->toDisk('public')
+            // ->setSegmentLength(10) // optional
+            // ->setKeyFrameInterval(48) // optional
+            // ->addFormat($lowBitrate, function($media) {
+            //     $media->addFilter('scale=640:480');
+            // })
+            // ->addFormat($midBitrate, function($media) {
+            //     $media->scale(960, 720);
+            // })
+            ->addFormat($lowBitrate)
+            ->addFormat($midBitrate)
+            ->addFormat($highBitrate)
+            // ->onProgress(function ($percentage, $remaining, $rate) {
+            //     $this->info("{$remaining} seconds left at rate: {$rate}");
+            // })
+            // ->onProgress(function ($percentage) {
+            //    $this->info("{$percentage}% transcoded");
+            // })
+            ->save("{$hlsPath}.m3u8");
 
-        // we'll add different formats so the stream will play smoothly
-        // with all kinds of internet connections...
-            // ->addFormat($lowBitrateFormat)
-            // ->addFormat($midBitrateFormat)
-            ->addFormat($highBitrateFormat)
-
-        // call the 'save' method with a filename...
-            ->save($this->video->id . '.m3u8');
-
-        // update the database so we know the convertion is done!
-        $this->video->update([
-            'converted_for_streaming_at' => now(),
-        ]);
+        // Storage::delete("video/{$this->id}/{$this->guid}");
+        // ConvertVideoForStreaming::dispatch($model->id,$fileName);
     }
 }

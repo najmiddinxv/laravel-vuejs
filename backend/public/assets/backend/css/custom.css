@@ -1,0 +1,9 @@
+.error-data{
+    color:#dc3545;
+}
+.error-data-input{
+    border-color: #dc3545;
+}
+.tox-statusbar__branding, .tox-promotion{
+    display: none;
+}

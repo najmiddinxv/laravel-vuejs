@@ -13,10 +13,17 @@ return [
     |
     */
 
+    //Auth::guard('web') //Auth::guard('api') routeda shunday foydalanayapmiz
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+
+    // 'defaults' => [
+    //     'guard' => 'api',
+    //     'passwords' => 'users',
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -40,8 +47,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // 'api' => [
+        //     'driver' => 'sanctum',
+        //     'provider' => 'users',
+        // ],
         'api' => [
-            'driver' => 'sanctum',
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
     ],
@@ -68,7 +79,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

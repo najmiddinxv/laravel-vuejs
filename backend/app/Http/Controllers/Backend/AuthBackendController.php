@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,12 +60,15 @@ class AuthBackendController extends Controller
             // ]);
 
         }
-//        $credentials = $request->only('email', 'password');
+        // $credentials = $request->only('email', 'password');
         $remember_me = $request->has('remember') ? true : false;
+
+        //remember me ning expire timeni o'rnatish
+        // Auth::setRememberDuration(43200);  43200 minutes (30 days * 24 hours * 60 minutes)
 
         if (auth()->attempt(['email' => $request->email, 'password' => $request->password], $remember_me))
         {
-            return redirect()->route('backend.index'); // Redirect to the user dashboard after login
+            return redirect()->route('backend.index');
         }
 
         return redirect()->route('backend.auth.login')->with('error', 'Invalid login credentials.');

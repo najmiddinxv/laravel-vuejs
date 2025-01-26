@@ -2,9 +2,10 @@
 
 namespace App\View\Components;
 
-use App\Models\Menu;
+use App\Models\Content\Menu;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class HeaderComponent extends Component
@@ -16,8 +17,28 @@ class HeaderComponent extends Component
      */
     public function __construct()
     {
-        $this->menuItems = Menu::with('children')->whereNull('parent_id')->get();
+        $this->menuItems = $this->getMenuItems();
 
+    }
+
+    private function getMenuItems()
+    {
+
+        //bu yerda menu cheksiz vaqtga keshlandi
+        $cachedMenu = Cache::rememberForever('menu', function () {
+            return Menu::with('children')
+            ->whereNull('parent_id')
+            ->where('position',Menu::HEADER_MENU)
+            ->orderBy('menu_order','asc')
+            ->get();
+        });
+
+        return $cachedMenu;
+
+        // //bu yerda 60 bu daqiqa yani 1 soat degani. 1 soatga keshga olayapti
+        // return Cache::remember('menu', 60, function () {
+        //     return Menu::all();
+        // });
     }
 
     /**

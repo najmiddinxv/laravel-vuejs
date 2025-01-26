@@ -21,7 +21,6 @@ class AuthProfileController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -31,12 +30,11 @@ class AuthProfileController extends Controller
         }
 
         $user = User::create([
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('userProfile.auth.login'); // Redirect to the user dashboard after registration
+        return redirect()->route('userProfile.auth.login');
     }
 
     public function showLoginForm()
@@ -72,6 +70,7 @@ class AuthProfileController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return redirect()->route('userProfile.auth.login'); // Redirect to the login page after logout
+        // return redirect()->route('userProfile.auth.login'); // Redirect to the login page after logout
+        return redirect()->route('frontend.index'); // Redirect to the login page after logout
     }
 }

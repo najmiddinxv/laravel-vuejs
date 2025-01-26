@@ -1,26 +1,43 @@
 <?php
+use Illuminate\Http\JsonResponse;
 
-function sendResponse($message,$code = 200, $data = [])
+/**
+ * Send a successful JSON response.
+ *
+ * @param int $code
+ * @param string|null $message
+ * @param mixed $data
+ * @return JsonResponse
+ */
+function sendResponse(int $code = 200, string $message = null, mixed $data = null): JsonResponse
 {
     $response = [
         'success' => true,
         'code' => $code,
-        'message' => $message,
-        'data'    => $data,
+        'message' => $message ?? 'ok',
+        'data' => $data,
     ];
 
     return response()->json($response, $code);
 }
 
-function sendError($message, $code = 404, $data = [])
+/**
+ * Send an error JSON response.
+ *
+ * @param int $code
+ * @param string|null $message
+ * @param mixed $data
+ * @return JsonResponse
+ */
+function sendError(int $code = 404, string $message = null, mixed $data = null): JsonResponse
 {
     $response = [
         'success' => false,
         'code' => $code,
-        'message' => $message,
+        'message' => $message ?? 'An error occurred',
     ];
 
-    if(!empty($data)){
+    if (!is_null($data)) {
         $response['data'] = $data;
     }
 

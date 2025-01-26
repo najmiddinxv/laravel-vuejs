@@ -2,22 +2,57 @@
 
 namespace App\Observers;
 
-use App\Models\Post;
+use App\Models\Content\Post;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class PostObserver
 {
     public function creating(Post $post)
     {
-        $post->slug = Str::slug($post->title);
+        $post->created_by = auth()->user()->id ?? auth('api')->user()?->id;
+
+        $titleTranslations = $post->getTranslations('title');
+        $slugs = [];
+
+        foreach ($titleTranslations as $titleLocale => $title) {
+            $slugs[$titleLocale] = Str::slug($title);
+        }
+
+        $post->slug = $slugs;
     }
+
+    // $data['slug'] = [
+    //     'uz' => Str::slug($data['title']['uz']),
+    //     'ru' => Str::slug($data['title']['ru']),
+    //     'en' => Str::slug($data['title']['en']),
+    // ];
 
     /**
      * Handle the Post "created" event.
      */
     public function created(Post $post): void
     {
+        Cache::forget('banners');
 
+        // $user = $post->created_by;
+        // $user->notify(new NewPostNotification($post));
+    }
+
+    public function updating(Post $post): void
+    {
+        if(auth()->user()?->user_type == 1 ||auth('api')->user()?->user_type == 1){
+            $post->created_by = auth()->user()->id ?? auth('api')->user()->id;
+
+            $titleTranslations = $post->getTranslations('title');
+            $slugs = [];
+
+            foreach ($titleTranslations as $titleLocale => $title) {
+                $slugs[$titleLocale] = Str::slug($title);
+            }
+
+            $post->slug = $slugs;
+        }
     }
 
     /**
@@ -25,8 +60,23 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        //
+        if(auth()->user()?->user_type == 1 || auth('api')->user()?->user_type == 1){
+            Cache::forget('banners');
+        }
     }
+
+
+    /**
+     * Handle the Post "deleting" event.
+     *
+     * @param  \App\Models\Post  $post
+     * @return void
+     */
+    public function deleting(Post $post)
+    {
+        // Perform actions before deleting a post
+    }
+
 
     /**
      * Handle the Post "deleted" event.
@@ -35,6 +85,19 @@ class PostObserver
     {
         //
     }
+
+
+    /**
+     * Handle the Post "restoring" event.
+     *
+     * @param  \App\Models\Post  $post
+     * @return void
+     */
+    public function restoring(Post $post)
+    {
+        // Perform actions before restoring a soft-deleted post
+    }
+
 
     /**
      * Handle the Post "restored" event.
@@ -51,4 +114,7 @@ class PostObserver
     {
         //
     }
+
+
+
 }

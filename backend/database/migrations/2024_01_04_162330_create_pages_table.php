@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id')->nullable();
+            // $table->integer('category_id')->nullable();
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onUpdate('set null')
+            ->onDelete('set null');
             $table->jsonb('title');
             $table->jsonb('slug');
             $table->jsonb('description')->nullable();
             $table->jsonb('body')->nullable();
             $table->jsonb('image')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->integer('view_count')->default(0);
             $table->boolean('slider')->default(0);
             $table->timestamps();

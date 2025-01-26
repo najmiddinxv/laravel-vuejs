@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class AddRequestHeader
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): mixed
     {
         if (!$request->hasHeader('accept')) {

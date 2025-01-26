@@ -37,7 +37,8 @@ return [
      * If enabled, Telegraph dumps received
      * webhook messages to logs
      */
-    'debug_mode' => false,
+    // 'debug_mode' => false,
+    'debug_mode' => env('APP_DEBUG'),
 
     /*
      * If enabled, unknown webhook commands are

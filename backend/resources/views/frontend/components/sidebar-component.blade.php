@@ -17,21 +17,13 @@
             </div>
             <div class="sidebar-info">
                 <ul>
-                    <li>
-                        <a href="#">national <span>69</span></a>
-                    </li>
-                    <li>
-                        <a href="#">national <span>25</span></a>
-                    </li>
-                    <li>
-                        <a href="#">sports <span>18</span></a>
-                    </li>
-                    <li>
-                        <a href="#">megazine <span>37</span></a>
-                    </li>
-                    <li>
-                        <a href="#">health <span>12</span></a>
-                    </li>
+                    @forelse ($categories as $category)
+                        <li>
+                            <a href="#">{{ $category->name }} <span>{{ $category->posts_count+$category->news_count+$category->pages_count }}</span></a>
+                        </li>
+                    @empty
+
+                    @endforelse
                 </ul>
             </div>
         </div>
@@ -81,55 +73,22 @@
                 </li>
             </ul>
         </div>
-        <div class="sidebar-item archives">
-            <div class="title">
-                <h4>Archives</h4>
-            </div>
-            <div class="sidebar-info">
-                <ul>
-                    <li><a href="#">Aug 2018</a></li>
-                    <li><a href="#">Sept 2018</a></li>
-                    <li><a href="#">Nov 2018</a></li>
-                    <li><a href="#">Dec 2018</a></li>
-                </ul>
-            </div>
-        </div>
+
         <div class="sidebar-item gallery">
             <div class="title">
                 <h4>Gallery</h4>
             </div>
             <div class="sidebar-info">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/img/800x800.png" alt="thumb">
-                        </a>
-                    </li>
+                    @forelse($images as $image)
+                        <li>
+                            <a href="{{ Storage::url($image->path['large'] ?? '') }}">
+                                <img src="{{ Storage::url($image->path['medium'] ?? '') }}" alt="img">
+                            </a>
+                        </li>
+                    @empty
+
+                    @endforelse
                 </ul>
             </div>
         </div>
@@ -162,30 +121,6 @@
                 </ul>
             </div>
         </div>
-        <div class="sidebar-item tags">
-            <div class="title">
-                <h4>tags</h4>
-            </div>
-            <div class="sidebar-info">
-                <ul>
-                    <li><a href="#">Medical</a>
-                    </li>
-                    <li><a href="#">Health</a>
-                    </li>
-                    <li><a href="#">Patient</a>
-                    </li>
-                    <li><a href="#">Doctor</a>
-                    </li>
-                    <li><a href="#">Hospital</a>
-                    </li>
-                    <li><a href="#">Happy</a>
-                    </li>
-                    <li><a href="#">Children</a>
-                    </li>
-                    <li><a href="#">science</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
     </aside>
 {{-- </div> --}}

@@ -1,30 +1,41 @@
 <div>
 @php
-function renderMenu($menu) {
-    foreach ($menu as $menu_item) {
-        // if (!empty($menu_item->children)) {
-        if ($menu_item->children->count() > 0) {
 
-            // echo '<li class="dropdown active">';
-            echo '<li class="dropdown">';
-            echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" >' . $menu_item->name . '</a>';
-            echo '<ul class="dropdown-menu">';
+if (!function_exists('renderMenu')) {
+    function renderMenu($menu) {
+        foreach ($menu as $menu_item) {
+            if ($menu_item->children->isNotEmpty()) {
+                echo '<li class="dropdown">';
+                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' . $menu_item->name . '</a>';
+                echo '<ul class="dropdown-menu">';
                 renderMenu($menu_item->children);
-            echo '</ul>';
-            echo '</li>';
-        } else {
-            echo '<li><a href="' . url($menu_item->url) . '">' . $menu_item->name . '</a></li>';
-
+                echo '</ul>';
+                echo '</li>';
+            } else {
+                echo '<li><a href="' . url($menu_item->url) . '">' . $menu_item->name . '</a></li>';
+            }
         }
     }
-
 }
 
-// echo '<ul class="nav navbar-nav navbar-right my-style" data-in="#" data-out="#">';
-// renderMenu($menu);die;
-// echo '</ul>';
 
 @endphp
+{{--
+<ul>
+    @foreach($menuItems as $menu)
+        <li>
+            <a href="{{ $menu->url }}">{{ $menu->name }}</a>
+            @if($menu->children->isNotEmpty())
+                <ul>
+                    @foreach($menu->children as $childMenu)
+                        <li><a href="{{ $childMenu->url }}">{{ $childMenu->name }}</a></li>
+                    @endforeach
+                </ul>
+            @endif
+        </li>
+    @endforeach
+</ul> --}}
+
 <header id="home">
 
     <!-- Start Navigation -->
@@ -52,6 +63,39 @@ function renderMenu($menu) {
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
+                    <li class="login">
+                        @auth
+                        <div style="display: flex;align-items:center">
+                            <form action="{{route('userProfile.auth.logout')}}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button class="btn btn-danger" >
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Logout
+                                </button>
+                            </form>
+                            @if (request()->routeIs('userProfile.*'))
+                            <div>
+                                <a href="{{ route('frontend.index') }}" class="btn btn-success">saytga qaytish</a>
+                             </div>
+                            @else
+                            <a href="{{route('userProfile.index')}}" class="btn btn-success">
+                                profile
+                            </a>
+                            @endif
+                        </div>
+
+                        @else
+
+                        <a href="{{route('userProfile.auth.login')}}" title="login" class="btn btn-success">
+                            login
+                        </a>
+                        <a href="{{route('userProfile.auth.register')}}" title="register" class="btn btn-success">
+                            register
+                        </a>
+
+                        @endauth
+                    </li>
                     <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
                 </ul>
@@ -63,8 +107,9 @@ function renderMenu($menu) {
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html">
-                    <img src="/assets/frontend/img/logo.png" class="logo" alt="Logo">
+                <a class="navbar-brand" href="{{ route('frontend.index') }}">
+                    Logo
+                    {{-- <img src="/assets/frontend/img/logo.png" class="logo" alt="Logo"> --}}
                 </a>
             </div>
             <!-- End Header Navigation -->
@@ -75,7 +120,7 @@ function renderMenu($menu) {
                     @php
                         echo renderMenu($menuItems);
                     @endphp
-                    <li class="dropdown active">
+                    {{-- <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Home</a>
                         <ul class="dropdown-menu">
                             <li><a href="index-6.html">Home Version Six</a></li>
@@ -87,10 +132,10 @@ function renderMenu($menu) {
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a class="active" href="contact.html">contact</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>

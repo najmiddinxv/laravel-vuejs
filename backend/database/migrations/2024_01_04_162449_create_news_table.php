@@ -13,23 +13,28 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
+            
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onUpdate('set null')
+            ->onDelete('set null');
+
             $table->integer('created_by')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->boolean('slider')->default(0);
             $table->integer('view_count')->default(0);
             $table->timestamps();
         });
         Schema::create('news_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('news_id')->constrained()->onDelete('cascade');
+            $table->foreignId('news_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');
             $table->string('slug');
             $table->string('description',500)->nullable();
             $table->text('body')->nullable();
-            $table->string('image')->nullable();
-
+            $table->jsonb('main_image')->nullable();
             $table->unique(['news_id','locale']);
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserStatus;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class UserProfileMiddleware
     {
         if (auth()->check()){
             // if (auth()->user()->status === User::STATUS_ACTIVE && auth()->user()->user_type === User::USER_TYPE_USERPROFILE) {
-            if (auth()->user()->status === User::STATUS_ACTIVE) {
+            if (auth()->user()->status === UserStatus::STATUS_ACTIVE->value) {
                 return $next($request);
             }else{
                 Session::flush();

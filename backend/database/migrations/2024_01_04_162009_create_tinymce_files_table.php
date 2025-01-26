@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('tinymce_files', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('file_hash_name');
-            $table->bigInteger('size')->nullable();
-            $table->string('file_type')->nullable();
-            $table->integer('created_by')->nullable();
+            $table->foreignId('category_id')
+            ->nullable()
+            ->constrained('categories')
+            ->onUpdate('set null')
+            ->onDelete('set null');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('path');
+            $table->string('mime_type');
+            $table->unsignedBigInteger('size');
+            $table->unsignedInteger('download_count')->default(0);
+            $table->string('status')->default(1);
+            $table->unsignedBigInteger('uploaded_by');
             $table->timestamps();
         });
     }

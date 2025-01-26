@@ -12,108 +12,6 @@
 
     <x-alert-component type="danger" :message="$message" class="mt-4"></x-alert-component> --}}
 
-    <!-- Start Header Top
-    ============================================= -->
-    <div class="top-bar-area inline inc-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7 address-info text-left">
-                    <div class="info box">
-                        <ul>
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>
-                                   @lang('lang.hello')
-                                </p>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope-open"></i>
-                                <p>
-                                    Info@gmail.com
-                                </p>
-                            </li>
-                            <li>
-                                <i class="fas fa-phone"></i>
-                                <p>
-                                    +123 456 7890
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-5 info-right">
-                    <div class="item-flex border-less">
-                        <div class="social">
-                            <ul>
-                                <li>
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-pinterest"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="language-switcher">
-
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown">
-                                    {{ app()->getLocale() }}
-                                    <span class="fas fa-angle-down"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                            <li>
-                                                <a rel="alternate" hreflang="{{ $localeCode }}"
-                                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                    {{ $properties['native'] }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="language-switcher">
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <span class="fas fa-user"></span>
-                                </a>
-
-                                {{-- @if (Route::has('login'))
-                                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                                    @auth
-
-                                    <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-
-                                        @else
-                                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                                        @endif
-                                    @endauth
-                                    </div>
-                                @endif --}}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Header Top -->
-
-    <!-- Header
-    ============================================= -->
-    <x-header-component></x-header-component>
-    <!-- End Header -->
 
     <!-- Start Banner
     ============================================= -->
@@ -121,60 +19,29 @@
         <div id="bootcarousel" class="carousel inc-top-heading slide carousel-fade animate_text" data-ride="carousel">
             <!-- Wrapper for slides -->
             <div class="carousel-inner carousel-zoom">
-                <div class="item active">
-                    <div class="slider-thumb bg-cover" style="background-image: url(/assets/frontend/img/2440x1578.png);"></div>
-                    <div class="box-table">
-                        <div class="box-cell shadow dark">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-10 col-md-offset-1">
-                                        <div class="content">
-                                            <h3 data-animation="animated slideInDown">We are Deluck</h3>
-                                            <h1 data-animation="animated slideInDown">Start with us and grow your business</h1>
-                                            <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="#">View Details</a>
+                <div class="carousel-inner carousel-zoom">
+                    @foreach ($banners as $key => $banner)
+                        <div class="item {{ $key == 0 ? 'active' : '' }}">
+                            <div class="slider-thumb bg-cover" style="background-image: url('{{ Storage::url($banner->main_image['large'] ?? '/assets/frontend/img/2440x1578.png') }}');"></div>
+                            <div class="box-table">
+                                <div class="box-cell shadow dark">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-10 col-md-offset-1">
+                                                <div class="content">
+                                                    <h3 data-animation="animated slideInDown">{{ $banner->title }}</h3>
+                                                    <h1 data-animation="animated slideInDown">{{ $banner->subtitle }}</h1>
+                                                    <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="{{ route('frontend.posts.show',['slug'=>$banner->slug]) }}">View Details</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="item">
-                    <div class="slider-thumb bg-cover" style="background-image: url(/assets/frontend/img/2440x1578.png);"></div>
-                    <div class="box-table">
-                        <div class="box-cell shadow dark">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-10 col-md-offset-1">
-                                        <div class="content">
-                                            <h3 data-animation="animated slideInDown">Search a businessman</h3>
-                                            <h1 data-animation="animated slideInLeft">For making a Plan in Your Business</h1>
-                                            <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="#">View Details</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="slider-thumb bg-cover" style="background-image: url(/assets/frontend/img/2440x1578.png);"></div>
-                    <div class="box-table">
-                        <div class="box-cell shadow dark">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-10 col-md-offset-1">
-                                        <div class="content">
-                                            <h3 data-animation="animated slideInDown">Creating more value</h3>
-                                            <h1 data-animation="animated slideInRight">Find Value And Build Confidence</h1>
-                                            <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="#">View Details</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <!-- End Wrapper for slides -->
 
@@ -917,9 +784,6 @@
     </div>
     <!-- End Blog Area -->
 
-    <!-- Start Footer
-    ============================================= -->
-    <x-footer-component></x-footer-component>
-    <!-- End Footer -->
+
 
 @endsection

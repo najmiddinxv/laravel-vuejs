@@ -18,13 +18,34 @@ class UserSeeder extends Seeder
 
         User::truncate();
         User::factory()->create([
-            'first_name' => 'bek',
+            'first_name' => 'najmiddin',
             'last_name' => 'najmiddin',
-            'middle_name' => '',
-            'username' => 'bekdevz',
+            'middle_name' => 'najmiddin',
             'user_type' => 1,
             'status' => 1,
             'email' => 'bekdevz@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '01230123', // password
+            'remember_token' => Str::random(10),
+        ]);
+        User::factory()->create([
+            'first_name' => 'ilxom',
+            'last_name' => 'ilxom',
+            'middle_name' => 'ilxom',
+            'user_type' => 1,
+            'status' => 1,
+            'email' => 'ilxom@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '01230123', // password
+            'remember_token' => Str::random(10),
+        ]);
+        User::factory()->create([
+            'first_name' => 'yusuf',
+            'last_name' => 'yusuf',
+            'middle_name' => 'yusuf',
+            'user_type' => 2,
+            'status' => 1,
+            'email' => 'yusuf@gmail.com',
             'email_verified_at' => now(),
             'password' => '01230123', // password
             'remember_token' => Str::random(10),

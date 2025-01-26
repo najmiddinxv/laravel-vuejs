@@ -2,23 +2,41 @@
 
 namespace App\View\Components;
 
+use App\Models\Content\Category;
+use App\Models\Content\Image;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class SidebarComponent extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    public $categories;
+    public $images;
+
     public function __construct()
     {
-        //
+        $this->categories = $this->getCategories();
+        $this->images = $this->getImages();
+
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+    private function getCategories()
+    {
+        $categories = Category::withCount(['posts','news','pages'])
+            // ->whereNull('parent_id')
+            ->latest('id')
+            ->get();
+
+        return $categories;
+    }
+
+    private function getImages()
+    {
+        $images = Image::inRandomOrder()->limit(6)->get();
+        return $images;
+    }
+
+
     public function render(): View|Closure|string
     {
         return view('frontend.components.sidebar-component');

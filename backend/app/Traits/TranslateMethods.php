@@ -1,9 +1,6 @@
 <?php
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-
 trait TranslateMethods
 {
     public function getTranslatedAttribute($value)

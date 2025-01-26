@@ -167,9 +167,10 @@ return [
         // Bekadmin\Contact\ContactServiceProvider::class,
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         App\Providers\ServicesProvider::class,
-        App\Providers\RepositoriesProvider::class,
+        App\Providers\MacroServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -178,7 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
+        // App\Providers\TelescopeServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -196,7 +197,9 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'MyCustomService' => App\Facades\MyCustomServiceFacade::class,                                        
     ])->toArray(),
 
 ];
+    
