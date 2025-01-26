@@ -25,6 +25,7 @@ class User extends Authenticatable
         'last_name', //familya
         'first_name', //ism
         'middle_name', //sharif
+        'username',
         'email',
         'phone_number',
         'user_type',

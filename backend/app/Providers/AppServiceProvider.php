@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Macros\StringMacros;
+//use App\Macros\StringMacros;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use App\Services\MyCustomService;
+use App\Services\HelperService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,9 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('myCustomService', function ($app) { //yangiMyCustomService fasadi uchun bu
-            return new MyCustomService();
-        });    
+        $this->app->singleton('HelperService', function () { //yangiMyCustomService fasadi uchun bu
+            return new HelperService();
+        });
     }
 
     /**

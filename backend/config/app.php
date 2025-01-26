@@ -166,11 +166,12 @@ return [
         MongoDB\Laravel\MongoDBServiceProvider::class,
         // Bekadmin\Contact\ContactServiceProvider::class,
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+//        Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-
         App\Providers\ServicesProvider::class,
         App\Providers\MacroServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */
@@ -197,9 +198,10 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
-        'Image' => Intervention\Image\Facades\Image::class,
-        'MyCustomService' => App\Facades\MyCustomServiceFacade::class,                                        
+//        'Image' => Intervention\Image\Facades\Image::class,
+        'MyHelperFacade' => App\Facades\MyHelperFacade::class,
+
     ])->toArray(),
 
 ];
-    
+

@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'first_name' => 'najmiddin',
             'last_name' => 'najmiddin',
             'middle_name' => 'najmiddin',
+            'username' => 'najmiddin_bekdevz',
             'user_type' => 1,
             'status' => 1,
             'email' => 'bekdevz@gmail.com',
