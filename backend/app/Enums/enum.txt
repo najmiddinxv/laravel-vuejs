@@ -1,0 +1,350 @@
+ Misollar: Loyihada enum fayllarni tashkil qilish
+bash
+Copy
+Edit
+app/
+├── Enums/
+│   ├── PaymentStatus.php
+│   ├── OrderStatus.php
+│   └── ProductType.php
+PaymentStatus.php
+php
+Copy
+Edit
+namespace App\Enums;
+
+enum PaymentStatus: int
+{
+    case Pending = 0;
+    case Paid = 1;
+    case Failed = 2;
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Pending => 'Kutilmoqda',
+            self::Paid => 'To‘landi',
+            self::Failed => 'Muvaffaqiyatsiz',
+        };
+    }
+}
+OrderStatus.php
+php
+Copy
+Edit
+namespace App\Enums;
+
+enum OrderStatus: int
+{
+    case Draft = 0;
+    case Confirmed = 1;
+    case Shipped = 2;
+    case Delivered = 3;
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Draft => 'Qoralama',
+            self::Confirmed => 'Tasdiqlangan',
+            self::Shipped => 'Jo‘natilgan',
+            self::Delivered => 'Yetkazilgan',
+        };
+    }
+}
+ProductType.php
+php
+Copy
+Edit
+namespace App\Enums;
+
+enum ProductType: string
+{
+    case Physical = 'physical';
+    case Digital = 'digital';
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Physical => 'Jismoniy mahsulot',
+            self::Digital => 'Raqamli mahsulot',
+        };
+    }
+}
+✍️ Modelda ishlatish
+php
+Copy
+Edit
+// Order.php
+protected $casts = [
+    'status' => \App\Enums\OrderStatus::class,
+];
+
+// Payment.php
+protected $casts = [
+    'status' => \App\Enums\PaymentStatus::class,
+];
+
+// Product.php
+protected $casts = [
+    'type' => \App\Enums\ProductType::class,
+];
+🔚 Yakuniy maslahat:
+Agar enumlar ko‘payib ketsa, siz app/Enums/Order/OrderStatus.php, app/Enums/Payment/PaymentStatus.php kabi subfolderlarda saqlab, tartibni yanada yaxshilashingiz mumkin.
+
+Xohlasangiz, enumlar yordamida select box, badge rangi, yoki filterlash haqida real misollar ham keltiraman.
+
+
+
+
+
+
+
+You said:
+xa keltir
+
+
+ChatGPT said:
+Ajoyib! Quyida enumlarni Laravel loyihasida select box (form), badge rangi, va filterlashda qanday ishlatish mumkinligini real kodlar bilan bosqichma-bosqich ko‘rsataman.
+
+🧱 1. Enum (masalan, OrderStatus)
+php
+Copy
+Edit
+namespace App\Enums;
+
+enum OrderStatus: int
+{
+    case Draft = 0;
+    case Confirmed = 1;
+    case Shipped = 2;
+    case Delivered = 3;
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Draft => 'Qoralama',
+            self::Confirmed => 'Tasdiqlangan',
+            self::Shipped => 'Jo‘natilgan',
+            self::Delivered => 'Yetkazilgan',
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::Draft => 'secondary',
+            self::Confirmed => 'primary',
+            self::Shipped => 'warning',
+            self::Delivered => 'success',
+        };
+    }
+}
+🧾 2. Formda Select Box (Blade)
+blade
+Copy
+Edit
+<select name="status" class="form-control">
+    @foreach (\App\Enums\OrderStatus::cases() as $status)
+        <option value="{{ $status->value }}">
+            {{ $status->label() }}
+        </option>
+    @endforeach
+</select>
+Bu select orqali foydalanuvchi buyurtma statusini tanlay oladi.
+
+🎨 3. Badge ko‘rinishida chiqarish (masalan, admin panelda)
+blade
+Copy
+Edit
+@php
+    $status = $order->status;
+@endphp
+
+<span class="badge bg-{{ $status->color() }}">
+    {{ $status->label() }}
+</span>
+bg-success, bg-warning va hokazo — bu Bootstrap klasslari.
+
+🔎 4. Controllerda filterlash
+php
+Copy
+Edit
+use App\Enums\OrderStatus;
+
+public function index(Request $request)
+{
+    $query = Order::query();
+
+    if ($request->has('status') && $request->status !== null) {
+        $query->where('status', $request->status);
+    }
+
+    $orders = $query->paginate(10);
+
+    return view('orders.index', [
+        'orders' => $orders,
+        'statuses' => OrderStatus::cases(),
+        'selectedStatus' => $request->status,
+    ]);
+}
+Bladedagi filter formasi
+blade
+Copy
+Edit
+<form method="GET">
+    <select name="status" onchange="this.form.submit()" class="form-select">
+        <option value="">Barcha statuslar</option>
+        @foreach ($statuses as $status)
+            <option value="{{ $status->value }}" {{ $selectedStatus == $status->value ? 'selected' : '' }}>
+                {{ $status->label() }}
+            </option>
+        @endforeach
+    </select>
+</form>
+🧠 Bonus: Statusni formda saqlash
+php
+Copy
+Edit
+Order::create([
+    'name' => 'Yangi buyurtma',
+    'status' => OrderStatus::Confirmed, // enum orqali
+]);
+Yoki so‘rovdan int qiymat kelganda:
+
+php
+Copy
+Edit
+$status = OrderStatus::from((int) $request->status);
+🔚 Xulosa
+Enum yordamida:
+
+Statuslarni aniq va tip xavfsiz ishlatasiz.
+
+Badge, rang, label funksiyalarni enum ichida markazlashtirasiz.
+
+Kod DRY va YAGNI prinsiplariga mos bo‘ladi.
+
+Agar xohlasangiz, bu enumlar bilan API javoblarida ham qanday ishlatish yoki Vue.js frontendga enumlarni yuborish haqida ham misol beraman.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================================================================
+
+
+
+
+
+✅ 1. Enumni int qiymatlar bilan yaratish
+php
+Copy
+Edit
+namespace App\Enums;
+
+enum OrderStatus: int
+{
+    case Pending = 0;
+    case Processing = 1;
+    case Completed = 2;
+    case Cancelled = 3;
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Pending => 'Kutilmoqda',
+            self::Processing => 'Jarayonda',
+            self::Completed => 'Tugallangan',
+            self::Cancelled => 'Bekor qilingan',
+        };
+    }
+}
+✅ 2. Migration (integer saqlash)
+php
+Copy
+Edit
+$table->unsignedTinyInteger('status')->default(0); // 0 = Pending
+✅ 3. Modelda casts qilish
+php
+Copy
+Edit
+use App\Enums\OrderStatus;
+
+class Order extends Model
+{
+    protected $casts = [
+        'status' => OrderStatus::class,
+    ];
+}
+✅ 4. Foydalanish (model orqali):
+php
+Copy
+Edit
+// Yangi buyurtma yaratish
+Order::create([
+    'name' => 'Buyurtma 1',
+    'status' => OrderStatus::Pending, // bu yerda enumdan foydalanamiz
+]);
+
+// O'qish
+$order = Order::find(1);
+
+if ($order->status === OrderStatus::Completed) {
+    echo "Buyurtma tugallangan";
+}
+
+// Status nomini chiqarish
+echo $order->status->label(); // Jarayonda va h.k.
+✅ 5. Validation (int enum bilan)
+php
+Copy
+Edit
+use Illuminate\Validation\Rules\Enum;
+
+$request->validate([
+    'status' => ['required', new Enum(OrderStatus::class)],
+]);
+🔁 Qo‘shimcha: Enumdan arrayga aylantirish
+Dropdownda ko‘rsatish uchun:
+
+php
+Copy
+Edit
+OrderStatus::cases(); // [OrderStatus::Pending, OrderStatus::Processing, ...]
+Agar value => label holatda kerak bo‘lsa:
+
+php
+Copy
+Edit
+$statuses = collect(OrderStatus::cases())
+    ->mapWithKeys(fn($status) => [$status->value => $status->label()])
+    ->toArray();
+Natija:
+
+php
+Copy
+Edit
+[
+    0 => 'Kutilmoqda',
+    1 => 'Jarayonda',
+    2 => 'Tugallangan',
+    3 => 'Bekor qilingan',
+]
+🔚 Yakuniy foydalar:
+int ishlatish xotira tejaydi va indekslar samaraliroq ishlaydi
+
+Enum bilan birga ishlatish esa kodingizni aniq va tushunarli qiladi
+
+
+
+
+
