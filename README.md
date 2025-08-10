@@ -1,3 +1,4 @@
-# laravel-vuejs-tutorial
-laravel-vuejs-tutorial
+# laravel-vuejs
+laravel-vuejs
+
 
